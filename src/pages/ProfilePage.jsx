@@ -29,9 +29,6 @@ function ProfilePage() {
     await updateProfile(auth.currentUser, {
       displayName: username,
     });
-    // .then(() => {
-    //   console.log(username);
-    // });
 
     // FireStore
     // u firestoreu postoji users kolekcija
@@ -56,16 +53,17 @@ function ProfilePage() {
       </button>
       <p
         className="detailsText"
-        onClick={() => {
+        onClick={async () => {
           changeDetails && onSubmit();
-          setChangeDetails((prevstate) => !prevstate);
-          document.querySelector('#username').focus();
+          await setChangeDetails((prevstate) => !prevstate);
+          document.querySelector("#username").focus();
         }}
+        // async await da bi fokus radio!
       >
         {changeDetails ? "Done" : "Change Details"}
       </p>
       <div className="editDetailsDiv">
-        <input 
+        <input
           type="text"
           id="username"
           disabled={!changeDetails}
@@ -75,7 +73,7 @@ function ProfilePage() {
         <input
           type="email"
           id="email"
-          disabled={!changeDetails}
+          disabled={true}
           value={email}
           onChange={onChange}
         />

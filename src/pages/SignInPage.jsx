@@ -39,6 +39,8 @@ function SignInPage() {
           alert("Invalid email");
         } else if (err.code === "auth/user-not-found") {
           alert("User not found");
+        } else if (err.code === "auth/too-many-requests") {
+          alert("Too many requests. Try again later");
         } else {
           console.log(err);
         }
@@ -76,7 +78,7 @@ function SignInPage() {
             ></FontAwesomeIcon>
           </button>
         </div>
-        <Link to={'/forgotpass'}>Forgot password?</Link>
+        <Link to={"/forgotpass"}>Forgot password?</Link>
       </form>
     </div>
   );

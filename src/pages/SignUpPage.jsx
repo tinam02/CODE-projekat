@@ -30,9 +30,10 @@ function SignUpPage() {
 
   const onSubmit = function (evt) {
     evt.preventDefault();
+
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password).then(
-      (userCredential) => {
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
         // user created
         const user = userCredential.user;
 
@@ -41,7 +42,7 @@ function SignUpPage() {
           //!!
           displayName: username,
         }).then(() => {
-          console.log(`updated` + username);
+          console.log(`Welcome, ${username}`);
         });
 
         const formDataCopy = { ...formData };
@@ -49,10 +50,18 @@ function SignUpPage() {
         setDoc(doc(db, "users", user.uid), formDataCopy);
         //dodaje u kolekciju users
         navigate("/");
-      }
-    ).catch((err) => {
-      alert("An error occurred")
-    });
+      })
+      .catch((err) => {
+        if (err.code === "auth/email-already-in-use") {
+          alert("Email already in use");
+        } else if (err.code === "auth/invalid-email") {
+          alert("Invalid email");
+        } else if (err.code === "auth/weak-password") {
+          alert("Password should be at least 6 chars");
+        } else {
+          alert("An unknown error has occured");
+        }
+      });
   };
   //ASYNC
   // const onSubmit = async function (evt) {
