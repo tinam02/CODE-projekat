@@ -10,7 +10,7 @@ const PrivRoute = () => {
       return <h3>Loading</h3>
   }
 
-  return loggedIn ? <Outlet /> : <Navigate to="/signin" />;
+  return !loggedIn ? <Navigate to="/signin" /> : <Outlet/>;
 };
 
 export default PrivRoute;

@@ -36,14 +36,21 @@ function SignUpPage() {
       .then((userCredential) => {
         // user created
         const user = userCredential.user;
-
         // za username
         updateProfile(auth.currentUser, {
           //!!
           displayName: username,
-        }).then(() => {
-          console.log(`Welcome, ${username}`);
-        });
+          // photoURL: "https://example.com/jane-q-user/profile.jpg"
+        })
+          .then(() => {
+            console.log(`Welcome, ${username}`);
+          })
+          .catch((err) => {
+            console.log(
+              "An error occured with the createUserWithEmailAndPassword function" +
+                err.message
+            );
+          });
 
         const formDataCopy = { ...formData };
         formDataCopy.timestamp = serverTimestamp();
@@ -70,9 +77,7 @@ function SignUpPage() {
   //   createUserWithEmailAndPassword(auth, email, password).then(
   //     async (userCredential) => {
   //       const user = userCredential.user;
-  //       // user created
-
-  //       // za username
+  
   //       updateProfile(auth.currentUser, {
   //         //!!
   //         displayName: username,

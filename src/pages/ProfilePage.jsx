@@ -1,10 +1,13 @@
 import React from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 // change details;
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
+// icons
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRight, faHome } from "@fortawesome/free-solid-svg-icons";
 
 function ProfilePage() {
   const auth = getAuth();
@@ -78,6 +81,11 @@ function ProfilePage() {
           onChange={onChange}
         />
       </div>
+
+      <Link to="/submit">
+        <p>Submit an image</p>
+        <FontAwesomeIcon icon={faArrowRight} />
+      </Link>
     </>
   );
 }
