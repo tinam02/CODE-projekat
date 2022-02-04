@@ -6,25 +6,23 @@ import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 
 //sign in;
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+//https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react
 function SignInPage() {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
-  const { email, password } = formData;
   const onChange = function (evt) {
     setFormData((prevstate) => ({
       ...prevstate,
       [evt.target.id]: evt.target.value,
     }));
   };
-
   const onSubmit = async function (evt) {
     evt.preventDefault();
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
+    signInWithEmailAndPassword(auth, formData.email, formData.password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
@@ -54,7 +52,7 @@ function SignInPage() {
         <input
           type="email"
           placeholder="unesi email"
-          value={email}
+          value={formData.email}
           onChange={onChange}
           className="email"
           id="email"
@@ -62,7 +60,7 @@ function SignInPage() {
         <input
           placeholder="unesi sifru"
           type="password"
-          value={password}
+          value={formData.password}
           onChange={onChange}
           className="password"
           id="password"

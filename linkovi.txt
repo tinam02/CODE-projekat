@@ -1,0 +1,50 @@
+https://www.bezkoder.com/react-firestore-crud/
+https://firebase.google.com/docs/reference/js/v8/firebase.firestore.CollectionReference
+https://www.bezkoder.com/vue-3-firestore/
+//db je skracenica za getFirestore() iz prosle verzije firebasea
+
+//filtering firestore kolekcije;
+//where() moze da se koristi za tagove ili tip fajla koji uzimamo iz kolekcije  (filtered.jsx)
+//u Filtered.jsx koristim useparams za tip slike, i allUploads f-ja na homepage-u koristi slican kod ali bez where() jer vraca sve fajlove iz kolekcije
+https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
+
+//tutorial za form u reactu (SubmitImage.jsx)
+https://dev.to/jleewebdev/using-the-usestate-hook-and-working-with-forms-in-react-js-m6b
+// za input (SignInPage.jsx);
+https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react
+
+
+//protected route;
+//ovaj kod radi i u novim verzijama reacta i firebase-a;
+//koristim u kombinaciji sa outlet-om ( ako korisnik klikne na profil a nije ulogovan, prebacuje se na /signin a u suprotnom moze da udje u svoj profil(outlet) )
+https://stackoverflow.com/questions/65505665/protected-route-with-firebase
+//outlet;
+https://www.youtube.com/watch?v=0cSVuySEB0A&t=1695s
+
+//!!!!!!!! GRESKA u SubmitImage formi !! => ne vidi displayname od trenutnog korisnika? feb 03.
+//greska ispravljena:  problem to sto se stranica ucitala pre displayname-a feb 04
+
+//progress bar za uploadTask.on( "state_changed" u /submit
+https://www.youtube.com/watch?v=vUe91uOx7R0&t=1414s
+
+//💡refactoring u vscodu https://code.visualstudio.com/docs/editor/refactoring
+
+https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_AND#description
+//?objasnjenje za && kad se koristi kao x && y;
+https://stackoverflow.com/questions/40477245/is-it-possible-to-use-if-else-statement-in-react-render-function
+//ovo je obican if:
+{props.hasImage &&
+  <MyImage />
+}
+// if else:
+{props.hasImage ?
+      <MyImage /> :
+      <OtherElement/>
+}
+
+&&
+https://stackoverflow.com/questions/2932754/ternary-operators-in-javascript-without-an-else
+
+//if, else if, else moze da se zameni sa switch case
+https://www.oreilly.com/library/view/high-performance-javascript/9781449382308/ch04.html#if-else_versus_switch
+https://www.npmjs.com/package/react-if-elseif-else-render

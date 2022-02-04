@@ -70,30 +70,7 @@ function SignUpPage() {
         }
       });
   };
-  //ASYNC
-  // const onSubmit = async function (evt) {
-  //   evt.preventDefault();
-  //   const auth = getAuth();
-  //   createUserWithEmailAndPassword(auth, email, password).then(
-  //     async (userCredential) => {
-  //       const user = userCredential.user;
   
-  //       updateProfile(auth.currentUser, {
-  //         //!!
-  //         displayName: username,
-  //       }).then(() => {
-  //         console.log(`updated` + username);
-  //       });
-
-  //       const formDataCopy = { ...formData };
-  //       formDataCopy.timestamp = serverTimestamp();
-  //       await setDoc(doc(db, "users", user.uid), formDataCopy);
-  //       //dodaje u kolekciju users
-  //       navigate("/");
-  //     }
-  //   );
-  // };
-
   return (
     <div>
       <h1>SignUpPage</h1>

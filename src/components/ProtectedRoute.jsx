@@ -3,7 +3,7 @@ import { Outlet, Navigate } from "react-router-dom";
 //outlet renders child elem;
 import { useAuthStatus } from "../functions/useAuthStatus.js";
 
-const PrivRoute = () => {
+const ProtectedRoute = () => {
   const {loggedIn,statusToggle} = useAuthStatus();
 
   if(statusToggle) {
@@ -13,4 +13,4 @@ const PrivRoute = () => {
   return !loggedIn ? <Navigate to="/signin" /> : <Outlet/>;
 };
 
-export default PrivRoute;
+export default ProtectedRoute;

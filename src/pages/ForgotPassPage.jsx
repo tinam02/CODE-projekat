@@ -5,37 +5,27 @@ import { Link } from "react-router-dom";
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
-  const onChange = function (e) {
-    setEmail(e.target.value);
+  const onChange = function (evt) {
+    setEmail(evt.target.value);
   };
-  const onSubmit = async function (e) {
-    e.preventDefault();
+  const onSubmit = async function (evt) {
+    evt.preventDefault();
 
-    try {
-      const auth = getAuth();
-      await sendPasswordResetEmail(auth, email);
-      alert(`Check your e-mail`);
-    } catch (err) {
-      if (err.code === "auth/invalid-email") {
-        alert("Invalid email");
-      } else if (err.code === "auth/user-not-found") {
-        alert("User not found");
-      } else {
-        alert(`Failed`);
-      }
-    }
-
-    //moze i bez async
-// https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#sendpasswordresetemail
-    // const auth = getAuth();
-    // sendPasswordResetEmail(
-    //   auth, email)
-    //   .then(function() {
-    //   alert("sent")
-    //   })
-    //   .catch(function(error) {
-    //    console.log(error);
-    //   });
+    // https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#sendpasswordresetemail
+    const auth = getAuth();
+    sendPasswordResetEmail(auth, email)
+      .then(function () {
+        alert("sent");
+      })
+      .catch(function (err) {
+        if (err.code === "auth/invalid-email") {
+          alert("Invalid email");
+        } else if (err.code === "auth/user-not-found") {
+          alert("User not found");
+        } else {
+          alert(`Failed`);
+        }
+      });
   };
 
   return (

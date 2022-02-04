@@ -22,7 +22,7 @@ function Filtered() {
 
       querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
-        return uploads.push({ id: doc.id, data: doc.data() });
+        return uploads.unshift({ id: doc.id, data: doc.data() });
       });
       setUploads(uploads);
       console.log(uploads);
@@ -33,18 +33,21 @@ function Filtered() {
   //!!   DEPENDENCY ARRAY ZA INF LOOP
 
   let renderedUploads = "";
-  if (uploads && uploads.length > 0) {
-    renderedUploads = (
-      <>
-        {uploads.map((upload) => (
-          <div>
-            {" "}
-            <p>{upload.data.name}</p>
-            <img src={upload.data.imageURL[0]} alt="" />
-          </div>
-        ))}
-      </>
-    );
+  if (uploads) {
+    if (!(uploads.length > 0)) {
+      renderedUploads = `No uploads tagged with ${params.filteredBy}`;
+    } else {
+      const fileObj = (file) => (
+        <div>
+          {/* vraca objekat za svaki fajl */}
+          {console.log(file)}
+          <p>Title: {file.data.name}</p>
+          <img src={file.data.imageURL[0]} alt="" />
+        </div>
+      );
+
+      renderedUploads = <>{uploads.map(fileObj)}</>;
+    }
   }
 
   return (

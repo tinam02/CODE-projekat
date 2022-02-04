@@ -1,6 +1,5 @@
 // https://stackoverflow.com/questions/65505665/protected-route-with-firebase
-import React from "react";
-import { useState, useEffect } from "react";
+import React,{ useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth"; //https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#onauthstatechanged
 
 export const useAuthStatus = () => {
@@ -13,7 +12,7 @@ export const useAuthStatus = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
-        console.log(`ulogovan`);
+        console.log(`korisnik jeulogovan ${auth.currentUser.displayName}`);
       }
       setStatusToggle(false);
     });
@@ -21,3 +20,4 @@ export const useAuthStatus = () => {
 
   return { loggedIn, statusToggle };
 };
+

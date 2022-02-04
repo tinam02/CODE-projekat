@@ -17,6 +17,7 @@ function Navbar() {
       return true;
     }
   };
+  
   return (
     <div className="nav">
       <ul className="nav-ul">

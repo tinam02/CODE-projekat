@@ -1,6 +1,6 @@
 import React from "react";
 import { getAuth, updateProfile } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 // change details;
 import { updateDoc, doc } from "firebase/firestore";
@@ -12,41 +12,47 @@ import { faArrowRight, faHome } from "@fortawesome/free-solid-svg-icons";
 function ProfilePage() {
   const auth = getAuth();
   const navigate = useNavigate();
-  const [user, setUser] = useState(null);
   const [changeDetails, setChangeDetails] = useState(false);
 
   const [formData, setFormData] = useState({
     username: auth.currentUser.displayName,
     email: auth.currentUser.email,
   });
-  const { username, email } = formData;
 
   const onLogout = function () {
     auth.signOut();
     navigate("/");
   };
-  const onSubmit = async function () {
-    if (auth.currentUser.displayName === username) {
+  const onSubmit = function () {
+    if (auth.currentUser.displayName === formData.username) {
       alert("Thats your current username");
     }
-    await updateProfile(auth.currentUser, {
-      displayName: username,
-    });
-
-    // FireStore
-    // u firestoreu postoji users kolekcija
-    const userRef = doc(db, "users", auth.currentUser.uid);
-    await updateDoc(userRef, {
-      username: username,
-      // https://firebase.google.com/docs/firestore/manage-data/add-data
-      // https://firebase.google.com/docs/reference/js/firestore_
-    });
+    //https://firebase.google.com/docs/auth/web/manage-users#update_a_users_profile
+    updateProfile(auth.currentUser, {
+      displayName: formData.username,
+    })
+      .then(() => {
+        // FireStore
+        // u firestoreu postoji users kolekcija
+        const userRef = doc(db, "users", auth.currentUser.uid);
+        updateDoc(userRef, {
+          username: formData.username,
+          //! ovde moze da se doda field =>
+          // test:'test1234'
+          // TODO profilna
+          // https://firebase.google.com/docs/firestore/manage-data/add-data
+          // https://firebase.google.com/docs/reference/js/firestore_
+        });
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
   const onChange = function (evt) {
-    setFormData((prevstate) => ({
-      ...prevstate,
+    setFormData({
+      ...formData,
       [evt.target.id]: evt.target.value,
-    }));
+    });
   };
   return (
     <>
@@ -57,8 +63,11 @@ function ProfilePage() {
       <p
         className="detailsText"
         onClick={async () => {
+          //https://reactjs.org/docs/conditional-rendering.html
+          //true && x je x, a false && x je false
           changeDetails && onSubmit();
-          await setChangeDetails((prevstate) => !prevstate);
+          // changeDetails = changeDetails || onSubmit();
+          await setChangeDetails((bool) => !bool);
           document.querySelector("#username").focus();
         }}
         // async await da bi fokus radio!
@@ -70,16 +79,10 @@ function ProfilePage() {
           type="text"
           id="username"
           disabled={!changeDetails}
-          value={username}
+          value={formData.username}
           onChange={onChange}
         />
-        <input
-          type="email"
-          id="email"
-          disabled={true}
-          value={email}
-          onChange={onChange}
-        />
+        <input type="email" id="email" disabled={true} value={formData.email} />
       </div>
 
       <Link to="/submit">

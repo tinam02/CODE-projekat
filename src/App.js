@@ -9,25 +9,23 @@ import Filtered from "./pages/Filtered";
 import SubmitImage from "./pages/SubmitImage";
 //components
 import Navbar from "./components/Navbar";
-import PrivRoute from "./components/PrivRoute";
-
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
     <div className="App">
-      <h1>firebase test</h1>
       <Router>
         <Routes>
-          <Route path="/" element={<HomePage />}></Route>
-          <Route path="/signin" element={<SignInPage />}></Route>
-          <Route path="/forgotpass" element={<ForgotPassPage />}></Route>
-          <Route path="/filtered/:filteredBy" element={<Filtered />}></Route>
+          <Route path="/" element={<HomePage />}></Route>{" "}
           <Route path="/signup" element={<SignUpPage />}></Route>
-          <Route path="/profile" element={<PrivRoute />}>
+          <Route path="/signin" element={<SignInPage />}></Route>{" "}
+          <Route path="/profile" element={<ProtectedRoute />}>
             <Route path="/profile" element={<ProfilePage />}></Route>
             {/* ovo je outlet */}
           </Route>
+          <Route path="/forgotpass" element={<ForgotPassPage />}></Route>{" "}
           <Route path="/submit" element={<SubmitImage />}></Route>
+          <Route path="/filtered/:filteredBy" element={<Filtered />}></Route>
         </Routes>
         <Navbar />
       </Router>
