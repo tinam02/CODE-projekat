@@ -48,3 +48,9 @@ https://stackoverflow.com/questions/2932754/ternary-operators-in-javascript-with
 //if, else if, else moze da se zameni sa switch case
 https://www.oreilly.com/library/view/high-performance-javascript/9781449382308/ch04.html#if-else_versus_switch
 https://www.npmjs.com/package/react-if-elseif-else-render
+
+//airbnb styleguide
+https://github.com/airbnb/javascript#arrays
+
+//useeffect je kao domcontentloaded (ovako sam ga koristila u navbar-u)
+https://stackoverflow.com/questions/61986358/react-add-event-domcontentloaded-with-useeffect

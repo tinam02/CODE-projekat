@@ -15,6 +15,8 @@ function App() {
   return (
     <div className="App">
       <Router>
+        {" "}
+        <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />}></Route>{" "}
           <Route path="/signup" element={<SignUpPage />}></Route>
@@ -27,7 +29,6 @@ function App() {
           <Route path="/submit" element={<SubmitImage />}></Route>
           <Route path="/filtered/:filteredBy" element={<Filtered />}></Route>
         </Routes>
-        <Navbar />
       </Router>
     </div>
   );
