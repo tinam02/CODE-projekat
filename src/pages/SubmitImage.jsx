@@ -35,7 +35,7 @@ function SubmitImage() {
       if (user) {
         setFormData({ ...formData, userRef: user.uid });
         // console => components ima uid od korisnika koji je trenutno ulogovan
-        console.log(`Useeffect u submitimage korisnik: ` + user.displayName);
+        console.log(`Useeffect u submitimage korisnik: ${user.displayName}`);
       } else {
         navigate("/");
       }
@@ -64,12 +64,12 @@ function SubmitImage() {
     console.log(formData);
     //TODO loading, format name
     //!! storage
-    const uploadFormFile = async (file) => {
-      return new Promise((resolve, reject) => {
+    const uploadFormFile = async (file) =>
+      new Promise((resolve, reject) => {
         const storage = getStorage();
-        let fileName = `${file.name}-${auth.currentUser.uid}-${Math.floor(
-          Math.random() * 100
-        )}`;
+        const fileName = `${auth.currentUser.uid}-${Math.floor(
+          Math.random() * 10000
+        )}-${file.name}`;
         const storageRef = ref(storage, `images/${fileName}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
 
@@ -80,7 +80,8 @@ function SubmitImage() {
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log("Upload is " + progress + "% done");
+            console.log(`Upload is ${progress}% done`);
+            // eslint-disable-next-line default-case
             switch (snapshot.state) {
               case "paused":
                 console.log("Upload is paused");
@@ -92,7 +93,7 @@ function SubmitImage() {
           },
           (err) => {
             // Handle unsuccessful uploads
-            reject(err.message+"Error on uploadtask");
+            reject(`${err.message}Error on uploadtask`);
           },
           () => {
             // Handle successful uploads on complete
@@ -104,13 +105,10 @@ function SubmitImage() {
           }
         );
       });
-    };
 
     //array of image urls
     const imageURL = await Promise.all(
-      [...formData.imageURL].map((file) => {
-        return uploadFormFile(file);
-      })
+      [...formData.imageURL].map((file) => uploadFormFile(file))
     ).catch((err) => {
       console.log(`${err.message}Error in imgUrls`);
     });
@@ -158,7 +156,7 @@ function SubmitImage() {
             value={formData.description}
             onChange={handleChangeDesc}
             required
-          ></input>
+          />
         </label>
         <label htmlFor="">
           Type
@@ -168,7 +166,7 @@ function SubmitImage() {
             placeholder="Type"
             value={formData.type}
             onChange={handleChangeType}
-          ></input>
+          />
         </label>
         <label>
           Images
@@ -182,7 +180,7 @@ function SubmitImage() {
         </label>
         <label htmlFor="">
           Username:
-          <input value={lockedUsername} disabled></input>
+          <input value={lockedUsername} disabled />
         </label>
         <button type="submit">Submit</button>
       </form>
