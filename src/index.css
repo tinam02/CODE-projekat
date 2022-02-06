@@ -223,7 +223,7 @@ li {
 } */
 
 /* image layout */
-.gallery {
+/* .gallery {
   margin: auto;
   width: 80vw;
   height: 1000px;
@@ -258,10 +258,32 @@ li {
   will-change: transform;
   transform: scale(1.1);
   position: absolute;
-}
-.sepia {
+} */
+/* .sepia {
   filter: grayscale(100%) sepia(20%) brightness(88%);
 }
 .masked {
   clip-path: circle(25% at 50% 50%);
+} */
+
+/* MASONRY */
+.my-masonry-grid {
+  /* Not needed if autoprefixing */
+  display: flex;
+  margin-left: -30px; /* gutter size offset */
+  width: auto;
+}
+.my-masonry-grid_column {
+  padding-left: 30px; /* gutter size */
+  background-clip: padding-box;
+}
+
+/* Style your items */
+.my-masonry-grid_column > img {
+  /* change div to reference your elements you put in <Masonry> */
+  background: grey;
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  margin-bottom: 30px;
 }

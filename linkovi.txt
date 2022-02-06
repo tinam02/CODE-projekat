@@ -54,3 +54,10 @@ https://github.com/airbnb/javascript#arrays
 
 //useeffect je kao domcontentloaded (ovako sam ga koristila u navbar-u)
 https://stackoverflow.com/questions/61986358/react-add-event-domcontentloaded-with-useeffect
+
+//CSS;
+https://www.npmjs.com/package/react-masonry-css
+https://nekocalc.com/px-to-rem-converter
+//za svg:
+https://vectorizer.com/
+https://www.iloveimg.com/resize-image

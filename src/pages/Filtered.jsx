@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 //useparams jer switch ne radi u ovoj verziji reacta
 import { db } from "../firebase-config";
 import { collection, query, where, getDocs } from "firebase/firestore";
-//TODO image card za slike
+import Masonry from "react-masonry-css";
 
 function Filtered() {
   const [loading, setLoading] = useState(true);
@@ -31,22 +31,21 @@ function Filtered() {
     fetchUploads();
   }, []);
   //!!   DEPENDENCY ARRAY ZA INF LOOP
-
+  const breakpointColumnsObj = {
+    default: 5,
+    1600: 4,
+    1100: 3,
+    719: 2,
+    560: 1,
+  };
   let renderedUploads = "";
   if (uploads) {
     if (!(uploads.length > 0)) {
       renderedUploads = `No uploads tagged with ${params.filteredBy}`;
     } else {
-      const fileObj = (file) => (
-        <div>
-          {/* vraca objekat za svaki fajl */}
-          {console.log(file)}
-          <p>Title: {file.data.name}</p>
-          <img src={file.data.imageURL[0]} alt="" />
-        </div>
-      );
-
-      renderedUploads = <>{uploads.map(fileObj)}</>;
+      renderedUploads = uploads.map((file) => (
+        <img src={file.data.imageURL[0]}></img>
+      ));
     }
   }
 
@@ -54,7 +53,17 @@ function Filtered() {
     <div>
       <h1>Filtered</h1>
       <p>-----PARAMETAR OVDE ---------------</p>
-      {loading ? <h1>Loading</h1> : renderedUploads}
+      {loading ? (
+        <h1>Loading</h1>
+      ) : (
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {renderedUploads}
+        </Masonry>
+      )}
     </div>
   );
 }

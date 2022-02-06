@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase-config";
 import { collection, query, getDocs } from "firebase/firestore";
+import Masonry from "react-masonry-css";
 
 function AllUploads() {
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
-
-  const [reveal, setReveal] = useState(false);
 
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
@@ -23,45 +22,41 @@ function AllUploads() {
       setLoading(false);
     };
     fetchUploads();
-
-    setTimeout(() => {
-      setReveal(true);
-    }, 100);
   }, []);
-
+  const breakpointColumnsObj = {
+    default: 5,
+    1600: 4,
+    1100: 3,
+    719: 2,
+    560: 1,
+  };
   let renderedUploads = "";
 
   if (uploads) {
     if (!(uploads.length > 0)) {
       renderedUploads = "Nothing has been uploaded yet!";
     } else {
-      renderedUploads = (
-        <div className="gallery">
-          {uploads.map((file) => (
-            <div className={`gallery-item-wrapper`}>
-              <div className="gallery-item">
-                <div
-                  className="gallery-item-image sepia"
-                  style={{ backgroundImage: `url(${file.data.imageURL[0]})` }}
-                ></div>
-                {/* <p>Title: {file.data.name}</p> */}
-                <div
-                  className="gallery-item-image masked"
-                  style={{ backgroundImage: `url(${file.data.imageURL[0]})` }}
-                ></div>
-              </div>
-              {/* <img src={file.data.imageURL[0]} alt="" /> */}
-            </div>
-          ))}
-        </div>
-      );
+      renderedUploads = uploads.map((file) => (
+        <img src={file.data.imageURL[0]}></img>
+      ));
     }
   }
 
   return (
     <div>
       <h1>All uploads</h1>
-      {loading ? <h1>Loading</h1> : renderedUploads}
+      {/* {loading ? <h1>Loading</h1> : renderedUploads} */}
+      {loading ? (
+        <h1>Loading</h1>
+      ) : (
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {renderedUploads}
+        </Masonry>
+      )}
     </div>
   );
 }
