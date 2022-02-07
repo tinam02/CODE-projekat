@@ -60,7 +60,7 @@ function Navbar() {
   return (
     <header className="primary-header">
       <div>
-        <img src={logo} alt="logo" className="logo" />
+        <img src={logo} alt="logo" className="logo rotating" />
       </div>
 
       <button
@@ -74,7 +74,7 @@ function Navbar() {
         >
           {/* Ako korisnik nije ulogovan, prikazi sign in i sign up i ne prikazuj link za upload slike */}
           {!user ? null : (
-            <li className="nav-item " onClick={() => navigate("/submit")}>
+            <li className="nav-item" onClick={() => navigate("/submit")}>
               <FontAwesomeIcon
                 className="a"
                 icon={faPlus}

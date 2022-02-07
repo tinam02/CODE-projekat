@@ -44,8 +44,7 @@ function AllUploads() {
 
   return (
     <div>
-      <h1>All uploads</h1>
-      {/* {loading ? <h1>Loading</h1> : renderedUploads} */}
+      <h1>Explore</h1>
       {loading ? (
         <h1>Loading</h1>
       ) : (

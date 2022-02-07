@@ -16,7 +16,7 @@ function HomePage() {
         <h2>Home</h2>
       </header>
       <main>
-        
+        {/* slider? */}
         {/* <Link to="/filtered/digital">
           {" "}
           <FontAwesomeIcon icon={faTablet} size="3x"></FontAwesomeIcon>
@@ -28,7 +28,7 @@ function HomePage() {
           <p>neki tag</p>
         </Link> */}
 
-           {/* sve slike type nebitan */}
+           {/* sve slike */}
            <AllUploads/>
       </main>
     </div>

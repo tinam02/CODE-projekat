@@ -16,7 +16,8 @@
 }
 
 body {
-  background: url(./assets/bg.svg) no-repeat center center fixed;
+  /* background: url(./assets/bg.svg) no-repeat center center fixed; */
+
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -25,7 +26,14 @@ body {
   font-size: 1.2rem;
   letter-spacing: 3px;
   color: rgba(255, 255, 255, 0.568);
-  background-color: rgba(0, 0, 0, 0.323);
+  background-color: black;
+  background: linear-gradient(
+        to top,
+        rgba(245, 167, 0, 0.801),
+        rgba(0, 38, 255, 0.234)
+      )
+      no-repeat center center fixed,
+    url(https://grainy-gradients.vercel.app/noise.svg);
 }
 span {
   white-space: nowrap;
@@ -101,6 +109,32 @@ input:focus {
   width: 70px;
   margin: 2rem clamp(1.5rem, 5vw, 3.5rem);
 }
+
+/* test anim */
+.rotating {
+  -webkit-animation: rotating 2s linear infinite;
+  -moz-animation: rotating 2s linear infinite;
+  -ms-animation: rotating 2s linear infinite;
+  -o-animation: rotating 2s linear infinite;
+  animation: rotating 2s linear infinite;
+}
+@keyframes rotating {
+  from {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  to {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+
 .primary-header {
   display: flex;
   gap: var(--gap, 1rem);
