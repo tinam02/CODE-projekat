@@ -11,7 +11,7 @@ function AllUploads() {
   useEffect(() => {
     const fetchUploads = async () => {
       const q = query(collection(db, "uploads"),orderBy("timestamp"));
-      let uploads = [];
+      const uploads = [];
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
         console.log(doc.id, " => ", doc.data());
@@ -37,7 +37,7 @@ function AllUploads() {
       renderedUploads = "Nothing has been uploaded yet!";
     } else {
       renderedUploads = uploads.map((file) => (
-        <img src={file.data.imageURL[0]}></img>
+        <img src={file.data.imageURL[0]} alt={file.data.description}/>
       ));
     }
   }

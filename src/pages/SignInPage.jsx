@@ -70,10 +70,8 @@ function SignInPage() {
           <span>Sign in </span>
 
           <button className="signInButton">
-            <FontAwesomeIcon
-              icon={faArrowCircleRight}
-              size="2x"
-            ></FontAwesomeIcon>
+            <FontAwesomeIcon icon={faArrowCircleRight}
+            size="2x" />
           </button>
         </div>
         <Link to={"/forgotpass"}>Forgot password?</Link>

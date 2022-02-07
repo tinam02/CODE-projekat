@@ -32,7 +32,11 @@ function SubmitImage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setFormData({ ...formData, userRef: user.uid,    timestamp: serverTimestamp() });
+        setFormData({
+          ...formData,
+          userRef: user.uid,
+          timestamp: serverTimestamp(),
+        });
         // console => components ima uid od korisnika koji je trenutno ulogovan
         console.log(`Useeffect u submitimage korisnik: ${user.displayName}`);
       } else {
@@ -104,7 +108,7 @@ function SubmitImage() {
           }
         );
       });
-   
+
     //array of image urls
     const imageURL = await Promise.all(
       [...formData.imageURL].map((file) => uploadFormFile(file))
