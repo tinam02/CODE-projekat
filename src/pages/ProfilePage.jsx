@@ -80,12 +80,12 @@ function ProfilePage() {
             value={formData.username}
             onChange={onChange}
           />
-          <input
+          {/* <input
             type="email"
             id="email"
             disabled={true}
             value={formData.email}
-          />
+          /> */}
           <input
             type="url"
             name="photoURL"
