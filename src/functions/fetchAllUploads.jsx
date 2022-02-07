@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase-config";
-import { collection, query, getDocs } from "firebase/firestore";
+import { collection, query, getDocs,orderBy } from "firebase/firestore";
 import Masonry from "react-masonry-css";
 
 function AllUploads() {
@@ -10,7 +10,7 @@ function AllUploads() {
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
     const fetchUploads = async () => {
-      const q = query(collection(db, "uploads"));
+      const q = query(collection(db, "uploads"),orderBy("timestamp"));
       let uploads = [];
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {

@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-// usenavigate umesto usehistory jer vise ne postoji
 // AUTH
 import { db } from "../firebase-config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
@@ -12,7 +11,7 @@ import {
   uploadBytesResumable,
   getDownloadURL,
 } from "firebase/storage";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 
 // FORM
 // tutorial za form u reactu
@@ -33,7 +32,7 @@ function SubmitImage() {
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
-        setFormData({ ...formData, userRef: user.uid });
+        setFormData({ ...formData, userRef: user.uid,    timestamp: serverTimestamp() });
         // console => components ima uid od korisnika koji je trenutno ulogovan
         console.log(`Useeffect u submitimage korisnik: ${user.displayName}`);
       } else {
@@ -105,7 +104,7 @@ function SubmitImage() {
           }
         );
       });
-
+   
     //array of image urls
     const imageURL = await Promise.all(
       [...formData.imageURL].map((file) => uploadFormFile(file))
