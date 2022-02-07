@@ -17,6 +17,7 @@ function ProfilePage() {
   const [formData, setFormData] = useState({
     username: auth.currentUser.displayName,
     email: auth.currentUser.email,
+    photoURL: "",
   });
 
   const onLogout = function () {
@@ -30,6 +31,7 @@ function ProfilePage() {
     //https://firebase.google.com/docs/auth/web/manage-users#update_a_users_profile
     updateProfile(auth.currentUser, {
       displayName: formData.username,
+      photoURL: formData.photoURL,
     })
       .then(() => {
         // FireStore
@@ -37,6 +39,7 @@ function ProfilePage() {
         const userRef = doc(db, "users", auth.currentUser.uid);
         updateDoc(userRef, {
           username: formData.username,
+          photoURL: formData.photoURL,
           //! ovde moze da se doda field =>
           // test:'test1234'
           // TODO profilna
@@ -54,9 +57,20 @@ function ProfilePage() {
       [evt.target.id]: evt.target.value,
     });
   };
+  const onRemoveAvatar = function (evt) {
+    updateProfile(auth.currentUser, {
+      photoURL: "",
+    }).then(() => {
+      const userRef = doc(db, "users", auth.currentUser.uid);
+      updateDoc(userRef, {
+        photoURL: "",
+      });
+    });
+  };
   return (
     <>
       <h1>Welcome back, {auth.currentUser.displayName}</h1>
+      <img className="avatar" src={auth.currentUser.photoURL} alt="" />
       <button className="logOutButton" onClick={onLogout}>
         Log out
       </button>
@@ -83,10 +97,24 @@ function ProfilePage() {
           onChange={onChange}
         />
         <input type="email" id="email" disabled={true} value={formData.email} />
+        <div className="change-avatar">
+          {" "}
+          <input
+            type="url"
+            name="photoURL"
+            id="photoURL"
+            value={formData.photoURL}
+            onChange={onChange}
+          />
+          <button className="remove-avatar" onClick={onRemoveAvatar}>
+            Remove avatar
+          </button>
+        </div>
       </div>
 
       <Link to="/submit">
         <p>Submit an image</p>
+
         <FontAwesomeIcon icon={faArrowRight} />
       </Link>
     </>
