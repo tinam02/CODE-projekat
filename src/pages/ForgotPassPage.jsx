@@ -2,6 +2,8 @@ import React from "react";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+//alerts
+import toast, { Toaster } from "react-hot-toast";
 
 function ForgotPasswordPage() {
   const [email, setEmail] = useState("");
@@ -15,21 +17,22 @@ function ForgotPasswordPage() {
     const auth = getAuth();
     sendPasswordResetEmail(auth, email)
       .then(function () {
-        alert("sent");
+        toast.success("An email has been sent!");
       })
       .catch(function (err) {
         if (err.code === "auth/invalid-email") {
-          alert("Invalid email");
+          toast.error("Invalid email");
         } else if (err.code === "auth/user-not-found") {
-          alert("User not found");
+          toast.error("User not found");
         } else {
-          alert(`Failed`);
+          toast.error(`Failed`);
         }
       });
   };
 
   return (
     <div>
+      <Toaster />
       <h1>ForgotPasswordPage</h1>
       <main>
         <form onSubmit={onSubmit}>

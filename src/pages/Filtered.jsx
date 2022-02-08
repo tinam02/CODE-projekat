@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 //  ":" posle / u Route!!
 //useparams jer switch ne radi u ovoj verziji reacta
 import { db } from "../firebase-config";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+} from "firebase/firestore";
 import Masonry from "react-masonry-css";
 
 function Filtered() {
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
   const params = useParams();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchUploads = async () => {
       const q = query(
@@ -25,7 +32,7 @@ function Filtered() {
         return uploads.unshift({ id: doc.id, data: doc.data() });
       });
       setUploads(uploads);
-      console.log(uploads);
+      // console.log(uploads);
       setLoading(false);
     };
     fetchUploads();
@@ -38,13 +45,19 @@ function Filtered() {
     719: 2,
     560: 1,
   };
+  const fetchidk = async () => {
+    const docRef = doc(db, "uploads", this);
+    const querySnapsho = await getDoc(docRef);
+    console.log(querySnapsho.data());
+  };
+
   let renderedUploads = "";
   if (uploads) {
     if (!(uploads.length > 0)) {
       renderedUploads = `No uploads tagged with ${params.filteredBy}`;
     } else {
       renderedUploads = uploads.map((file) => (
-        <img src={file.data.imageURL[0]}></img>
+        <img onClick={fetchidk} src={file.data.imageURL[0]}></img>
       ));
     }
   }

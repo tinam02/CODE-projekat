@@ -10,8 +10,10 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { db } from "../firebase-config";
-
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
+
+//alerts
+import toast, { Toaster } from "react-hot-toast";
 
 function SignUpPage() {
   const navigate = useNavigate();
@@ -60,19 +62,20 @@ function SignUpPage() {
       })
       .catch((err) => {
         if (err.code === "auth/email-already-in-use") {
-          alert("Email already in use");
+          toast.error("Email already in use");
         } else if (err.code === "auth/invalid-email") {
-          alert("Invalid email");
+          toast.error("Invalid email");
         } else if (err.code === "auth/weak-password") {
-          alert("Password should be at least 6 chars");
+          toast.error("Password should be at least 6 chars");
         } else {
-          alert("An unknown error has occured");
+          toast.error("An unknown error has occured");
         }
       });
   };
-  
+
   return (
     <div>
+      <Toaster />
       <h1>SignUpPage</h1>
       <form onSubmit={onSubmit}>
         <input

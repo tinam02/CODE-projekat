@@ -6,6 +6,10 @@ import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 
 //sign in;
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+
+//alerts
+import toast, { Toaster } from "react-hot-toast";
+
 //https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react
 function SignInPage() {
   const navigate = useNavigate();
@@ -32,21 +36,22 @@ function SignInPage() {
       })
       .catch((err) => {
         if (err.code === "auth/wrong-password") {
-          alert("Wrong password");
+          toast.error("Wrong password");
         } else if (err.code === "auth/invalid-email") {
-          alert("Invalid email");
+          toast.error("Invalid email");
         } else if (err.code === "auth/user-not-found") {
-          alert("User not found");
+          toast.error("User not found");
         } else if (err.code === "auth/too-many-requests") {
-          alert("Too many requests. Try again later");
+          toast.error("Too many requests. Try again later");
         } else {
-          console.log(err);
+          toast.error("An unknown error has occured");
         }
       });
   };
 
   return (
     <div>
+      <Toaster />
       <h1>SignInPage</h1>
       <form onSubmit={onSubmit}>
         <input
@@ -70,8 +75,7 @@ function SignInPage() {
           <span>Sign in </span>
 
           <button className="signInButton">
-            <FontAwesomeIcon icon={faArrowCircleRight}
-            size="2x" />
+            <FontAwesomeIcon icon={faArrowCircleRight} size="2x" />
           </button>
         </div>
         <Link to={"/forgotpass"}>Forgot password?</Link>

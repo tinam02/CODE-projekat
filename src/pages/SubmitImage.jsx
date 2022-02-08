@@ -12,7 +12,8 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-
+//alerts
+import toast, { Toaster } from "react-hot-toast";
 // FORM
 // tutorial za form u reactu
 // https://dev.to/jleewebdev/using-the-usestate-hook-and-working-with-forms-in-react-js-m6b
@@ -37,8 +38,7 @@ function SubmitImage() {
           userRef: user.uid,
           timestamp: serverTimestamp(),
         });
-        // console => components ima uid od korisnika koji je trenutno ulogovan
-        console.log(`Useeffect u submitimage korisnik: ${user.displayName}`);
+        // console.log(`Useeffect u submitimage korisnik: ${user.displayName}`);
       } else {
         navigate("/");
       }
@@ -83,7 +83,7 @@ function SubmitImage() {
             // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
             const progress =
               (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            console.log(`Upload is ${progress}% done`);
+            toast(`Upload is ${progress}% done`);
             // eslint-disable-next-line default-case
             switch (snapshot.state) {
               case "paused":
@@ -102,7 +102,6 @@ function SubmitImage() {
             // Handle successful uploads on complete
             // For instance, get the download URL: https://firebasestorage.googleapis.com/...
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-              console.log("File available at", downloadURL);
               resolve(downloadURL);
             });
           }
@@ -136,7 +135,7 @@ function SubmitImage() {
   }
 
   return (
-    <div>
+    <div><Toaster/>
       <h1>Submit image</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="">

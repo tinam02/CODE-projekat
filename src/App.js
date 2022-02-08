@@ -10,6 +10,7 @@ import SubmitImage from "./pages/SubmitImage";
 //components
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ImagePage from "./pages/ImagePage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route path="/forgotpass" element={<ForgotPassPage />}></Route>{" "}
           <Route path="/submit" element={<SubmitImage />}></Route>
           <Route path="/filtered/:filteredBy" element={<Filtered />}></Route>
+          <Route path="/image/:imageID" element={<ImagePage />}></Route>
         </Routes>
       </Router>
     </div>
