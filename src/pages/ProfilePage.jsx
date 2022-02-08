@@ -1,15 +1,26 @@
 import React from "react";
 import { getAuth, updateProfile } from "firebase/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 // change details;
-import { updateDoc, doc } from "firebase/firestore";
+import {
+  updateDoc,
+  doc,
+  getDocs,
+  collection,
+  query,
+  where
+} from "firebase/firestore";
 import { db } from "../firebase-config";
 // icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import Masonry from "react-masonry-css";
+import ScrollToTop from "../components/ScrollToTop";
 
 function ProfilePage() {
+  const [loading, setLoading] = useState(true);
+  const [uploads, setUploads] = useState(null);
   const auth = getAuth();
   const navigate = useNavigate();
   const [changeDetails, setChangeDetails] = useState(false);
@@ -21,6 +32,27 @@ function ProfilePage() {
     email: auth.currentUser.email,
     photoURL: "",
   });
+
+  // get personal uploads
+  useEffect(() => {
+    const getMyUploads = async () => {
+      const q = query(
+        collection(db, "uploads"),
+        where("userRef", "==", auth.currentUser.uid)
+      );
+      const querySnapshot = await getDocs(q);
+      let uploads = [];
+      querySnapshot.forEach((doc) => {
+        return uploads.push({
+          id: doc.id,
+          data: doc.data(),
+        });
+      });
+      setUploads(uploads);
+      setLoading(false);
+    };
+    getMyUploads();
+  }, []);
 
   const onLogout = function () {
     auth.signOut();
@@ -75,74 +107,108 @@ function ProfilePage() {
     // setChangeAvatar(false);
   };
 
+  let myUploads = "";
+  // if(!loading){
+  //   if(uploads.length > 0){
+  //     myUploads = {uploads.map((file) => (
+  //       <li>{file.data.description}</li>
+  //     ))}
+  //   }
+  // }
+  if (!loading) {
+    if (!(uploads.length > 0)) {
+      myUploads = <p className="profile-no-uploads">No uploads</p>;
+    } else {
+      myUploads = uploads.map((file) => (
+        <img src={file.data.imageURL[0]} alt={file.data.description} />
+      ));
+    }
+  }
+  const breakpointColumnsObj = {
+    default: 5,
+    1600: 4,
+    1100: 3,
+    719: 2,
+    560: 1,
+  };
   return (
-    <div id="profile">
-      <h1>Welcome back, {auth.currentUser.displayName}</h1>
-      <div
-        id="avatar"
-        style={{
-          backgroundImage: `url(${
-            auth.currentUser.photoURL
-              ? auth.currentUser.photoURL
-              : defaultAvatar
-          })`,
-        }}
-      ></div>
+    <>
+      <div id="profile">
+        <ScrollToTop />
+        <h1>Welcome back, {auth.currentUser.displayName}</h1>
+        <div
+          id="avatar"
+          style={{
+            backgroundImage: `url(${
+              auth.currentUser.photoURL
+                ? auth.currentUser.photoURL
+                : defaultAvatar
+            })`,
+          }}
+        ></div>
 
-      <div className="editDetailsDiv">
-        <div className="update-details">
-          <input
-            type="text"
-            id="username"
-            disabled={!changeDetails}
-            value={formData.username}
-            onChange={onChange}
-          />
-          {/* <input
-            type="email"
-            id="email"
-            disabled={true}
-            value={formData.email}
-          /> */}
-          <input
-            type="url"
-            name="photoURL"
-            id="photoURL"
-            value={formData.photoURL}
-            disabled={!changeDetails}
-            onChange={onChange}
-            placeholder="Upload avatar from url"
-            required
-          />
-          <p
-            className="detailsText"
-            onClick={async () => {
-              //https://reactjs.org/docs/conditional-rendering.html
-              //true && x je x, a false && x je false
-              changeDetails && onSubmit();
-              // changeDetails = changeDetails || onSubmit();
-              await setChangeDetails((bool) => !bool);
-              document.querySelector("#username").focus();
-            }}
-            // async await da bi fokus radio!
-          >
-            {changeDetails ? "Done" : "Update details"}
-          </p>
-          <p className="reset-avatar detailsText" onClick={onResetAvatar}>
-            Reset avatar
-          </p>
+        <div className="editDetailsDiv">
+          <div className="update-details">
+            <input
+              type="text"
+              id="username"
+              disabled={!changeDetails}
+              value={formData.username}
+              onChange={onChange}
+            />
+            {/* <input
+        type="email"
+        id="email"
+        disabled={true}
+        value={formData.email}
+      /> */}
+            <input
+              type="url"
+              name="photoURL"
+              id="photoURL"
+              value={formData.photoURL}
+              disabled={!changeDetails}
+              onChange={onChange}
+              placeholder="Upload avatar from url"
+              required
+            />
+            <p
+              className="detailsText"
+              onClick={async () => {
+                //https://reactjs.org/docs/conditional-rendering.html
+                //true && x je x, a false && x je false
+                changeDetails && onSubmit();
+                // changeDetails = changeDetails || onSubmit();
+                await setChangeDetails((bool) => !bool);
+                document.querySelector("#username").focus();
+              }}
+              // async await da bi fokus radio!
+            >
+              {changeDetails ? "Done" : "Update details"}
+            </p>
+            <p className="reset-avatar detailsText" onClick={onResetAvatar}>
+              Reset avatar
+            </p>
+          </div>
         </div>
+
+        <Link to="/submit">
+          <p>Submit an image</p>
+          <FontAwesomeIcon icon={faArrowRight} />
+        </Link>
+        <button className="logOutButton" onClick={onLogout}>
+          Log out
+        </button>
       </div>
-
-      <Link to="/submit">
-        <p>Submit an image</p>
-
-        <FontAwesomeIcon icon={faArrowRight} />
-      </Link>
-      <button className="logOutButton" onClick={onLogout}>
-        Log out
-      </button>
-    </div>
+      {/*! ADD MARGIN HERE */}
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="my-masonry-grid"
+        columnClassName="my-masonry-grid_column"
+      >
+        {myUploads}
+      </Masonry>
+    </>
   );
 }
 
