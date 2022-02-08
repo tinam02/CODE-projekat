@@ -57,6 +57,16 @@ button {
   transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
     border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
+.scroll-to-top-button {  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+}
+.scroll-to-top-button_visible {
+  opacity: 1;
+}
+.scroll-to-top-button_hidden {
+  opacity: 0;
+}
 .detailsText {
   font-size: 1.5em;
   text-decoration: underline;
@@ -334,6 +344,7 @@ li {
   max-width: 500px;
   height: auto;
   margin-bottom: 30px;
+  image-rendering: -webkit-optimize-contrast;
 }
 
 /* PROFILE */

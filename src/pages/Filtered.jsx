@@ -51,8 +51,8 @@ function Filtered() {
 
   return (
     <div>
-      <h1>Filtered</h1>
-      <p>-----PARAMETAR OVDE ---------------</p>
+      <h1>#{params.filteredBy}</h1>
+
       {loading ? (
         <h1>Loading</h1>
       ) : (

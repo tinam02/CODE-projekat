@@ -65,7 +65,7 @@ function SubmitImage() {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     console.log(formData);
-    //TODO loading, format name
+    //TODO loading
     //!! storage
     const uploadFormFile = async (file) =>
       new Promise((resolve, reject) => {
