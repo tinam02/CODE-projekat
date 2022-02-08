@@ -17,7 +17,6 @@ import hamburgerclose from "../assets/hamburgerclose.svg";
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-  // const [loggedin, setLoggedIn] = useState(false);
 
   const navIconActive = function (path) {
     if (path === location.pathname) {
@@ -29,21 +28,18 @@ function Navbar() {
   if (auth.currentUser) {
     user = auth.currentUser;
   }
-
   useEffect(() => {
     console.log("using effect");
     handleContentLoaded();
   }, []);
+
   const handleContentLoaded = () => {
-    // style
     const nav = document.querySelector(".primary-navigation");
     const navToggle = document.querySelector(".mobile-nav-toggle");
 
-    //1
     if (navToggle && nav) {
       navToggle.addEventListener("click", () => {
         //if closed open it
-
         const visibility = nav.getAttribute("data-visible");
         if (visibility === "false") {
           nav.setAttribute("data-visible", true);
@@ -52,7 +48,6 @@ function Navbar() {
           nav.setAttribute("data-visible", false);
           navToggle.setAttribute("aria-expanded", false);
         }
-        console.log(visibility);
       });
     }
   };

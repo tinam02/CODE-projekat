@@ -104,6 +104,15 @@ input {
 input:focus {
   box-shadow: rgb(0 0 0 / 72%) 0px 1px 3px, rgba(0, 0, 0, 14) 0px 1px 2px;
 }
+input:disabled {
+  background: #ffffff5b;
+  color: black;
+  cursor: not-allowed;
+}
+input:disabled::selection {
+  cursor: not-allowed;
+  background: rgba(0, 0, 0, 0);
+}
 /* NAVBAR */
 .logo {
   width: 70px;
