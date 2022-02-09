@@ -13,6 +13,8 @@ import {
 } from "firebase/firestore";
 import Masonry from "react-masonry-css";
 
+// todo  update this code
+
 function Filtered() {
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);

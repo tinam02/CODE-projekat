@@ -138,7 +138,7 @@ function SubmitImage() {
     <div><Toaster/>
       <h1>Submit image</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="">
+        <label htmlFor="name">
           Name:
           <input
             type="text"
@@ -149,7 +149,7 @@ function SubmitImage() {
             required
           />
         </label>
-        <label htmlFor="">
+        <label htmlFor="description">
           Description:
           <input
             type="text"
@@ -160,7 +160,7 @@ function SubmitImage() {
             required
           />
         </label>
-        <label htmlFor="">
+        <label htmlFor="type">
           Type
           <input
             type="text"
@@ -170,7 +170,7 @@ function SubmitImage() {
             onChange={handleChangeType}
           />
         </label>
-        <label>
+        <label htmlFor="images">
           Images
           <input
             type="file"
@@ -180,7 +180,7 @@ function SubmitImage() {
             multiple="multiple"
           />
         </label>
-        <label htmlFor="">
+        <label htmlFor="username">
           Username:
           <input value={lockedUsername} disabled />
         </label>

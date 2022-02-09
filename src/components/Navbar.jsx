@@ -7,6 +7,7 @@ import {
   faLock,
   faSignInAlt,
   faPlus,
+  faAtom,
 } from "@fortawesome/free-solid-svg-icons";
 import { getAuth } from "firebase/auth";
 // misc
@@ -92,7 +93,7 @@ function Navbar() {
                   navIconActive("/signin") ? "#fff" : "rgba(255, 255, 255, 0.5)"
                 }
               />
-              <span aria-hidden="true"> Sign In </span>
+              <span aria-hidden="true">Sign In</span>
             </li>
           ) : null}
 
@@ -106,21 +107,21 @@ function Navbar() {
                   navIconActive("/signup") ? "#fff" : "rgba(255, 255, 255, 0.5)"
                 }
               />
-              <span aria-hidden="true"> Sign up </span>
+              <span aria-hidden="true">Sign up</span>
             </li>
           ) : null}
 
           <li className="nav-item " onClick={() => navigate("/")}>
             <FontAwesomeIcon
               className="a"
-              icon={faHome}
+              icon={faAtom}
               size="2x"
               color={navIconActive("/") ? "#fff" : "rgba(255, 255, 255, 0.5)"}
             />
-            <span aria-hidden="true"> Home </span>
+            <span aria-hidden="true">Explore</span>
           </li>
 
-          <li className="navbar-item " onClick={() => navigate("/profile")}>
+          <li className="nav-item " onClick={() => navigate("/profile")}>
             <FontAwesomeIcon
               className="a"
               icon={faUserCircle}

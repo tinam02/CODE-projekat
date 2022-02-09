@@ -37,7 +37,7 @@ function AllUploads() {
       renderedUploads = "Nothing has been uploaded yet!";
     } else {
       renderedUploads = uploads.map((file) => (
-        <img src={file.data.imageURL[0]} alt={file.data.description}/>
+        <img src={file.data.imageURL[0]} alt={file.data.description} key={file.data.imageURL[0]}/>
       ));
     }
   }

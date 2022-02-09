@@ -38,7 +38,7 @@ function ScrollToTop() {
         type="button"
         onClick={scrollToTop}
       >
-        <FontAwesomeIcon icon={faArrowUp} size="2x" color="black" />
+        <FontAwesomeIcon icon={faArrowUp} size="2x" color="#000" />
       </button>
     </div>
   );
