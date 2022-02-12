@@ -1,3 +1,20 @@
+.customCursor {
+  will-change: transform, transition, width, height, top, left;
+  position: fixed;
+  bottom: 10px;
+  left: 10px;display: none;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  mix-blend-mode: difference;
+  width: 20px;
+  height: 20px;z-index: 999999999;
+  border-radius: 50%;
+  pointer-events: none;
+  overflow: hidden;
+  /* animacija za "mouseout", ovo je default */
+  animation: animIdle 0.3s forwards;
+}
+
 ::root {
   --clr-white: 0 0% 100%;
 }
@@ -13,6 +30,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  cursor: none;
+}
+*,html,
+*:hover {
+ 
 }
 /* SCROLLBAR */
 html::-webkit-scrollbar {
@@ -33,11 +55,12 @@ html::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.666);
 }
 html::-webkit-scrollbar-thumb:active {
-  background: rgb(0, 0, 0)
+  background: rgb(0, 0, 0);
 }
+
 body {
   /* background: url(./assets/bg.svg) no-repeat center center fixed; */
-
+height: 100vh;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -62,7 +85,6 @@ span {
 /* INPUT, BUTTONS, LABEL */
 
 button {
-  cursor: pointer;
   outline: 0;
   color: #fff;
   background: transparent;
@@ -93,7 +115,6 @@ button {
   text-decoration: underline;
   display: block;
   margin: 1em;
-  cursor: pointer;
   outline: 0;
   display: inline-block;
   font-weight: 400;
@@ -199,7 +220,6 @@ input:disabled::selection {
   font-weight: 700;
 }
 .primary-navigation > * {
-  cursor: pointer;
   padding: 1rem 2rem;
   border: 0;
 }
@@ -354,4 +374,24 @@ li {
 .update-details {
   display: flex;
   flex-direction: column;
+}
+
+@keyframes animHover {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(5);
+  }
+}
+
+@keyframes animIdle {
+  0% {
+    transform: scale(5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
 }

@@ -47,10 +47,10 @@ function Filtered() {
     719: 2,
     560: 1,
   };
-  const fetchidk = async () => {
+  const fetchFilter = async () => {
     const docRef = doc(db, "uploads", this);
-    const querySnapsho = await getDoc(docRef);
-    console.log(querySnapsho.data());
+    const querySnapshot = await getDoc(docRef);
+    console.log(querySnapshot.data());
   };
 
   let renderedUploads = "";
@@ -59,7 +59,7 @@ function Filtered() {
       renderedUploads = `No uploads tagged with ${params.filteredBy}`;
     } else {
       renderedUploads = uploads.map((file) => (
-        <img onClick={fetchidk} src={file.data.imageURL[0]}></img>
+        <img onClick={fetchFilter} src={file.data.imageURL[0]}></img>
       ));
     }
   }

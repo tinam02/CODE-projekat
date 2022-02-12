@@ -14,11 +14,11 @@ function AllUploads() {
       const uploads = [];
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
+        // console.log(doc.id, " => ", doc.data());
         uploads.unshift({ id: doc.id, data: doc.data() });
       });
       setUploads(uploads);
-      console.log(uploads);
+      // console.log(uploads);
       setLoading(false);
     };
     fetchUploads();

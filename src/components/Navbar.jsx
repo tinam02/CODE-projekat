@@ -32,6 +32,7 @@ function Navbar() {
   useEffect(() => {
     console.log("using effect");
     handleContentLoaded();
+  
   }, []);
 
   const handleContentLoaded = () => {
@@ -54,87 +55,98 @@ function Navbar() {
   };
 
   return (
-    <header className="primary-header">
-      <div>
-        <img src={logo} alt="logo" className="logo rotating" />
-      </div>
+    <>
+      <header className="primary-header">
+        <div>
+          <img src={logo} alt="logo" className="logo rotating" />
+        </div>
 
-      <button
-        className="mobile-nav-toggle"
-        aria-controls="primary-navigation"
-      />
-      <nav>
-        <ul
-          data-visible="false"
-          className="primary-navigation underline-indicators flex"
-        >
-          {/* Ako korisnik nije ulogovan, prikazi sign in i sign up i ne prikazuj link za upload slike */}
-          {!user ? null : (
-            <li className="nav-item" onClick={() => navigate("/submit")}>
+        <button
+          className="mobile-nav-toggle"
+          aria-controls="primary-navigation"
+        />
+        <nav>
+          <ul
+            data-visible="false"
+            className="primary-navigation underline-indicators flex"
+          >
+            {/* Ako korisnik nije ulogovan, prikazi sign in i sign up i ne prikazuj link za upload slike */}
+            {!user ? null : (
+              <li className="nav-item" onClick={() => navigate("/submit")}>
+                <FontAwesomeIcon
+                  className="a"
+                  icon={faPlus}
+                  size="2x"
+                  color={
+                    navIconActive("/submit")
+                      ? "#fff"
+                      : "rgba(255, 255, 255, 0.5)"
+                  }
+                />
+                <span aria-hidden="true"> Submit</span>
+              </li>
+            )}
+
+            {!user ? (
+              <li className="nav-item " onClick={() => navigate("/signin")}>
+                <FontAwesomeIcon
+                  className="a"
+                  icon={faSignInAlt}
+                  size="2x"
+                  color={
+                    navIconActive("/signin")
+                      ? "#fff"
+                      : "rgba(255, 255, 255, 0.5)"
+                  }
+                />
+                <span aria-hidden="true">Sign In</span>
+              </li>
+            ) : null}
+
+            {!user ? (
+              <li className="nav-item " onClick={() => navigate("/signup")}>
+                <FontAwesomeIcon
+                  className="a"
+                  icon={faLock}
+                  size="2x"
+                  color={
+                    navIconActive("/signup")
+                      ? "#fff"
+                      : "rgba(255, 255, 255, 0.5)"
+                  }
+                />
+                <span aria-hidden="true">Sign up</span>
+              </li>
+            ) : null}
+
+            <li className="nav-item " onClick={() => navigate("/")}>
               <FontAwesomeIcon
                 className="a"
-                icon={faPlus}
+                icon={faAtom}
                 size="2x"
-                color={
-                  navIconActive("/submit") ? "#fff" : "rgba(255, 255, 255, 0.5)"
-                }
+                color={navIconActive("/") ? "#fff" : "rgba(255, 255, 255, 0.5)"}
               />
-              <span aria-hidden="true"> Submit</span>
+              <span aria-hidden="true">Explore</span>
             </li>
-          )}
 
-          {!user ? (
-            <li className="nav-item " onClick={() => navigate("/signin")}>
+            <li className="nav-item " onClick={() => navigate("/profile")}>
               <FontAwesomeIcon
                 className="a"
-                icon={faSignInAlt}
+                icon={faUserCircle}
                 size="2x"
                 color={
-                  navIconActive("/signin") ? "#fff" : "rgba(255, 255, 255, 0.5)"
+                  navIconActive("/profile")
+                    ? "#fff"
+                    : "rgba(255, 255, 255, 0.5)"
                 }
               />
-              <span aria-hidden="true">Sign In</span>
+              <span aria-hidden="true">Profile</span>
             </li>
-          ) : null}
-
-          {!user ? (
-            <li className="nav-item " onClick={() => navigate("/signup")}>
-              <FontAwesomeIcon
-                className="a"
-                icon={faLock}
-                size="2x"
-                color={
-                  navIconActive("/signup") ? "#fff" : "rgba(255, 255, 255, 0.5)"
-                }
-              />
-              <span aria-hidden="true">Sign up</span>
-            </li>
-          ) : null}
-
-          <li className="nav-item " onClick={() => navigate("/")}>
-            <FontAwesomeIcon
-              className="a"
-              icon={faAtom}
-              size="2x"
-              color={navIconActive("/") ? "#fff" : "rgba(255, 255, 255, 0.5)"}
-            />
-            <span aria-hidden="true">Explore</span>
-          </li>
-
-          <li className="nav-item " onClick={() => navigate("/profile")}>
-            <FontAwesomeIcon
-              className="a"
-              icon={faUserCircle}
-              size="2x"
-              color={
-                navIconActive("/profile") ? "#fff" : "rgba(255, 255, 255, 0.5)"
-              }
-            />
-            <span aria-hidden="true">Profile</span>
-          </li>
-        </ul>
-      </nav>
-    </header>
+          </ul>
+        </nav>
+      </header>
+     
+    </>
   );
 }
 

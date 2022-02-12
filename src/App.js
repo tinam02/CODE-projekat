@@ -11,12 +11,13 @@ import SubmitImage from "./pages/SubmitImage";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ImagePage from "./pages/ImagePage";
-
+import { useEffect } from "react";
+import Cursor from "./components/Cursor";
 function App() {
   return (
-    <div className="App">
+    <>
       <Router>
-        {" "}
+        <Cursor />
         <Navbar />
         <Routes>
           <Route path="/" element={<HomePage />}></Route>{" "}
@@ -32,7 +33,7 @@ function App() {
           <Route path="/image/:imageID" element={<ImagePage />}></Route>
         </Routes>
       </Router>
-    </div>
+    </>
   );
 }
 
