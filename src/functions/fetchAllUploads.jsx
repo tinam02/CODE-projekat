@@ -1,28 +1,65 @@
 import React, { useState, useEffect } from "react";
 import { db } from "../firebase-config";
-import { collection, query, getDocs,orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  getDocs,
+  orderBy,
+  limit,
+  startAfter,
+} from "firebase/firestore";
 import Masonry from "react-masonry-css";
 
 function AllUploads() {
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
+  const [lastUpload, setLastUpload] = useState(null);
 
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
-    const fetchUploads = async () => {
-      const q = query(collection(db, "uploads"),orderBy("timestamp"));
-      const uploads = [];
-      const querySnapshot = await getDocs(q);
-      querySnapshot.forEach((doc) => {
-        // console.log(doc.id, " => ", doc.data());
-        uploads.unshift({ id: doc.id, data: doc.data() });
-      });
-      setUploads(uploads);
-      // console.log(uploads);
-      setLoading(false);
-    };
     fetchUploads();
   }, []);
+  const fetchUploads = async () => {
+    const q = query(
+      collection(db, "uploads"),
+      orderBy("timestamp", "desc"),
+      limit(30)
+    );
+    const uploads = [];
+    const querySnapshot = await getDocs(q);
+
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+    setLastUpload(lastVisible);
+
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.id, " => ", doc.data());
+      uploads.push({ id: doc.id, data: doc.data() });
+    });
+    setUploads(uploads);
+    setLoading(false);
+  };
+  //pagination
+  const loadMore = async () => {
+    const q = query(
+      collection(db, "uploads"),
+      orderBy("timestamp", "desc"),
+      limit(10),
+      startAfter(lastUpload)
+    );
+    const uploads = [];
+    const querySnapshot = await getDocs(q);
+
+    const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+    setLastUpload(lastVisible);
+
+    querySnapshot.forEach((doc) => {
+      // console.log(doc.id, " => ", doc.data());
+      uploads.push({ id: doc.id, data: doc.data() });
+    });
+    setUploads((prevstate) => [...prevstate, ...uploads]);
+    setLoading(false);
+  };
+
   const breakpointColumnsObj = {
     default: 5,
     1600: 4,
@@ -37,13 +74,20 @@ function AllUploads() {
       renderedUploads = "Nothing has been uploaded yet!";
     } else {
       renderedUploads = uploads.map((file) => (
-        <img src={file.data.imageURL[0]} alt={file.data.description} key={file.data.imageURL[0]}/>
+        <img
+          onClick={() => {
+            console.log(new Date(file.data.timestamp.seconds * 1000));
+          }}
+          src={file.data.imageURL[0]}
+          alt={file.data.description}
+          key={file.data.imageURL[0]}
+        />
       ));
     }
   }
 
   return (
-    <div>
+    <main>
       <h1>Explore</h1>
       {loading ? (
         <h1>Loading</h1>
@@ -56,7 +100,9 @@ function AllUploads() {
           {renderedUploads}
         </Masonry>
       )}
-    </div>
+  
+      {lastUpload && <button onClick={loadMore}> Load more</button>}
+    </main>
   );
 }
 

@@ -18,7 +18,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import Masonry from "react-masonry-css";
 import ScrollToTop from "../components/ScrollToTop";
-import { async } from "@firebase/util";
 
 function ProfilePage() {
   const [loading, setLoading] = useState(true);
@@ -35,8 +34,6 @@ function ProfilePage() {
     photoURL: "",
   });
 
-  
-
   // get personal uploads
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
@@ -46,21 +43,19 @@ function ProfilePage() {
         where("userRef", "==", auth.currentUser.uid)
       );
       const querySnapshot = await getDocs(q);
-      let uploads = [];
-      querySnapshot.forEach((doc) => {
-        // console.log(doc.id);
-        // console.log(doc.data());
-        return uploads.push({
+      const uploads = [];
+      querySnapshot.forEach((doc) =>
+        uploads.push({
           id: doc.id,
           data: doc.data(),
-        });
-      });
+        })
+      );
       // console.log(uploads);
       setUploads(uploads);
       setLoading(false);
     };
     getMyUploads();
-  }, []);
+  }, [auth.currentUser.uid]);
 
   const onLogout = function () {
     auth.signOut();
@@ -114,31 +109,29 @@ function ProfilePage() {
     });
     // setChangeAvatar(false);
   };
-// delete
-const deleteImg = async (id) => {
-  const userDoc = doc(db, "uploads", id);
-  await deleteDoc(userDoc);
-  const updated = uploads.filter((file)=> file.id !== id);
-  setUploads(updated)
-};
+  // delete
+  const deleteImg = async (id) => {
+    const userDoc = doc(db, "uploads", id);
+    await deleteDoc(userDoc);
+    const updated = uploads.filter((file) => file.id !== id);
+    setUploads(updated);
+  };
 
   let myUploads = "";
   if (!loading) {
     if (!(uploads.length > 0)) {
       myUploads = <p className="profile-no-uploads">No uploads</p>;
     } else {
-      myUploads = uploads.map((file) => {
-        return (
-          <img
-            src={file.data.imageURL[0]}
-            alt={file.data.description}
-            key={file.data.imageURL[0]}
-            onClick={(evt) => {
-              deleteImg(file.id);
-            }}
-          />
-        );
-      });
+      myUploads = uploads.map((file) => (
+        <img
+          src={file.data.imageURL[0]}
+          alt={file.data.description}
+          key={file.data.imageURL[0]}
+          onClick={(evt) => {
+            deleteImg(file.id);
+          }}
+        />
+      ));
     }
   }
 
@@ -163,7 +156,7 @@ const deleteImg = async (id) => {
                 : defaultAvatar
             })`,
           }}
-        ></div>
+        />
 
         <div className="editDetailsDiv">
           <div className="update-details">

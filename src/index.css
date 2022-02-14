@@ -2,12 +2,14 @@
   will-change: transform, transition, width, height, top, left;
   position: fixed;
   bottom: 10px;
-  left: 10px;display: none;
+  left: 10px;
+  display: none;
   transform: translate(-50%, -50%);
   background-color: #fff;
   mix-blend-mode: difference;
   width: 20px;
-  height: 20px;z-index: 999999999;
+  height: 20px;
+  z-index: 999999999;
   border-radius: 50%;
   pointer-events: none;
   overflow: hidden;
@@ -32,9 +34,9 @@
   padding: 0;
   cursor: none;
 }
-*,html,
+*,
+html,
 *:hover {
- 
 }
 /* SCROLLBAR */
 html::-webkit-scrollbar {
@@ -60,7 +62,7 @@ html::-webkit-scrollbar-thumb:active {
 
 body {
   /* background: url(./assets/bg.svg) no-repeat center center fixed; */
-height: 100vh;
+  height: 100vh;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -70,13 +72,20 @@ height: 100vh;
   letter-spacing: 3px;
   color: rgba(255, 255, 255, 0.568);
   background-color: black;
-  background: linear-gradient(
+  /* background: linear-gradient(
         to top,
         rgba(245, 167, 0, 0.801),
         rgba(0, 38, 255, 0.234)
       )
       no-repeat center center fixed,
-    url(https://grainy-gradients.vercel.app/noise.svg);
+    url(https://grainy-gradients.vercel.app/noise.svg); */
+    background: linear-gradient(
+      to top,
+      rgba(0, 134, 167, 0.905),
+      rgba(88, 0, 189, 0.419)
+    )
+    no-repeat center center fixed,
+  url('../src/assets/noise.svg');
 }
 span {
   white-space: nowrap;
@@ -166,7 +175,8 @@ input:disabled::selection {
   background: rgba(0, 0, 0, 0);
 }
 /* NAVBAR */
-.logo {
+.logo {user-select: none;
+  pointer-events: none;
   width: 70px;
   margin: 2rem clamp(1.5rem, 5vw, 3.5rem);
 }
@@ -244,7 +254,7 @@ input:disabled::selection {
     flex-direction: column;
     transform: translateX(100%);
     border-radius: 5px 0 0 5px;
-    transition: transform 400ms ease-in-out;
+    transition: transform 400ms cubic-bezier(1, 0, 0, 1);
   }
   .primary-navigation[data-visible="true"] {
     transform: translateX(0);

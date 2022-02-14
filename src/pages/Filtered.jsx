@@ -59,7 +59,7 @@ function Filtered() {
       renderedUploads = `No uploads tagged with ${params.filteredBy}`;
     } else {
       renderedUploads = uploads.map((file) => (
-        <img onClick={fetchFilter} src={file.data.imageURL[0]}></img>
+        <img onClick={fetchFilter} src={file.data.imageURL[0]} />
       ));
     }
   }

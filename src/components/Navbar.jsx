@@ -55,7 +55,7 @@ function Navbar() {
   };
 
   return (
-    <>
+    
       <header className="primary-header">
         <div>
           <img src={logo} alt="logo" className="logo rotating" />
@@ -104,7 +104,7 @@ function Navbar() {
             ) : null}
 
             {!user ? (
-              <li className="nav-item " onClick={() => navigate("/signup")}>
+              <li className="nav-item" onClick={() => navigate("/signup")}>
                 <FontAwesomeIcon
                   className="a"
                   icon={faLock}
@@ -145,8 +145,6 @@ function Navbar() {
           </ul>
         </nav>
       </header>
-     
-    </>
   );
 }
 

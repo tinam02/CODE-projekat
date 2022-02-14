@@ -49,7 +49,8 @@ https://stackoverflow.com/questions/2932754/ternary-operators-in-javascript-with
 https://www.oreilly.com/library/view/high-performance-javascript/9781449382308/ch04.html#if-else_versus_switch
 https://www.npmjs.com/package/react-if-elseif-else-render
 
-
+//push vs unshift;
+https://stackoverflow.com/questions/44031591/performance-of-array-push-vs-array-unshift
 
 **STYLE**
 https://www.npmjs.com/package/react-masonry-css

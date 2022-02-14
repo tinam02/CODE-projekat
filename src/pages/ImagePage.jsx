@@ -21,7 +21,7 @@ function ImagePage() {
       }
     };
     fetchListing();
-  }, []);
+  }, [params.imageID]);
 
   return loading ? (
     <h1>Loading</h1>
