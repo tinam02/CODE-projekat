@@ -417,3 +417,12 @@ li {
 .hide {
   opacity: 0;
 }
+
+.openModalBtn {
+  width: 200px;
+  height: 40px;
+  border: none;
+  border-radius: 5px;
+  background-color: cornflowerblue;
+  color: white;
+}

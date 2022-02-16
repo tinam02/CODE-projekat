@@ -12,8 +12,8 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase-config";
 
-const auth = getAuth();
 const useFb = () => {
+  const auth = getAuth();
   const [formData, setFormData] = useState({
     username: auth.currentUser.displayName,
     email: auth.currentUser.email,
@@ -81,6 +81,8 @@ const useFb = () => {
       });
     setChangeAvatar(false);
   };
+
+
 
   return {
     formData,

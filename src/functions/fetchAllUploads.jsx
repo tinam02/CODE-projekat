@@ -10,12 +10,18 @@ import {
 } from "firebase/firestore";
 import Masonry from "react-masonry-css";
 import { motion, AnimatePresence } from "framer-motion";
+import Modal from "../components/Modal";
 
 function AllUploads() {
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
   const [lastUpload, setLastUpload] = useState(null);
-
+  const [openModal, setOpenModal] = useState(false);
+  const [modalId, setModalId] = useState({
+    src: "",
+    desc: "",
+    name: "",
+  });
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
     fetchUploads();
@@ -87,16 +93,21 @@ function AllUploads() {
               initial={{ opacity: 0, y: 200 }}
               key={file.data.imageURL[0]}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={transition} 
-              
+              transition={transition}
               onClick={() => {
-                console.log(new Date(file.data.timestamp.seconds * 1000));
+                setOpenModal(true);
+                setModalId({
+                  // ...modalId,
+                  src: file.data.imageURL[0],
+                  desc: file.data.description,
+                  name: file.data.name,
+                });
               }}
               src={file.data.imageURL[0]}
               alt={file.data.description}
             />
           )))
-        }{" "}
+        }
       </AnimatePresence>;
     }
   }
@@ -107,16 +118,25 @@ function AllUploads() {
       {loading ? (
         <h1>Loading</h1>
       ) : (
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          {renderedUploads}
-        </Masonry>
+        <>
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {renderedUploads}
+          </Masonry>
+          {lastUpload && <button onClick={loadMore}> Load more</button>}
+          {openModal && (
+            <Modal
+              closeModal={setOpenModal}
+              imgSrc={modalId.src}
+              imgDesc={modalId.desc}
+              imgTitle={modalId.title}
+            />
+          )}
+        </>
       )}
-
-      {lastUpload && <button onClick={loadMore}> Load more</button>}
     </main>
   );
 }
