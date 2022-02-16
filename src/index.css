@@ -36,7 +36,14 @@
 }
 *,
 html,
-*:hover {
+*:hover,
+input,
+select,
+textarea,
+input[type="text"],
+input[type="file"],
+input[type="file"]::file-selector-button {
+  cursor: none;
 }
 /* SCROLLBAR */
 html::-webkit-scrollbar {
@@ -79,13 +86,13 @@ body {
       )
       no-repeat center center fixed,
     url(https://grainy-gradients.vercel.app/noise.svg); */
-    background: linear-gradient(
-      to top,
-      rgba(0, 134, 167, 0.905),
-      rgba(88, 0, 189, 0.419)
-    )
-    no-repeat center center fixed,
-  url('../src/assets/noise.svg');
+  background: linear-gradient(
+        to top,
+        rgba(0, 134, 167, 0.905),
+        rgba(88, 0, 189, 0.419)
+      )
+      no-repeat center center fixed,
+    url("../src/assets/noise.svg");
 }
 span {
   white-space: nowrap;
@@ -175,7 +182,8 @@ input:disabled::selection {
   background: rgba(0, 0, 0, 0);
 }
 /* NAVBAR */
-.logo {user-select: none;
+.logo {
+  user-select: none;
   pointer-events: none;
   width: 70px;
   margin: 2rem clamp(1.5rem, 5vw, 3.5rem);
@@ -341,11 +349,11 @@ li {
 
 /* MASONRY */
 .my-masonry-grid {
-  /* Not needed if autoprefixing */
   display: flex;
   margin-left: -30px; /* gutter size offset */
   width: auto;
 }
+
 .my-masonry-grid_column {
   padding-left: 30px; /* gutter size */
   background-clip: padding-box;
@@ -404,4 +412,8 @@ li {
   100% {
     transform: scale(1);
   }
+}
+
+.hide {
+  opacity: 0;
 }

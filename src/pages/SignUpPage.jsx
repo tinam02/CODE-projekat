@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
-
+//todo regex
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -40,9 +40,8 @@ function SignUpPage() {
         const user = userCredential.user;
         // za username
         updateProfile(auth.currentUser, {
-          //!!
           displayName: username,
-          // photoURL: "https://example.com/jane-q-user/profile.jpg"
+         
         })
           .then(() => {
             console.log(`Welcome, ${username}`);

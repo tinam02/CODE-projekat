@@ -9,6 +9,7 @@ import {
   startAfter,
 } from "firebase/firestore";
 import Masonry from "react-masonry-css";
+import { motion, AnimatePresence } from "framer-motion";
 
 function AllUploads() {
   const [loading, setLoading] = useState(true);
@@ -19,6 +20,7 @@ function AllUploads() {
   useEffect(() => {
     fetchUploads();
   }, []);
+
   const fetchUploads = async () => {
     const q = query(
       collection(db, "uploads"),
@@ -38,6 +40,7 @@ function AllUploads() {
     setUploads(uploads);
     setLoading(false);
   };
+
   //pagination
   const loadMore = async () => {
     const q = query(
@@ -68,21 +71,33 @@ function AllUploads() {
     560: 1,
   };
   let renderedUploads = "";
+  const transition = {
+    duration: 0.6,
+    ease: [0.6, 0.01, -0.05, 0.9],
+  };
 
   if (uploads) {
     if (!(uploads.length > 0)) {
       renderedUploads = "Nothing has been uploaded yet!";
     } else {
-      renderedUploads = uploads.map((file) => (
-        <img
-          onClick={() => {
-            console.log(new Date(file.data.timestamp.seconds * 1000));
-          }}
-          src={file.data.imageURL[0]}
-          alt={file.data.description}
-          key={file.data.imageURL[0]}
-        />
-      ));
+      <AnimatePresence>
+        {
+          (renderedUploads = uploads.map((file) => (
+            <motion.img
+              initial={{ opacity: 0, y: 200 }}
+              key={file.data.imageURL[0]}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={transition} 
+              
+              onClick={() => {
+                console.log(new Date(file.data.timestamp.seconds * 1000));
+              }}
+              src={file.data.imageURL[0]}
+              alt={file.data.description}
+            />
+          )))
+        }{" "}
+      </AnimatePresence>;
     }
   }
 
@@ -100,7 +115,7 @@ function AllUploads() {
           {renderedUploads}
         </Masonry>
       )}
-  
+
       {lastUpload && <button onClick={loadMore}> Load more</button>}
     </main>
   );

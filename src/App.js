@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 //pages
 import HomePage from "./pages/HomePage";
 import ProfilePage from "./pages/ProfilePage";
@@ -11,28 +16,30 @@ import SubmitImage from "./pages/SubmitImage";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ImagePage from "./pages/ImagePage";
-import { useEffect } from "react";
 import Cursor from "./components/Cursor";
+import { AnimatePresence, motion } from "framer-motion";
+
 function App() {
+  const location = useLocation();
   return (
     <>
-      <Router>
-        <Cursor />
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<HomePage />}></Route>{" "}
-          <Route path="/signup" element={<SignUpPage />}></Route>
-          <Route path="/signin" element={<SignInPage />}></Route>{" "}
-          <Route path="/profile" element={<ProtectedRoute />}>
-            <Route path="/profile" element={<ProfilePage />}></Route>
+      <Cursor />
+      <Navbar />
+      <AnimatePresence exitBeforeEnter >
+        <Routes location={location} key={location.pathname}>
+          <Route key={location.pathname}path="/" element={<HomePage />}></Route>{" "}
+          <Route key={location.pathname} path="/signup" element={<SignUpPage />}></Route>
+          <Route key={location.pathname} path="/signin" element={<SignInPage />}></Route>{" "}
+          <Route key={location.pathname} path="/profile" element={<ProtectedRoute />}>
+            <Route key={location.pathname}path="/profile" element={<ProfilePage />}></Route>
             {/* ovo je outlet */}
           </Route>
-          <Route path="/forgotpass" element={<ForgotPassPage />}></Route>{" "}
-          <Route path="/submit" element={<SubmitImage />}></Route>
-          <Route path="/filtered/:filteredBy" element={<Filtered />}></Route>
-          <Route path="/image/:imageID" element={<ImagePage />}></Route>
+          <Route key={location.pathname}path="/forgotpass" element={<ForgotPassPage />}></Route>{" "}
+          <Route key={location.pathname} path="/submit" element={<SubmitImage />}></Route>
+          <Route key={location.pathname}path="/filtered/:filteredBy" element={<Filtered />}></Route>
+          <Route key={location.pathname} path="/image/:imageID" element={<ImagePage />}></Route>
         </Routes>
-      </Router>
+      </AnimatePresence>
     </>
   );
 }

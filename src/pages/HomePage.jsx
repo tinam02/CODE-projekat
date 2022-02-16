@@ -8,10 +8,16 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import AllUploads from "../functions/fetchAllUploads";
 import ScrollToTop from "../components/ScrollToTop";
-
+import { motion, AnimatePresence } from "framer-motion";
 function HomePage() {
+  const transition = { duration: 0.6, ease: [0.6, 0.01, -0.05, 0.9] };
   return (
-    <div>
+    <motion.div 
+      transition={transition}
+      animate={{ opacity: 1,  }}
+      exit={{ opacity: 0 }}
+    
+    >
       <header>
         <h2>Home</h2>
       </header>
@@ -32,7 +38,7 @@ function HomePage() {
         <AllUploads />
       </main>
       <ScrollToTop />
-    </div>
+    </motion.div>
   );
 }
 

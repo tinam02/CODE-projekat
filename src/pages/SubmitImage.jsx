@@ -21,8 +21,6 @@ function SubmitImage() {
   const auth = getAuth();
   const navigate = useNavigate();
 
-  //TODO add loading state
-
   const [formData, setFormData] = useState({
     name: "",
     description: "",
@@ -65,13 +63,12 @@ function SubmitImage() {
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     console.log(formData);
-    //TODO loading
     //!! storage
     const uploadFormFile = async (file) =>
       new Promise((resolve, reject) => {
         const storage = getStorage();
         const fileName = `${auth.currentUser.uid}-${Math.floor(
-          Math.random() * 10000
+          Math.random() * 100000
         )}-${file.name}`;
         const storageRef = ref(storage, `images/${fileName}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -135,7 +132,8 @@ function SubmitImage() {
   }
 
   return (
-    <div><Toaster/>
+    <div>
+      <Toaster />
       <h1>Submit image</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
