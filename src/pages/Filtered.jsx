@@ -12,6 +12,7 @@ import {
   doc,
 } from "firebase/firestore";
 import Masonry from "react-masonry-css";
+import Loading from "../components/Loading";
 
 // todo  update this code
 
@@ -69,7 +70,7 @@ function Filtered() {
       <h1>#{params.filteredBy}</h1>
 
       {loading ? (
-        <h1>Loading</h1>
+      <Loading/>
       ) : (
         <Masonry
           breakpointCols={breakpointColumnsObj}

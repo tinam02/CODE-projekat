@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import { getAuth } from "firebase/auth";
+// misc
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faHome,
@@ -9,8 +11,6 @@ import {
   faPlus,
   faAtom,
 } from "@fortawesome/free-solid-svg-icons";
-import { getAuth } from "firebase/auth";
-// misc
 import logo from "../assets/logo2.svg";
 import hamburger from "../assets/hamburger.svg";
 import hamburgerclose from "../assets/hamburgerclose.svg";

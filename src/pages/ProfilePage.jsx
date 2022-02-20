@@ -7,6 +7,7 @@ import {
   collection,
   query,
   where,
+  orderBy,
   deleteDoc,
 } from "firebase/firestore";
 import { db } from "../firebase-config";
@@ -43,7 +44,8 @@ function ProfilePage() {
     const getMyUploads = async () => {
       const q = query(
         collection(db, "uploads"),
-        where("userRef", "==", auth.currentUser.uid)
+        where("userRef", "==", auth.currentUser.uid),
+        orderBy("timestamp", "desc")
       );
       const querySnapshot = await getDocs(q);
       const uploads = [];
@@ -72,17 +74,17 @@ function ProfilePage() {
     if (!(uploads.length > 0)) {
       myUploads = <p className="profile-no-uploads">No uploads</p>;
     } else {
-      <AnimatePresence initial={{ opacity: 0 }} exitBeforeEnter={true}>
+      <AnimatePresence exitBeforeEnter>
         {
           (myUploads = uploads.map((file) => (
             <motion.img
               src={file.data.imageURL[0]}
               key={file.data.imageURL[0]}
               initial={{ opacity: 0, y: 200 }}
+              variants={imageVariants}
               transition={transition}
-              whileTap={{ scale: 1.1 }}
               whileInView={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.4 }}
+              exit="exit"
               alt={file.data.description}
               onClick={(evt) => {
                 deleteImg(file.id);

@@ -1,8 +1,6 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 //todo regex
 import {
   getAuth,
@@ -11,8 +9,9 @@ import {
 } from "firebase/auth";
 import { db } from "../firebase-config";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
-
-//alerts
+//misc
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 
 function SignUpPage() {

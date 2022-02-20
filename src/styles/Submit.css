@@ -1,0 +1,36 @@
+form {
+  padding: 1.5rem 2rem;
+  background: hsl(0, 0%, 100%);
+  color: hsl(0, 0%, 10%);
+  max-width: 300px;
+  width: 95vw;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 1px 10px -8px currentColor;
+}
+form > * + * {
+  margin-top: 0.5rem;
+}
+form label {
+  display: block;
+  font-weight: 700;
+}
+form input {
+  padding: 0.5rem;
+  border: 2px solid currentColor;
+  background: none;
+  font-size: 1rem;
+  font-family: inherit;
+  color: inherit;
+  outline: none;
+}
+form button {
+  background: hsl(0, 0%, 10%);
+  border: none;
+  color: hsl(0, 0%, 100%);
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  font-family: inherit;
+  padding: 0.5rem 1rem;
+}
+

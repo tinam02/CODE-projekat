@@ -4,7 +4,6 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 function ScrollToTop() {
   const [isVisible, setVisibility] = useState();
-
   const toggleVisibility = () => {
     if (window.pageYOffset > 300) {
       setVisibility(true);
@@ -26,7 +25,7 @@ function ScrollToTop() {
       window.removeEventListener("scroll", toggleVisibility);
     };
   }, []);
-  
+
   return (
     <div className="scroll-to-top-button">
       <button

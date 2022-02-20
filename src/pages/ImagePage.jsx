@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { db } from "../firebase-config";
 import { getDoc, doc } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
+import Loading from "../components/Loading";
 
 function ImagePage() {
   const [listing, setListing] = useState(null);
@@ -24,7 +25,7 @@ function ImagePage() {
   }, [params.imageID]);
 
   return loading ? (
-    <h1>Loading</h1>
+    <Loading />
   ) : (
     <div>
       <h1>Image</h1>

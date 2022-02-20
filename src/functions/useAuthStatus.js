@@ -1,5 +1,5 @@
 // https://stackoverflow.com/questions/65505665/protected-route-with-firebase
-import React,{ useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getAuth, onAuthStateChanged } from "firebase/auth"; //https://firebase.google.com/docs/reference/js/v8/firebase.auth.Auth#onauthstatechanged
 
 export const useAuthStatus = () => {

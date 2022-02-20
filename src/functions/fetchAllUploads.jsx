@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { db } from "../firebase-config";
 import {
   collection,
@@ -8,9 +9,10 @@ import {
   limit,
   startAfter,
 } from "firebase/firestore";
+import Modal from "../components/Modal";
 import Masonry from "react-masonry-css";
 import { motion, AnimatePresence } from "framer-motion";
-import Modal from "../components/Modal";
+import Loading from "../components/Loading";
 
 function AllUploads() {
   const [loading, setLoading] = useState(true);
@@ -22,6 +24,7 @@ function AllUploads() {
     desc: "",
     name: "",
   });
+  const [tags, setTags] = useState(null);
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
     fetchUploads();
@@ -34,15 +37,23 @@ function AllUploads() {
       limit(30)
     );
     const uploads = [];
+    const tagsObjects = [];
     const querySnapshot = await getDocs(q);
-
     const lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
     setLastUpload(lastVisible);
 
     querySnapshot.forEach((doc) => {
       // console.log(doc.id, " => ", doc.data());
+      // array objekata
       uploads.push({ id: doc.id, data: doc.data() });
+      tagsObjects.push({ data: doc.data().type });
     });
+    // izvlaci tag iz svakog tag objekta
+    const tagsValues = tagsObjects.map((a) => a.data);
+    // u Setu element moze da se pojavi samo jednom, znaci brise duplikate
+    const tags = [...new Set(tagsValues)];
+    setTags(tags);
+
     setUploads(uploads);
     setLoading(false);
   };
@@ -76,22 +87,22 @@ function AllUploads() {
     719: 2,
     560: 1,
   };
-  let renderedUploads = "";
+
   const transition = {
     duration: 0.6,
     ease: [0.6, 0.01, -0.05, 0.9],
   };
-
+  let renderedUploads = "";
   if (uploads) {
     if (!(uploads.length > 0)) {
       renderedUploads = "Nothing has been uploaded yet!";
     } else {
       <AnimatePresence>
         {
-          (renderedUploads = uploads.map((file) => (
+          (renderedUploads = uploads.map((file, i) => (
             <motion.img
               initial={{ opacity: 0, y: 200 }}
-              key={file.data.imageURL[0]}
+              key={i}
               whileInView={{ opacity: 1, y: 0 }}
               transition={transition}
               onClick={() => {
@@ -112,11 +123,41 @@ function AllUploads() {
     }
   }
 
+  let marqueeTags = "";
+  if (uploads) {
+    if (!(uploads.length > 0)) {
+      marqueeTags = "Nothing has been uploaded yet!";
+    } else {
+      <AnimatePresence>
+        {
+          (marqueeTags = tags.map((tag, i) => {
+            return (
+              <Link
+                key={i}
+                to={`/filtered/${tag}`}
+                style={{ fontSize: "30px", marginLeft: "20px",textDecoration:'none',color:'white',fontWeight: "bold"}}
+              >
+                #{tag}
+              </Link>
+            );
+          }))
+        }
+      </AnimatePresence>;
+    }
+  }
+
   return (
     <main>
+      <marquee
+        behavior=""
+        direction="right"
+        style={{ backgroundColor: "#000", padding: "8px" }}
+      >
+        {marqueeTags}
+      </marquee>
       <h1>Explore</h1>
       {loading ? (
-        <h1>Loading</h1>
+        <Loading />
       ) : (
         <>
           <Masonry
@@ -129,10 +170,10 @@ function AllUploads() {
           {lastUpload && <button onClick={loadMore}> Load more</button>}
           {openModal && (
             <Modal
-              closeModal={setOpenModal}
+              toggleModal={setOpenModal}
               imgSrc={modalId.src}
               imgDesc={modalId.desc}
-              imgTitle={modalId.title}
+              imgTitle={modalId.name}
             />
           )}
         </>

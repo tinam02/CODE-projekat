@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 // AUTH
 import { db } from "../firebase-config";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
-// STORAGE
-// storage za slike https://firebase.google.com/docs/storage/web/upload-files#monitor_upload_progress
+// storage
 import {
   getStorage,
   ref,
@@ -12,10 +11,16 @@ import {
   getDownloadURL,
 } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-//alerts
 import toast, { Toaster } from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  breakpointColumnsObj,
+  imageVariants,
+  transition,
+} from "../functions/constants";
+import "../styles/Submit.css";
+
 // FORM
-// tutorial za form u reactu
 // https://dev.to/jleewebdev/using-the-usestate-hook-and-working-with-forms-in-react-js-m6b
 function SubmitImage() {
   const auth = getAuth();
@@ -36,11 +41,11 @@ function SubmitImage() {
           userRef: user.uid,
           timestamp: serverTimestamp(),
         });
-        // console.log(`Useeffect u submitimage korisnik: ${user.displayName}`);
       } else {
         navigate("/");
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleChangeName = (evt) => {
@@ -58,17 +63,16 @@ function SubmitImage() {
   const handleChangeType = (evt) => {
     evt.preventDefault();
     setFormData({ ...formData, type: evt.target.value });
-    // * FIXED target.type => target.value
   };
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     console.log(formData);
-    //!! storage
+    //* storage
     const uploadFormFile = async (file) =>
       new Promise((resolve, reject) => {
         const storage = getStorage();
         const fileName = `${auth.currentUser.uid}-${Math.floor(
-          Math.random() * 100000
+          Math.random() * 1000000
         )}-${file.name}`;
         const storageRef = ref(storage, `images/${fileName}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -76,18 +80,13 @@ function SubmitImage() {
         uploadTask.on(
           "state_changed",
           (snapshot) => {
-            // Observe state change events such as progress, pause, and resume
-            // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-            const progress =
-              (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-            toast(`Upload is ${progress}% done`);
             // eslint-disable-next-line default-case
             switch (snapshot.state) {
               case "paused":
                 console.log("Upload is paused");
                 break;
               case "running":
-                console.log("Upload is running");
+                console.log(`Upload is running}`);
                 break;
             }
           },
@@ -96,13 +95,17 @@ function SubmitImage() {
             reject(`${err.message}Error on uploadtask`);
           },
           () => {
-            // Handle successful uploads on complete
-            // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+            // Handle successful uploads
             getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
               resolve(downloadURL);
             });
           }
         );
+        toast.promise(uploadTask, {
+          loading: `Upload is ${uploadTask.snapshot.state}`,
+          success: "Uploaded successfully",
+          error: "Upload failed",
+        });
       });
 
     //array of image urls
@@ -130,61 +133,86 @@ function SubmitImage() {
   if (auth.currentUser) {
     lockedUsername = auth.currentUser.displayName;
   }
-
+  const listItemContainerVariant = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 1 },
+    },
+  };
+  const listItemVariant = {
+    hidden: { y: -500 },
+    show: { y: 0, transition: { type: "spring", stiffness: 120 } },
+  };
   return (
-    <div>
+    <motion.div>
       <Toaster />
-      <h1>Submit image</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">
-          Name:
-          <input
-            type="text"
-            id="name"
-            placeholder="Name"
-            value={formData.name}
-            onChange={handleChangeName}
-            required
-          />
-        </label>
-        <label htmlFor="description">
-          Description:
-          <input
-            type="text"
-            id="description"
-            placeholder="Description"
-            value={formData.description}
-            onChange={handleChangeDesc}
-            required
-          />
-        </label>
-        <label htmlFor="type">
-          Type
-          <input
-            type="text"
-            id="type"
-            placeholder="Type"
-            value={formData.type}
-            onChange={handleChangeType}
-          />
-        </label>
-        <label htmlFor="images">
-          Images
-          <input
-            type="file"
-            id="images"
-            onChange={handleChangeImg}
-            required
-            multiple="multiple"
-          />
-        </label>
-        <label htmlFor="username">
-          Username:
-          <input value={lockedUsername} disabled />
-        </label>
+      <motion.h1>Submit image</motion.h1>
+      <motion.form onSubmit={handleSubmit}>
+        <ul>
+          <li>
+            <label htmlFor="name">
+              Name:
+              <input
+                type="text"
+                id="name"
+                placeholder="Name"
+                value={formData.name}
+                onChange={handleChangeName}
+                required
+              />
+            </label>
+          </li>
+          <li>
+            <label htmlFor="description">
+              Description:
+              <input
+                type="text"
+                id="description"
+                placeholder="Description"
+                value={formData.description}
+                onChange={handleChangeDesc}
+                required
+              />
+            </label>
+          </li>
+          <li>
+            {" "}
+            <label htmlFor="type">
+              Type
+              <input
+                type="text"
+                id="type"
+                placeholder="Type"
+                value={formData.type}
+                onChange={handleChangeType}
+              />
+            </label>
+          </li>
+          <li>
+            {" "}
+            <label htmlFor="images">
+              Images
+              <input
+                type="file"
+                id="images"
+                onChange={handleChangeImg}
+                required
+                multiple="multiple"
+              />
+            </label>
+          </li>
+          <li>
+            {" "}
+            <label htmlFor="username">
+              Username:
+              <input value={lockedUsername} disabled />
+            </label>
+          </li>
+        </ul>
         <button type="submit">Submit</button>
-      </form>
-    </div>
+      </motion.form>
+    </motion.div>
   );
 }
 
