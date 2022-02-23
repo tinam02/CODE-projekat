@@ -135,7 +135,13 @@ function AllUploads() {
               <Link
                 key={i}
                 to={`/filtered/${tag}`}
-                style={{ fontSize: "30px", marginLeft: "20px",textDecoration:'none',color:'white',fontWeight: "bold"}}
+                style={{
+                  fontSize: "30px",
+                  marginLeft: "20px",
+                  textDecoration: "none",
+                  color: "white",
+                  fontWeight: "bold",
+                }}
               >
                 #{tag}
               </Link>
@@ -148,14 +154,16 @@ function AllUploads() {
 
   return (
     <main>
+      {/* ---Marquee */}
       <marquee
-        behavior=""
+        behavior="scroll"
         direction="right"
         style={{ backgroundColor: "#000", padding: "8px" }}
       >
         {marqueeTags}
       </marquee>
-      <h1>Explore</h1>
+
+      {/* ---Images */}
       {loading ? (
         <Loading />
       ) : (
@@ -168,6 +176,8 @@ function AllUploads() {
             {renderedUploads}
           </Masonry>
           {lastUpload && <button onClick={loadMore}> Load more</button>}
+
+          {/* ---Modal */}
           {openModal && (
             <Modal
               toggleModal={setOpenModal}

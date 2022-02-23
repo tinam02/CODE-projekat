@@ -21,7 +21,7 @@
   --clr-white: 0 0% 100%;
 }
 @font-face {
-  font-family: "GlyphWorld Desert";
+  font-family: "GlyphWorld";
   src: url("./assets/GlyphWorld-Desert.otf");
   font-weight: normal;
   font-style: normal;
@@ -52,7 +52,7 @@ body {
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
-  font-family: sans-serif;
+  font-family: Helvetica, sans-serif;
   font-size: 1.2rem;
   color: rgb(0, 0, 0);
   background-color: rgb(238, 229, 229);

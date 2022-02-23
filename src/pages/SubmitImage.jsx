@@ -152,7 +152,7 @@ function SubmitImage() {
         <ul>
           <li>
             <label htmlFor="name">
-              Name:
+              name:
               <input
                 type="text"
                 id="name"
@@ -165,7 +165,7 @@ function SubmitImage() {
           </li>
           <li>
             <label htmlFor="description">
-              Description:
+              description:
               <input
                 type="text"
                 id="description"
@@ -179,12 +179,12 @@ function SubmitImage() {
           <li>
             {" "}
             <label htmlFor="type">
-              Type
+              type
               <input
                 type="text"
                 id="type"
                 placeholder="Type"
-                value={formData.type}
+                value={formData.type.toLowerCase()}
                 onChange={handleChangeType}
               />
             </label>
@@ -192,7 +192,7 @@ function SubmitImage() {
           <li>
             {" "}
             <label htmlFor="images">
-              Images
+              images
               <input
                 type="file"
                 id="images"
@@ -205,12 +205,12 @@ function SubmitImage() {
           <li>
             {" "}
             <label htmlFor="username">
-              Username:
+              username:
               <input value={lockedUsername} disabled />
             </label>
           </li>
         </ul>
-        <button type="submit">Submit</button>
+        <button type="submit">submit</button>
       </motion.form>
     </motion.div>
   );

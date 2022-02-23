@@ -106,12 +106,6 @@ function ProfilePage() {
         exit="exit"
         variants={imageVariants}
       >
-        <h1>
-          Welcome back,
-          {auth.currentUser.displayName
-            ? auth.currentUser.displayName
-            : "Guest"}
-        </h1>
         <div
           id="avatar"
           style={{

@@ -13,7 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ImagePage from "./pages/ImagePage";
 import Cursor from "./components/Cursor";
 import { AnimatePresence } from "framer-motion";
-
+import ErrorPage from "./pages/ErrorPage";
 function App() {
   const location = useLocation();
   return (
@@ -69,6 +69,7 @@ function App() {
             path="/image/:imageID"
             element={<ImagePage />}
           ></Route>
+          <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
       </AnimatePresence>
     </>

@@ -1,5 +1,4 @@
 import React from "react";
-import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowCircleRight,
@@ -9,37 +8,23 @@ import {
 import AllUploads from "../functions/fetchAllUploads";
 import ScrollToTop from "../components/ScrollToTop";
 import { motion, AnimatePresence } from "framer-motion";
-
+import "../styles/HomePage.css";
 function HomePage() {
-
   return (
-    <motion.div 
- 
-      animate={{ opacity: 1,  }}
-      exit={{ opacity: 0 }}
-    
-    >
-      <header>
-        <h2>Home</h2>
+    <main id="homepage-main">
+      <header className="homepage-header">
+        <h1 className="homepage-title">GALLERY</h1>
+        <h2>Latest tags</h2>
       </header>
-      <main>
+
+      <div>
         {/* slider? */}
-        {/* <Link to="/filtered/digital">
-          {" "}
-          <FontAwesomeIcon icon={faTablet} size="3x"></FontAwesomeIcon>
-          <p>Digital</p>
-        </Link>
-        <Link to="/filtered/photography">
-          {" "}
-          <FontAwesomeIcon icon={faPaintBrush} size="3x"></FontAwesomeIcon>
-          <p>neki tag</p>
-        </Link> */}
 
         {/* sve slike */}
         <AllUploads />
-      </main>
+      </div>
       <ScrollToTop />
-    </motion.div>
+    </main>
   );
 }
 

@@ -3,6 +3,7 @@ import React, { useEffect } from "react";
 function Cursor() {
   useEffect(() => {
     const cursor = document.querySelector(".customCursor");
+
     const custom = () => {
       document.addEventListener("mousemove", (e) => {
         cursor.style.display = "block";
@@ -18,7 +19,19 @@ function Cursor() {
       document.addEventListener("mouseleave", function (event) {
         cursor.style.display = "none";
       });
+      document.addEventListener("mouseover", function (event) {
+        if (event.target.tagName.toLowerCase() === "a") {
+          cursor.style.animation = "animHover 0.3s forwards";
+        }
+      });
+      document.addEventListener("mouseout", function (event) {
+        if (event.target.tagName.toLowerCase() === "a") {
+          cursor.style.animation = "animIdle 0.3s forwards";
+        }
+      });
+      console.log(`cus`);
     };
+    console.log(`object`);
     custom();
   }, []);
   return <div className="customCursor"></div>;
