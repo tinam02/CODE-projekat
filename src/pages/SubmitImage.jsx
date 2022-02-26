@@ -13,11 +13,7 @@ import {
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  breakpointColumnsObj,
-  imageVariants,
-  transition,
-} from "../functions/constants";
+import { imageVariants, transition } from "../functions/constants";
 import "../styles/Submit.css";
 
 // FORM
@@ -133,17 +129,7 @@ function SubmitImage() {
   if (auth.currentUser) {
     lockedUsername = auth.currentUser.displayName;
   }
-  const listItemContainerVariant = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: { staggerChildren: 1 },
-    },
-  };
-  const listItemVariant = {
-    hidden: { y: -500 },
-    show: { y: 0, transition: { type: "spring", stiffness: 120 } },
-  };
+
   return (
     <motion.div>
       <Toaster />

@@ -10,7 +10,6 @@ import SubmitImage from "./pages/SubmitImage";
 //components
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
-import ImagePage from "./pages/ImagePage";
 import Cursor from "./components/Cursor";
 import { AnimatePresence } from "framer-motion";
 import ErrorPage from "./pages/ErrorPage";
@@ -64,11 +63,7 @@ function App() {
             path="/filtered/:filteredBy"
             element={<Filtered />}
           ></Route>
-          <Route
-            key={location.pathname}
-            path="/image/:imageID"
-            element={<ImagePage />}
-          ></Route>
+          
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
       </AnimatePresence>

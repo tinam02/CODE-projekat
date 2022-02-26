@@ -9,7 +9,7 @@ function Loading() {
       style={{
         width: "100vw",
         height: "100vh",
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
+        backgroundColor: "rgba(0, 0, 0, 1)",
         position: "fixed",
         top: 0,
         left: 0,

@@ -9,10 +9,11 @@ import {
   limit,
   startAfter,
 } from "firebase/firestore";
-import Modal from "../components/Modal";
-import Masonry from "react-masonry-css";
-import { motion, AnimatePresence } from "framer-motion";
 import Loading from "../components/Loading";
+import Masonry from "react-masonry-css";
+import Modal from "../components/Modal";
+import { motion, AnimatePresence } from "framer-motion";
+import { transition } from "./constants";
 
 function AllUploads() {
   const [loading, setLoading] = useState(true);
@@ -23,6 +24,8 @@ function AllUploads() {
     src: "",
     desc: "",
     name: "",
+    time: "",
+    tag: "",
   });
   const [tags, setTags] = useState(null);
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
@@ -73,7 +76,6 @@ function AllUploads() {
     setLastUpload(lastVisible);
 
     querySnapshot.forEach((doc) => {
-      // console.log(doc.id, " => ", doc.data());
       uploads.push({ id: doc.id, data: doc.data() });
     });
     setUploads((prevstate) => [...prevstate, ...uploads]);
@@ -88,10 +90,6 @@ function AllUploads() {
     560: 1,
   };
 
-  const transition = {
-    duration: 0.6,
-    ease: [0.6, 0.01, -0.05, 0.9],
-  };
   let renderedUploads = "";
   if (uploads) {
     if (!(uploads.length > 0)) {
@@ -112,6 +110,8 @@ function AllUploads() {
                   src: file.data.imageURL[0],
                   desc: file.data.description,
                   name: file.data.name,
+                  time: JSON.stringify(file.data.timestamp.toDate()),
+                  tag: [file.data.type],
                 });
               }}
               src={file.data.imageURL[0]}
@@ -123,45 +123,66 @@ function AllUploads() {
     }
   }
 
-  let marqueeTags = "";
+  let marqueeTags = [];
+  let marqueeRev = [];
   if (uploads) {
     if (!(uploads.length > 0)) {
       marqueeTags = "Nothing has been uploaded yet!";
     } else {
-      <AnimatePresence>
-        {
-          (marqueeTags = tags.map((tag, i) => {
-            return (
-              <Link
-                key={i}
-                to={`/filtered/${tag}`}
-                style={{
-                  fontSize: "30px",
-                  marginLeft: "20px",
-                  textDecoration: "none",
-                  color: "white",
-                  fontWeight: "bold",
-                }}
-              >
-                #{tag}
-              </Link>
-            );
-          }))
-        }
-      </AnimatePresence>;
+      marqueeTags = tags.map((tag, i) => {
+        return (
+          <motion.span
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ x: "-100%" }}
+            transition={{ transition, duration: 0.8 }}
+          >
+            <Link
+              key={i}
+              to={`/filtered/${tag}`}
+              style={{
+                fontSize: "30px",
+                marginLeft: "20px",
+                textDecoration: "none",
+                color: "white",
+                fontWeight: "bold",
+              }}
+            >
+              #{tag}
+            </Link>
+          </motion.span>
+        );
+      });
+      // TODO remove this
+      marqueeRev = [...marqueeTags].reverse();
     }
   }
 
   return (
-    <main>
+    <main style={{ overflow: "hidden" }}>
       {/* ---Marquee */}
-      <marquee
+      <motion.marquee
+        initial={{ width: 0, x: "-100%" }}
+        animate={{ width: "100%", x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={transition}
         behavior="scroll"
         direction="right"
         style={{ backgroundColor: "#000", padding: "8px" }}
       >
         {marqueeTags}
-      </marquee>
+      </motion.marquee>
+      <motion.marquee
+        initial={{ width: 0, x: "100%" }}
+        animate={{ width: "100%", x: 0 }}
+        exit={{ x: "100%" }}
+        transition={transition}
+        behavior="scroll"
+        direction="left"
+        style={{ backgroundColor: "#000", padding: "8px" }}
+      >
+        {marqueeRev}
+      </motion.marquee>
 
       {/* ---Images */}
       {loading ? (
@@ -175,17 +196,19 @@ function AllUploads() {
           >
             {renderedUploads}
           </Masonry>
-          {lastUpload && <button onClick={loadMore}> Load more</button>}
 
-          {/* ---Modal */}
           {openModal && (
             <Modal
               toggleModal={setOpenModal}
               imgSrc={modalId.src}
               imgDesc={modalId.desc}
               imgTitle={modalId.name}
+              imgTimestamp={modalId.time.slice(1, 11).replaceAll("-", "/")}
+              imgTag={modalId.tag}
             />
           )}
+
+          {lastUpload && <button onClick={loadMore}> Load more</button>}
         </>
       )}
     </main>

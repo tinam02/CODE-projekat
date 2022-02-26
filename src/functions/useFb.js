@@ -1,38 +1,22 @@
-import React, { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useState } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
-import {
-  updateDoc,
-  doc,
-  getDocs,
-  collection,
-  query,
-  where,
-  deleteDoc,
-} from "firebase/firestore";
+import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
 
 const useFb = () => {
   const auth = getAuth();
   const [formData, setFormData] = useState({
-    username: auth.currentUser.displayName,
-    email: auth.currentUser.email,
+    username: auth.currentUser ? auth.currentUser.displayName : "",
+    email: auth.currentUser ? auth.currentUser.email : "",
     photoURL: "",
   });
-  const navigate = useNavigate();
 
   //PROFILE
   const [changeAvatar, setChangeAvatar] = useState(false);
   const defaultAvatar =
     "https://firebasestorage.googleapis.com/v0/b/projekat1-8acde.appspot.com/o/images%2Favatar.svg?alt=media&token=977b09ec-a3fd-4ee4-96a7-965b629b999";
 
-  //log out
-  const onLogout = () => {
-    auth.signOut();
-    navigate("/");
-  };
-
-  //form data
+  //input
   const onChange = function (evt) {
     setFormData({
       ...formData,
@@ -82,13 +66,10 @@ const useFb = () => {
     setChangeAvatar(false);
   };
 
-
-
   return {
     formData,
     changeAvatar,
     defaultAvatar,
-    onLogout,
     onChange,
     onSubmit,
     onResetAvatar,

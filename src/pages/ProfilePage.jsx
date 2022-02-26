@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+import { Link, useNavigate } from "react-router-dom";
+import { getAuth, signOut } from "firebase/auth";
 import {
   doc,
   getDocs,
@@ -25,26 +25,20 @@ import {
 import useFb from "../functions/useFb";
 
 function ProfilePage() {
-  const {
-    formData,
-    defaultAvatar,
-    onLogout,
-    onChange,
-    onSubmit,
-    onResetAvatar,
-  } = useFb();
+  const { formData, defaultAvatar, onChange, onSubmit, onResetAvatar } =
+    useFb();
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
   const auth = getAuth();
   const [changeDetails, setChangeDetails] = useState(false);
-
+  const navigate = useNavigate();
   // get personal uploads
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
     const getMyUploads = async () => {
       const q = query(
         collection(db, "uploads"),
-        where("userRef", "==", auth.currentUser.uid),
+        auth.currentUser.uid && where("userRef", "==", auth.currentUser.uid),
         orderBy("timestamp", "desc")
       );
       const querySnapshot = await getDocs(q);
@@ -59,8 +53,22 @@ function ProfilePage() {
       setUploads(uploads);
       setLoading(false);
     };
+    console.log(`object`);
     getMyUploads();
-  }, [auth.currentUser.uid]);
+    console.log(`object2`);
+  }, []);
+
+  //log out
+  const onLogout = () => {
+    signOut(auth)
+      .then(() => {
+        navigate("/");
+        console.log(`logged out!`);
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
 
   const deleteImg = async (id) => {
     const userDoc = doc(db, "uploads", id);
@@ -74,25 +82,21 @@ function ProfilePage() {
     if (!(uploads.length > 0)) {
       myUploads = <p className="profile-no-uploads">No uploads</p>;
     } else {
-      <AnimatePresence exitBeforeEnter>
-        {
-          (myUploads = uploads.map((file) => (
-            <motion.img
-              src={file.data.imageURL[0]}
-              key={file.data.imageURL[0]}
-              initial={{ opacity: 0, y: 200 }}
-              variants={imageVariants}
-              transition={transition}
-              whileInView={{ opacity: 1, y: 0 }}
-              exit="exit"
-              alt={file.data.description}
-              onClick={(evt) => {
-                deleteImg(file.id);
-              }}
-            />
-          )))
-        }
-      </AnimatePresence>;
+      myUploads = uploads.map((file) => (
+        <motion.img
+          src={file.data.imageURL[0]}
+          key={file.data.imageURL[0]}
+          initial={{ opacity: 0, y: 200 }}
+          variants={imageVariants}
+          transition={transition}
+          whileInView={{ opacity: 1, y: 0 }}
+          exit="exit"
+          alt={file.data.description}
+          onClick={(evt) => {
+            deleteImg(file.id);
+          }}
+        />
+      ));
     }
   }
 
@@ -110,7 +114,7 @@ function ProfilePage() {
           id="avatar"
           style={{
             backgroundImage: `url(${
-              auth.currentUser.photoURL
+              auth.currentUser && auth.currentUser.photoURL
                 ? auth.currentUser.photoURL
                 : defaultAvatar
             })`,
