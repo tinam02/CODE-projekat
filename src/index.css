@@ -39,6 +39,37 @@ footer {
   font-weight: normal;
   font-style: normal;
 }
+@font-face {
+  font-family: "lynojean";
+  src: url("./assets/lyno/lyno-jean_2-webfont.woff2") format("woff2"),
+    url("./assets/lyno/lyno-jean_2-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "lynostan";
+  src: url("./assets/lyno/lyno-stan_2-webfont.woff2") format("woff2"),
+    url("./assets/lyno/lyno-stan_2-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "lynoulys";
+  src: url("./assets/lyno/lyno-ulys_2-webfont.woff2") format("woff2"),
+    url("./assets/lyno/lyno-ulys_2-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "lynowalt";
+  src: url("./assets/lyno/lyno-walt_2-webfont.woff2") format("woff2"),
+    url("./assets/lyno/lyno-walt_2-webfont.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
 
 *,
 *::before,
@@ -194,7 +225,7 @@ button:hover,
 }
 input,
 textarea {
-  resize:vertical;
+  resize: vertical;
   display: block;
   margin: 1em;
   color: var(--clr-secondary);
@@ -445,7 +476,8 @@ hr {
 }
 
 /* SUBMIT IMAGE */
-.submit-form ul { overflow: hidden;
+.submit-form ul {
+  overflow: hidden;
   padding: 1.5rem 2rem;
   background: hsl(0, 0%, 100%);
   color: hsl(0, 0%, 10%);
