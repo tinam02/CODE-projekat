@@ -25,7 +25,7 @@ function Modal({
         exit={{ opacity: 0 }}
         className="modalContainer"
       >
-        <img src={imgSrc} alt="modal img" />
+        <img src={imgSrc} alt="modal img" draggable={false} />
         <div className="modalBody">
           <div className="modalDetails">
             <h1 className="modal__imgTitle">Title: {imgTitle}</h1>

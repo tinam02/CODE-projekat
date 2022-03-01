@@ -14,7 +14,6 @@ import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
 import { imageVariants, transition } from "../functions/constants";
-import "../styles/Submit.css";
 
 // FORM
 // https://dev.to/jleewebdev/using-the-usestate-hook-and-working-with-forms-in-react-js-m6b
@@ -43,6 +42,7 @@ function SubmitImage() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  // const validPass = new RegExp('[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?')
 
   const handleChangeName = (evt) => {
     evt.preventDefault();
@@ -60,9 +60,10 @@ function SubmitImage() {
     evt.preventDefault();
     setFormData({ ...formData, type: evt.target.value });
   };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(formData);
+
     //* storage
     const uploadFormFile = async (file) =>
       new Promise((resolve, reject) => {
@@ -82,7 +83,7 @@ function SubmitImage() {
                 console.log("Upload is paused");
                 break;
               case "running":
-                console.log(`Upload is running}`);
+                console.log(`Upload is running`);
                 break;
             }
           },
@@ -134,7 +135,7 @@ function SubmitImage() {
     <motion.div>
       <Toaster />
       <motion.h1>Submit image</motion.h1>
-      <motion.form onSubmit={handleSubmit}>
+      <motion.form className="submit-form" onSubmit={handleSubmit}>
         <ul>
           <li>
             <label htmlFor="name">
@@ -152,7 +153,8 @@ function SubmitImage() {
           <li>
             <label htmlFor="description">
               description:
-              <input
+              <textarea
+              rows="4" cols="50"
                 type="text"
                 id="description"
                 placeholder="Description"
@@ -184,7 +186,7 @@ function SubmitImage() {
                 id="images"
                 onChange={handleChangeImg}
                 required
-                multiple="multiple"
+                multiple={false}
               />
             </label>
           </li>

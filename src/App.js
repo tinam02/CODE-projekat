@@ -13,6 +13,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Cursor from "./components/Cursor";
 import { AnimatePresence } from "framer-motion";
 import ErrorPage from "./pages/ErrorPage";
+
 function App() {
   const location = useLocation();
   return (

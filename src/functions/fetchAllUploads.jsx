@@ -132,20 +132,20 @@ function AllUploads() {
       marqueeTags = tags.map((tag, i) => {
         return (
           <motion.span
+            key={i}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ x: "-100%" }}
             transition={{ transition, duration: 0.8 }}
           >
             <Link
-              key={i}
               to={`/filtered/${tag}`}
               style={{
-                fontSize: "30px",
+                fontSize: "var(--fs-default)",
+                fontFamily: "lorenzaregular",
                 marginLeft: "20px",
                 textDecoration: "none",
                 color: "white",
-                fontWeight: "bold",
               }}
             >
               #{tag}
@@ -168,7 +168,7 @@ function AllUploads() {
         transition={transition}
         behavior="scroll"
         direction="right"
-        style={{ backgroundColor: "#000", padding: "8px" }}
+        style={{ backgroundColor: "#000", padding: "2px" }}
       >
         {marqueeTags}
       </motion.marquee>
@@ -179,7 +179,7 @@ function AllUploads() {
         transition={transition}
         behavior="scroll"
         direction="left"
-        style={{ backgroundColor: "#000", padding: "8px" }}
+        style={{ backgroundColor: "#000", padding: "2px" }}
       >
         {marqueeRev}
       </motion.marquee>
