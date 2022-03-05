@@ -34,7 +34,11 @@ function Cursor() {
     console.log(`object`);
     custom();
   }, []);
-  return <div className="customCursor"></div>;
+  return (
+    <div className="customCursor">
+      {/* <div id="customCursor-span"></div> */}
+    </div>
+  );
 }
 
 export default Cursor;

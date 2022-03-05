@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-
+import { motion } from "framer-motion";
+import { transition } from "../functions/constants.js";
 function RandomFont(params) {
   useEffect(() => {
-    const text = document.querySelector("h1");
     const getFont = () => {
       let fontsArr = ["lynojean", "lynostan", "lynowalt", "lynoulys"];
       var randomNumber = Math.floor(Math.random() * fontsArr.length);
@@ -11,15 +11,14 @@ function RandomFont(params) {
     };
     const changeFonts = () => {
       let x = document.getElementById("demo");
-      let txt = x.innerHTML;
+      // ovde se koristi textcontent jer innerhtml i innertext dodaju  i html tagove!!
+      let txt = x.textContent;
       let newText = "";
       const forFonts = () => {
-        let l = txt.length;
-        for (let i = 0; i < l; i++) {
-          newText += `<span style="font-family:'${getFont()}'">${txt.charAt(
+        for (let i = 0; i < txt.length; i++) {
+          newText += `<span key={${i}} style="font-family:'${getFont()}'">${txt.charAt(
             i
           )}</span>`;
-          console.log("a");
         }
       };
       forFonts();
@@ -28,7 +27,17 @@ function RandomFont(params) {
     changeFonts();
   }, []);
 
-  return <h1 id="demo">{params.text}</h1>;
+  return (
+    <motion.h1
+      id="demo" 
+      initial={{ y: -200, opacity: 0,  dropShadow: "10px 10px 0 rgba(255, 0, 0, 0.2)", }}
+      animate={{ opacity: 1, y: 0,  dropShadow: "10px 10px 0 rgba(0, 0, 0, 0.3)", }}
+      exit={{ y: "-110%", opacity: 0 }}
+      transition={transition}
+    >
+      {params.text}
+    </motion.h1>
+  );
 }
 
 export default RandomFont;

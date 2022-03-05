@@ -160,10 +160,28 @@ function AllUploads() {
 
   return (
     <main style={{ overflow: "hidden" }}>
+      <motion.hr
+        initial={{ width: 0, x: "-100%" }}
+        animate={{ width: "105%", x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={transition}
+      />
+      <motion.hr
+        initial={{ width: 0, x: "-100%" }}
+        animate={{ width: "105%", x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={transition}
+      />
+      <motion.hr
+        initial={{ width: 0, x: "-100%" }}
+        animate={{ width: "105%", x: 0 }}
+        exit={{ x: "-100%" }}
+        transition={transition}
+      />
       {/* ---Marquee */}
       <motion.marquee
         initial={{ width: 0, x: "-100%" }}
-        animate={{ width: "100%", x: 0 }}
+        animate={{ width: "105%", x: 0 }}
         exit={{ x: "-100%" }}
         transition={transition}
         behavior="scroll"
@@ -174,7 +192,7 @@ function AllUploads() {
       </motion.marquee>
       <motion.marquee
         initial={{ width: 0, x: "100%" }}
-        animate={{ width: "100%", x: 0 }}
+        animate={{ width: "105%", x: 0 }}
         exit={{ x: "100%" }}
         transition={transition}
         behavior="scroll"

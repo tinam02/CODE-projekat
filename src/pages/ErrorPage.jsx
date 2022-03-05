@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";import RandomFont from "../components/RandomFont";
 function ErrorPage() {
   return (
     <div
@@ -24,11 +24,11 @@ function ErrorPage() {
       >
         <h1
           style={{
-            fontSize: "20rem",
+            fontSize: "10rem",
             color: "rgba(255,255,255,1)",
           }}
         >
-          404
+          <RandomFont text="404"/>
         </h1>
         <h2
           style={{

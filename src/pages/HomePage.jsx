@@ -17,17 +17,11 @@ function HomePage() {
         <span className="homepage-title">
           <RandomFont text="GALLERY" />
         </span>
-
-        {/* <h1 className="homepage-title">
-          <span className="accent-span">G</span>ALLERY
-        </h1> */}
-        <hr />
-        <hr />
-        <hr />
+      
       </header>
 
       <div>
-        {/* slider? */}
+    
 
         {/* sve slike */}
         <AllUploads />
