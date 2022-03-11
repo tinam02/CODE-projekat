@@ -4,12 +4,20 @@ import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 function ScrollToTop() {
   const [isVisible, setVisibility] = useState();
+
   const toggleVisibility = () => {
-    if (window.pageYOffset > 300) {
+    if (document.querySelector("body").classList.contains("body-openModal")) {
+      setVisibility(false);
+    }
+    if (
+      window.pageYOffset > 300 &&
+      !document.querySelector("body").classList.contains("body-openModal")
+    ) {
       setVisibility(true);
     } else {
       setVisibility(false);
     }
+    // removes scroll button when modal is open
   };
   const scrollToTop = () => {
     window.scrollTo({

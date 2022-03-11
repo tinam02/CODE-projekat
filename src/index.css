@@ -166,7 +166,9 @@ body::-webkit-scrollbar-thumb:active {
 span {
   white-space: nowrap;
 }
-
+.hidden {
+  display: none;
+}
 /* INPUT, BUTTONS, LABEL */
 
 button {
@@ -361,6 +363,10 @@ li {
 }
 
 /* MODAL */
+.body-openModal {
+  overflow: hidden;
+}
+
 .modalBackground {
   width: 100vw;
   height: 100vh;
@@ -375,6 +381,7 @@ li {
 }
 .modalContainer {
   display: flex;
+  flex-direction: row;
   justify-content: space-between;
   /* width: 70%; */
   max-width: 90%;
@@ -394,12 +401,18 @@ li {
   justify-content: space-between;
   align-items: space-between;
 }
+.modalDetails {
+  overflow-y: scroll;
+}
 .modalContainer img {
   margin: auto;
   object-fit: contain;
   max-width: 50%;
 }
-
+.modal__imgDesc {
+  max-width: 600px;
+  white-space: pre-line;
+}
 /* ===================== PAGES =====================*/
 /* HOME */
 .homepage-header {
@@ -435,6 +448,13 @@ hr {
   text-align: center;
   gap: 40px;
 }
+.explore-images {
+  filter: grayscale();
+  transition: filter 400ms ease;
+}
+.explore-images:hover {
+  filter: none;
+}
 
 #avatar {
   -webkit-background-size: contain;
@@ -446,6 +466,7 @@ hr {
   width: 200px;
   height: 200px;
 }
+
 .update-details {
   display: flex;
   flex-direction: column;
@@ -570,6 +591,11 @@ textarea {
   #profile input {
     display: block;
     width: 90vw;
+  }
+
+  /* modal */
+  .modalContainer {
+    flex-direction: column;
   }
 }
 

@@ -154,7 +154,9 @@ function SubmitImage() {
             <label htmlFor="description">
               description:
               <textarea
-              rows="4" cols="50"
+                rows="4"
+                cols="50"
+                maxLength={300}
                 type="text"
                 id="description"
                 placeholder="Description"

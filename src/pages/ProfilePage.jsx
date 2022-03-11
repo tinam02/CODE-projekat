@@ -83,19 +83,23 @@ function ProfilePage() {
       myUploads = <p className="profile-no-uploads">No uploads</p>;
     } else {
       myUploads = uploads.map((file) => (
-        <motion.img
-          src={file.data.imageURL[0]}
-          key={file.data.imageURL[0]}
-          initial={{ opacity: 0, y: 200 }}
-          variants={imageVariants}
-          transition={transition}
-          whileInView={{ opacity: 1, y: 0 }}
-          exit="exit"
-          alt={file.data.description}
-          onClick={(evt) => {
-            deleteImg(file.id);
-          }}
-        />
+        <>
+          <motion.img
+          className="profile-images"
+            style={{ position: "relative" }}
+            src={file.data.imageURL[0]}
+            key={file.data.imageURL[0]}
+            initial={{ opacity: 0, y: 200 }}
+            variants={imageVariants}
+            transition={transition}
+            whileInView={{ opacity: 1, y: 0 }}
+            exit="exit"
+            alt={file.data.description}
+            onClick={(evt) => {
+              deleteImg(file.id);
+            }}
+          />
+        </>
       ));
     }
   }

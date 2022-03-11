@@ -82,6 +82,14 @@ function AllUploads() {
     setLoading(false);
   };
 
+  // disable scrolling when modal is open
+  if (openModal) {
+    document.querySelector("body").classList.add("body-openModal");
+    document.querySelector(".scroll-to-top-button")?.classList.add("hidden");
+  } else {
+    document.querySelector("body").classList.remove("body-openModal");
+    document.querySelector(".scroll-to-top-button")?.classList.remove("hidden");
+  }
   const breakpointColumnsObj = {
     default: 5,
     1600: 4,
@@ -99,6 +107,8 @@ function AllUploads() {
         {
           (renderedUploads = uploads.map((file, i) => (
             <motion.img
+              src={file.data.imageURL[0]}
+              alt={file.data.description}
               initial={{ opacity: 0, y: 200 }}
               key={i}
               whileInView={{ opacity: 1, y: 0 }}
@@ -114,8 +124,7 @@ function AllUploads() {
                   tag: [file.data.type],
                 });
               }}
-              src={file.data.imageURL[0]}
-              alt={file.data.description}
+              className='explore-images'
             />
           )))
         }
