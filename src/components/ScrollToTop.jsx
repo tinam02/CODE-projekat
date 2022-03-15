@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 function ScrollToTop() {
   const [isVisible, setVisibility] = useState();
@@ -45,7 +45,7 @@ function ScrollToTop() {
         type="button"
         onClick={scrollToTop}
       >
-        <FontAwesomeIcon icon={faArrowUp} size="2x" color="#000" />
+       &#128285;
       </button>
     </div>
   );

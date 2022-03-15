@@ -64,7 +64,6 @@ function App() {
             path="/filtered/:filteredBy"
             element={<Filtered />}
           ></Route>
-          
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
       </AnimatePresence>

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-//  ":" posle / u Route!!
-//useparams jer switch ne radi u ovoj verziji reacta
 import { db } from "../firebase-config";
 import {
   collection,

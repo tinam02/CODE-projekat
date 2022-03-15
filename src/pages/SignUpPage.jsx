@@ -10,8 +10,6 @@ import {
 import { db } from "../firebase-config";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 //misc
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 
 function SignUpPage() {
@@ -102,13 +100,8 @@ function SignUpPage() {
         />
 
         <div className="signUpDiv">
-          <span>Sign up </span>
-
           <button className="signUpButton">
-            <FontAwesomeIcon
-              icon={faArrowCircleRight}
-              size="2x"
-            ></FontAwesomeIcon>
+           Sign up
           </button>
         </div>
       </form>

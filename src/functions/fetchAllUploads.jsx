@@ -53,7 +53,7 @@ function AllUploads() {
     });
     // izvlaci tag iz svakog tag objekta
     const tagsValues = tagsObjects.map((a) => a.data);
-    // u Setu element moze da se pojavi samo jednom, znaci brise duplikate
+    // remove duplicates
     const tags = [...new Set(tagsValues)];
     setTags(tags);
 
@@ -61,7 +61,7 @@ function AllUploads() {
     setLoading(false);
   };
 
-  //pagination
+  //*--- Load more
   const loadMore = async () => {
     const q = query(
       collection(db, "uploads"),
@@ -82,7 +82,7 @@ function AllUploads() {
     setLoading(false);
   };
 
-  // disable scrolling when modal is open
+  // Disable scrolling when modal is open
   if (openModal) {
     document.querySelector("body").classList.add("body-openModal");
     document.querySelector(".scroll-to-top-button")?.classList.add("hidden");
@@ -90,6 +90,8 @@ function AllUploads() {
     document.querySelector("body").classList.remove("body-openModal");
     document.querySelector(".scroll-to-top-button")?.classList.remove("hidden");
   }
+
+  // Masonry config
   const breakpointColumnsObj = {
     default: 5,
     1600: 4,
@@ -98,6 +100,7 @@ function AllUploads() {
     560: 1,
   };
 
+  //*--- Uploads start
   let renderedUploads = "";
   if (uploads) {
     if (!(uploads.length > 0)) {
@@ -124,16 +127,17 @@ function AllUploads() {
                   tag: [file.data.type],
                 });
               }}
-              className='explore-images'
+              className="explore-images"
             />
           )))
         }
       </AnimatePresence>;
     }
   }
+//*--- Uploads end
 
+//*--- Marquee start
   let marqueeTags = [];
-  let marqueeRev = [];
   if (uploads) {
     if (!(uploads.length > 0)) {
       marqueeTags = "Nothing has been uploaded yet!";
@@ -162,10 +166,9 @@ function AllUploads() {
           </motion.span>
         );
       });
-      // TODO remove this
-      marqueeRev = [...marqueeTags].reverse();
     }
   }
+//--- Marquee end
 
   return (
     <main style={{ overflow: "hidden" }}>
@@ -187,7 +190,7 @@ function AllUploads() {
         exit={{ x: "-100%" }}
         transition={transition}
       />
-      {/* ---Marquee */}
+      {/* --- Display marquee */}
       <motion.marquee
         initial={{ width: 0, x: "-100%" }}
         animate={{ width: "105%", x: 0 }}
@@ -208,10 +211,10 @@ function AllUploads() {
         direction="left"
         style={{ backgroundColor: "#000", padding: "2px" }}
       >
-        {marqueeRev}
+        {marqueeTags}
       </motion.marquee>
 
-      {/* ---Images */}
+      {/* *--- Display uploads */}
       {loading ? (
         <Loading />
       ) : (

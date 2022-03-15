@@ -4,8 +4,6 @@ import { Link, useNavigate } from "react-router-dom";
 //sign in;
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 // misc
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowCircleRight } from "@fortawesome/free-solid-svg-icons";
 import toast, { Toaster } from "react-hot-toast";
 
 
@@ -71,10 +69,8 @@ function SignInPage() {
         />
 
         <div className="signInDiv">
-          <span>Sign in </span>
-
           <button className="signInButton">
-            <FontAwesomeIcon icon={faArrowCircleRight} size="2x" />
+            Sign in
           </button>
         </div>
         <Link to={"/forgotpass"}>Forgot password?</Link>

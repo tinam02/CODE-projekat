@@ -10,11 +10,12 @@ import {
   orderBy,
   deleteDoc,
 } from "firebase/firestore";
+
 import { db } from "../firebase-config";
-// style
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import useFb from "../functions/useFb";
 import ScrollToTop from "../components/ScrollToTop";
+import Loading from "../components/Loading";
+// style
 import Masonry from "react-masonry-css";
 import { motion, AnimatePresence } from "framer-motion";
 import {
@@ -22,7 +23,6 @@ import {
   imageVariants,
   transition,
 } from "../functions/constants";
-import useFb from "../functions/useFb";
 
 function ProfilePage() {
   const { formData, defaultAvatar, onChange, onSubmit, onResetAvatar } =
@@ -35,30 +35,29 @@ function ProfilePage() {
   // get personal uploads
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
-    const getMyUploads = async () => {
-      const q = query(
-        collection(db, "uploads"),
-        auth.currentUser.uid && where("userRef", "==", auth.currentUser.uid),
-        orderBy("timestamp", "desc")
-      );
-      const querySnapshot = await getDocs(q);
-      const uploads = [];
-      querySnapshot.forEach((doc) =>
-        uploads.push({
-          id: doc.id,
-          data: doc.data(),
-        })
-      );
-      // console.log(uploads);
-      setUploads(uploads);
-      setLoading(false);
-    };
-    console.log(`object`);
     getMyUploads();
-    console.log(`object2`);
   }, []);
 
-  //log out
+  //*--- Fetch uploads
+  const getMyUploads = async () => {
+    const q = query(
+      collection(db, "uploads"),
+      auth.currentUser.uid && where("userRef", "==", auth.currentUser.uid),
+      orderBy("timestamp", "desc")
+    );
+    const uploads = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) =>
+      uploads.push({
+        id: doc.id,
+        data: doc.data(),
+      })
+    );
+    setUploads(uploads);
+    setLoading(false);
+  };
+
+  //*--- Log out
   const onLogout = () => {
     signOut(auth)
       .then(() => {
@@ -70,6 +69,7 @@ function ProfilePage() {
       });
   };
 
+  //*--- Delete image
   const deleteImg = async (id) => {
     const userDoc = doc(db, "uploads", id);
     await deleteDoc(userDoc);
@@ -77,22 +77,22 @@ function ProfilePage() {
     setUploads(updated);
   };
 
+  //*--- Uploads start
   let myUploads = "";
   if (!loading) {
     if (!(uploads.length > 0)) {
-      myUploads = <p className="profile-no-uploads">No uploads</p>;
+      myUploads = <h2 className="profile-no-uploads-text">No uploads yet</h2>;
     } else {
       myUploads = uploads.map((file) => (
         <>
           <motion.img
-          className="profile-images"
+            className="profile-image"
             style={{ position: "relative" }}
             src={file.data.imageURL[0]}
             key={file.data.imageURL[0]}
             initial={{ opacity: 0, y: 200 }}
-            variants={imageVariants}
-            transition={transition}
             whileInView={{ opacity: 1, y: 0 }}
+            transition={transition}
             exit="exit"
             alt={file.data.description}
             onClick={(evt) => {
@@ -103,10 +103,11 @@ function ProfilePage() {
       ));
     }
   }
+  //--- Uploads end
 
   return (
     <>
-      <ScrollToTop />
+      <ScrollToTop/>
       <motion.main
         id="profile"
         initial="exit"
@@ -167,19 +168,22 @@ function ProfilePage() {
 
         <Link to="/submit">
           <p>Submit an image</p>
-          <FontAwesomeIcon icon={faArrowRight} />
+
+          <span style={{ "font-size": "35px" }}> &#9758; </span>
         </Link>
         <button className="logOutButton" onClick={onLogout}>
           Log out
         </button>
       </motion.main>
-      <Masonry
-        breakpointCols={breakpointColumnsObj}
-        className="my-masonry-grid"
-        columnClassName="my-masonry-grid_column"
-      >
-        {myUploads}
-      </Masonry>
+      <div className="profile-masonry">
+        <Masonry
+          breakpointCols={breakpointColumnsObj}
+          className="my-masonry-grid"
+          columnClassName="my-masonry-grid_column"
+        >
+          {myUploads}
+        </Masonry>
+      </div>
     </>
   );
 }

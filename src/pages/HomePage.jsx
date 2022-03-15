@@ -1,10 +1,4 @@
 import React from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faArrowCircleRight,
-  faPaintBrush,
-  faTablet,
-} from "@fortawesome/free-solid-svg-icons";
 import AllUploads from "../functions/fetchAllUploads";
 import ScrollToTop from "../components/ScrollToTop";
 import { motion, AnimatePresence } from "framer-motion";
@@ -17,13 +11,10 @@ function HomePage() {
         <span className="homepage-title">
           <RandomFont text="GALLERY" />
         </span>
-      
       </header>
 
       <div>
-    
-
-        {/* sve slike */}
+        {/* sve slike iz fetchalluploads */}
         <AllUploads />
       </div>
       <ScrollToTop />
