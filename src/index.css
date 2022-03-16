@@ -424,8 +424,8 @@ li {
 .homepage-title {
   margin-top: 5%;
   text-align: center;
-  font-family: "lorenzaregular";
-  font-size: clamp(3rem, -0.875rem + 8.333vw, 6rem);
+  font-family: sans-serif;
+  font-size: clamp(2em, -0.875em + 8.333vw, 6em);
 }
 .accent-span {
   font-family: "respirablack";
@@ -588,6 +588,9 @@ textarea {
 
 /* ===================== MEDIA QUERY ===================== */
 @media (max-width: 35rem) {
+  hr{
+    margin-left: 0;
+  }
   .primary-navigation {
     gap: 0.5rem;
     position: fixed;
@@ -676,6 +679,9 @@ textarea {
   .primary-navigation {
     gap: 0.5rem;
     padding-inline: clamp(3rem, 7vw, 7rem);
+  }
+  hr{
+    margin-left: 0;
   }
 }
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { getAuth, updateProfile } from "firebase/auth";
 import { updateDoc, doc } from "firebase/firestore";
 import { db } from "../firebase-config";
+import toast from "react-hot-toast";
 
 const useFb = () => {
   const auth = getAuth();
@@ -39,31 +40,38 @@ const useFb = () => {
 
   //submit
   const onSubmit = function () {
-    //https://firebase.google.com/docs/auth/web/manage-users#update_a_users_profile
-    updateProfile(auth.currentUser, {
-      displayName: formData.username,
-      photoURL:
-        formData.photoURL === "" || !formData.photoURL
-          ? defaultAvatar
-          : formData.photoURL,
-    })
-      .then(() => {
-        // FireStore
-        // u firestoreu postoji users kolekcija
-        const userRef = doc(db, "users", auth.currentUser.uid);
-        updateDoc(userRef, {
-          username: formData.username,
-          photoURL:
-            formData.photoURL === "" || !formData.photoURL
-              ? defaultAvatar
-              : formData.photoURL,
-        });
-        setChangeAvatar(true);
+    const regUser = /^[a-z\d]{5,12}$/i;
+    if (regUser.test(formData.username) !== true) {
+      toast.error("Username must be between 5 and 12 characters!");
+      setFormData({ ...formData, username: auth.currentUser.displayName });
+    } else {
+      updateProfile(auth.currentUser, {
+        displayName: formData.username,
+        photoURL:
+          formData.photoURL === "" || !formData.photoURL
+            ? defaultAvatar
+            : formData.photoURL,
       })
-      .catch((err) => {
-        console.log(err.message);
-      });
-    setChangeAvatar(false);
+        .then(() => {
+          // FireStore
+          // u firestoreu postoji users kolekcija
+          const userRef = doc(db, "users", auth.currentUser.uid);
+          updateDoc(userRef, {
+            username: formData.username,
+            photoURL:
+              formData.photoURL === "" || !formData.photoURL
+                ? defaultAvatar
+                : formData.photoURL,
+          });
+          setChangeAvatar(true);
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+      setChangeAvatar(false);
+    }
+
+    //https://firebase.google.com/docs/auth/web/manage-users#update_a_users_profile
   };
 
   return {

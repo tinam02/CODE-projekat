@@ -23,6 +23,8 @@ import {
   imageVariants,
   transition,
 } from "../functions/constants";
+import toast, { Toaster } from "react-hot-toast";
+import Modal from "../components/Modal";
 
 function ProfilePage() {
   const { formData, defaultAvatar, onChange, onSubmit, onResetAvatar } =
@@ -32,6 +34,17 @@ function ProfilePage() {
   const auth = getAuth();
   const [changeDetails, setChangeDetails] = useState(false);
   const navigate = useNavigate();
+  const [openModal, setOpenModal] = useState(false);
+  const [modalId, setModalId] = useState({
+    src: "",
+    desc: "",
+    name: "",
+    time: "",
+    tag: "",
+    imgRemove: true,
+    imgId: null,
+  });
+
   // get personal uploads
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
@@ -96,7 +109,19 @@ function ProfilePage() {
             exit="exit"
             alt={file.data.description}
             onClick={(evt) => {
-              deleteImg(file.id);
+              // deleteImg(file.id);
+
+              setOpenModal(true);
+              setModalId({
+                // ...modalId,
+                src: file.data.imageURL[0],
+                desc: file.data.description,
+                name: file.data.name,
+                time: JSON.stringify(file.data.timestamp.toDate()),
+                tag: [file.data.type],
+                imgRemove: true,
+                imgId: file.id,
+              });
             }}
           />
         </>
@@ -107,7 +132,8 @@ function ProfilePage() {
 
   return (
     <>
-      <ScrollToTop/>
+      <Toaster />
+      <ScrollToTop />
       <motion.main
         id="profile"
         initial="exit"
@@ -149,10 +175,10 @@ function ProfilePage() {
             <p
               className="detailsText"
               onClick={async () => {
+                console.log(changeDetails);
                 //https://reactjs.org/docs/conditional-rendering.html
-                //true && x je x, a false && x je false
                 changeDetails && onSubmit();
-                // changeDetails = changeDetails || onSubmit();
+                console.log(changeDetails);
                 await setChangeDetails((bool) => !bool);
                 document.querySelector("#username").focus();
               }}
@@ -184,6 +210,22 @@ function ProfilePage() {
           {myUploads}
         </Masonry>
       </div>
+      {openModal && (
+        <Modal
+          toggleModal={setOpenModal}
+          imgSrc={modalId.src}
+          imgDesc={modalId.desc}
+          imgTitle={modalId.name}
+          imgTimestamp={modalId.time.slice(1, 11).replaceAll("-", "/")}
+          imgTag={modalId.tag}
+          imgRemove={true}
+          onRemove={() => {
+            toast.success("Image removed!");
+            setOpenModal(false);
+            deleteImg(modalId.imgId);
+          }}
+        />
+      )}
     </>
   );
 }

@@ -6,10 +6,13 @@ function Modal({
   imgTitle,
   imgTimestamp,
   imgTag,
+  imgRemove,
+ imgId,
+ onRemove,
 }) {
   const transition = {
     duration: 0.45,
-    ease: [0, 0.5, -0.5,1],
+    ease: [0, 0.5, -0.5, 1],
   };
 
   return (
@@ -20,7 +23,7 @@ function Modal({
       className="modalBackground"
     >
       <motion.div
-        initial={{ scale: 0, }}
+        initial={{ scale: 0 }}
         animate={{ scale: 1, transition }}
         exit={{ opacity: 0 }}
         className="modalContainer"
@@ -41,6 +44,7 @@ function Modal({
             {" "}
             X{" "}
           </button>
+          {imgRemove && <button onClick={onRemove}>Remove</button>}
         </div>
       </motion.div>
     </motion.div>

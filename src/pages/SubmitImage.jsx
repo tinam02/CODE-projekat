@@ -42,7 +42,6 @@ function SubmitImage() {
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  // const validPass = new RegExp('[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?')
 
   const handleChangeName = (evt) => {
     evt.preventDefault();

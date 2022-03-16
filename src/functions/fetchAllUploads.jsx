@@ -228,7 +228,7 @@ function AllUploads() {
           </Masonry>
 
           {openModal && (
-            <Modal
+            <Modal 
               toggleModal={setOpenModal}
               imgSrc={modalId.src}
               imgDesc={modalId.desc}

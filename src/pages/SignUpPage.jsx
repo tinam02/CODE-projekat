@@ -29,8 +29,10 @@ function SignUpPage() {
 
   const onSubmit = function (evt) {
     evt.preventDefault();
-
+    const regPass = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{6,}$/;
+    const regUser = /^[a-z\d]{5,12}$/i;
     const auth = getAuth();
+
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // user created
@@ -38,16 +40,12 @@ function SignUpPage() {
         // za username
         updateProfile(auth.currentUser, {
           displayName: username,
-         
         })
           .then(() => {
             console.log(`Welcome, ${username}`);
           })
           .catch((err) => {
-            console.log(
-              "An error occured with the createUserWithEmailAndPassword function" +
-                err.message
-            );
+            console.log(`An error occured during registration: ${err.message}`);
           });
 
         const formDataCopy = { ...formData };
@@ -57,13 +55,18 @@ function SignUpPage() {
         navigate("/");
       })
       .catch((err) => {
-        if (err.code === "auth/email-already-in-use") {
+        if (regPass.test(password) !== true) {
+          toast.error(
+            "Password must be at least 6 characters and contain at least one uppercase letter, one lowercase letter and a number"
+          );
+        } else if (regUser.test(username) !== true) {
+          toast.error("Username needs to have between 5 and 12 characters");
+        } else if (err.code === "auth/email-already-in-use") {
           toast.error("Email already in use");
         } else if (err.code === "auth/invalid-email") {
           toast.error("Invalid email");
-        } else if (err.code === "auth/weak-password") {
-          toast.error("Password should be at least 6 chars");
-        } else {
+        }
+        else {
           toast.error("An unknown error has occured");
         }
       });
@@ -100,9 +103,7 @@ function SignUpPage() {
         />
 
         <div className="signUpDiv">
-          <button className="signUpButton">
-           Sign up
-          </button>
+          <button className="signUpButton">Sign up</button>
         </div>
       </form>
     </div>
