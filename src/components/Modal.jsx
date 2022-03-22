@@ -1,4 +1,6 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
+
 function Modal({
   toggleModal,
   imgSrc,
@@ -7,8 +9,8 @@ function Modal({
   imgTimestamp,
   imgTag,
   imgRemove,
- imgId,
- onRemove,
+  imgId,
+  onRemove,
 }) {
   const transition = {
     duration: 0.45,
@@ -24,7 +26,10 @@ function Modal({
     >
       <motion.div
         initial={{ scale: 0 }}
-        animate={{ scale: 1, transition }}
+        animate={{
+          scale: 1,
+          transition,
+        }}
         exit={{ opacity: 0 }}
         className="modalContainer"
       >
@@ -34,17 +39,27 @@ function Modal({
             <h1 className="modal__imgTitle">Title: {imgTitle}</h1>
             <p className="modal__imgDesc">Description: {imgDesc}</p>
             <p className="modal__imgDate">Date: {imgTimestamp}</p>
-            <p className="modal__imgTag">#{imgTag}</p>
+            <p     className="modal__imgTag">
+              <Link
+                to={`/filtered/${imgTag}`}
+                className="modal__imgTag-link"
+                //toggle modal off to enable scrolling
+                onClick={() => toggleModal()}
+              >
+                #{imgTag}
+              </Link>
+            </p>
           </div>
-          <button
-            onClick={() => {
-              toggleModal();
-            }}
-          >
-            {" "}
-            X{" "}
-          </button>
-          {imgRemove && <button onClick={onRemove}>Remove</button>}
+          <div className="modal-btn-container">
+            <button
+              onClick={() => {
+                toggleModal();
+              }}
+            >
+              Close
+            </button>
+            {imgRemove && <button onClick={onRemove}>Remove</button>}
+          </div>
         </div>
       </motion.div>
     </motion.div>

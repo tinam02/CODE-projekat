@@ -6,7 +6,6 @@ import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 // misc
 import toast, { Toaster } from "react-hot-toast";
 
-
 //https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react
 function SignInPage() {
   const navigate = useNavigate();
@@ -47,33 +46,29 @@ function SignInPage() {
   };
 
   return (
-    <div>
+    <div className="sign-in-container">
       <Toaster />
-      <h1>SignInPage</h1>
+      <h1>Sign In</h1>
       <form onSubmit={onSubmit}>
         <input
           type="email"
-          placeholder="unesi email"
+          placeholder="email"
           value={formData.email}
           onChange={onChange}
           className="email"
           id="email"
         />
         <input
-          placeholder="unesi sifru"
+          placeholder="password"
           type="password"
           value={formData.password}
           onChange={onChange}
           className="password"
           id="password"
         />
+        <button className="btn sign-in-btn">Sign in</button>
 
-        <div className="signInDiv">
-          <button className="signInButton">
-            Sign in
-          </button>
-        </div>
-        <Link to={"/forgotpass"}>Forgot password?</Link>
+        <Link to={"/forgotpass"}>Forgot your password?</Link>
       </form>
     </div>
   );

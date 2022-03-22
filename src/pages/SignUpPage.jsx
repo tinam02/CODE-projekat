@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 //todo regex
 import {
   getAuth,
@@ -65,8 +65,7 @@ function SignUpPage() {
           toast.error("Email already in use");
         } else if (err.code === "auth/invalid-email") {
           toast.error("Invalid email");
-        }
-        else {
+        } else {
           toast.error("An unknown error has occured");
         }
       });
@@ -75,11 +74,11 @@ function SignUpPage() {
   return (
     <div>
       <Toaster />
-      <h1>SignUpPage</h1>
+      <h1>Sign Up</h1>
       <form onSubmit={onSubmit}>
         <input
           type="text"
-          placeholder="unesi user"
+          placeholder="username"
           value={username}
           onChange={onChange}
           className="username"
@@ -87,14 +86,14 @@ function SignUpPage() {
         />
         <input
           type="email"
-          placeholder="unesi email"
+          placeholder="email"
           value={email}
           onChange={onChange}
           className="email"
           id="email"
         />
         <input
-          placeholder="unesi sifru"
+          placeholder="password"
           type="password"
           value={password}
           onChange={onChange}
@@ -103,7 +102,7 @@ function SignUpPage() {
         />
 
         <div className="signUpDiv">
-          <button className="signUpButton">Sign up</button>
+          <button className="btn sign-up-btn">Submit</button>
         </div>
       </form>
     </div>

@@ -25,6 +25,11 @@ const useFb = () => {
     });
   };
 
+  //check if image
+  const checkURL = (url) => {
+    return url.match(/\.(jpeg|jpg|gif|png|webp|jfif)$/);
+  };
+
   //reset avatar
   const onResetAvatar = function () {
     updateProfile(auth.currentUser, {
@@ -48,7 +53,9 @@ const useFb = () => {
       updateProfile(auth.currentUser, {
         displayName: formData.username,
         photoURL:
-          formData.photoURL === "" || !formData.photoURL
+          formData.photoURL === "" ||
+          !formData.photoURL ||
+          checkURL(formData.photoURL) === null
             ? defaultAvatar
             : formData.photoURL,
       })
@@ -81,6 +88,7 @@ const useFb = () => {
     onChange,
     onSubmit,
     onResetAvatar,
+    checkURL,
   };
 };
 export default useFb;

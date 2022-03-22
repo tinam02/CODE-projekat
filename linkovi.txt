@@ -52,6 +52,12 @@ https://www.npmjs.com/package/react-if-elseif-else-render
 //push vs unshift;
 https://stackoverflow.com/questions/44031591/performance-of-array-push-vs-array-unshift
 
+//set
+https://www.javascripttutorial.net/array/javascript-remove-duplicates-from-array/
+
+//verify image extension
+https://stackoverflow.com/questions/9714525/javascript-image-url-verify
+
 **STYLE**
 https://www.npmjs.com/package/react-masonry-css
 https://nekocalc.com/px-to-rem-converter

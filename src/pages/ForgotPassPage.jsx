@@ -33,23 +33,21 @@ function ForgotPasswordPage() {
   return (
     <div>
       <Toaster />
-      <h1>ForgotPasswordPage</h1>
+      <h1>Reset password</h1>
       <main>
         <form onSubmit={onSubmit}>
           <input
             type="email"
             name="email"
             id="email"
-            placeholder="Email..."
+            placeholder="email"
             value={email}
             onChange={onChange}
           />
-          <Link to="/signin">Sign in</Link>
-
-          <div>
-            <p>Send reset email</p>
-            <button>Send</button>
-          </div>
+          <p>
+            Back to <Link to="/signin">Sign in</Link>
+          </p>
+          <button>Send Reset Email</button>
         </form>
       </main>
     </div>

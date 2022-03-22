@@ -14,10 +14,9 @@ import {
 import { db } from "../firebase-config";
 import useFb from "../functions/useFb";
 import ScrollToTop from "../components/ScrollToTop";
-import Loading from "../components/Loading";
 // style
 import Masonry from "react-masonry-css";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import {
   breakpointColumnsObj,
   imageVariants,
@@ -31,6 +30,10 @@ function ProfilePage() {
     useFb();
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
+  const [myData, setMyData] = useState({
+    postCount: 0,
+    myUsername: "",
+  });
   const auth = getAuth();
   const [changeDetails, setChangeDetails] = useState(false);
   const navigate = useNavigate();
@@ -67,6 +70,11 @@ function ProfilePage() {
       })
     );
     setUploads(uploads);
+    setMyData((prevstate) => ({
+      ...prevstate,
+      myUsername: auth.currentUser && auth.currentUser.displayName,
+      postCount: uploads && uploads.length,
+    }));
     setLoading(false);
   };
 
@@ -94,37 +102,35 @@ function ProfilePage() {
   let myUploads = "";
   if (!loading) {
     if (!(uploads.length > 0)) {
-      myUploads = <h2 className="profile-no-uploads-text">No uploads yet</h2>;
+      myUploads = ''
     } else {
       myUploads = uploads.map((file) => (
-        <>
-          <motion.img
-            className="profile-image"
-            style={{ position: "relative" }}
-            src={file.data.imageURL[0]}
-            key={file.data.imageURL[0]}
-            initial={{ opacity: 0, y: 200 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={transition}
-            exit="exit"
-            alt={file.data.description}
-            onClick={(evt) => {
-              // deleteImg(file.id);
+        <motion.img
+          className="profile-image"
+          style={{ position: "relative" }}
+          src={file.data.imageURL[0]}
+          key={file.data.imageURL[0]}
+          initial={{ opacity: 0, y: 200 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={transition}
+          exit="exit"
+          alt={file.data.description}
+          onClick={(evt) => {
+            // deleteImg(file.id);
 
-              setOpenModal(true);
-              setModalId({
-                // ...modalId,
-                src: file.data.imageURL[0],
-                desc: file.data.description,
-                name: file.data.name,
-                time: JSON.stringify(file.data.timestamp.toDate()),
-                tag: [file.data.type],
-                imgRemove: true,
-                imgId: file.id,
-              });
-            }}
-          />
-        </>
+            setOpenModal(true);
+            setModalId({
+              // ...modalId,
+              src: file.data.imageURL[0],
+              desc: file.data.description,
+              name: file.data.name,
+              time: JSON.stringify(file.data.timestamp.toDate()),
+              tag: [file.data.type],
+              imgRemove: true,
+              imgId: file.id,
+            });
+          }}
+        />
       ));
     }
   }
@@ -151,53 +157,64 @@ function ProfilePage() {
             })`,
           }}
         />
+        <h2>{myData.myUsername}</h2>
+        <h2>
+          {myData.postCount === 1 ? "1 post" : `${myData.postCount} posts`}
+        </h2>
 
-        <div className="editDetailsDiv">
-          <div className="update-details">
-            <input
-              type="text"
-              id="username"
-              disabled={!changeDetails}
-              value={formData.username}
-              onChange={onChange}
-            />
+        <div className="edit-details-container">
+          <input
+            type="text"
+            id="username"
+            disabled={!changeDetails}
+            value={formData.username}
+            onChange={onChange}
+          />
 
-            <input
-              type="url"
-              name="photoURL"
-              id="photoURL"
-              value={formData.photoURL}
-              disabled={!changeDetails}
-              onChange={onChange}
-              placeholder="Upload avatar from url"
-              required
-            />
-            <p
-              className="detailsText"
+          <input
+            type="url"
+            name="photoURL"
+            id="photoURL"
+            value={formData.photoURL}
+            disabled={!changeDetails}
+            onChange={onChange}
+            placeholder="Upload avatar from url"
+            required
+          />
+          <div className="details-btn-container">
+            <button
+              className="details-btn"
               onClick={async () => {
-                console.log(changeDetails);
                 //https://reactjs.org/docs/conditional-rendering.html
                 changeDetails && onSubmit();
-                console.log(changeDetails);
+
                 await setChangeDetails((bool) => !bool);
                 document.querySelector("#username").focus();
               }}
               // async await da bi fokus radio!
             >
               {changeDetails ? "Done" : "Update details"}
-            </p>
-            <p className="reset-avatar detailsText" onClick={onResetAvatar}>
+            </button>
+            <button className="details-btn" onClick={onResetAvatar}>
               Reset avatar
-            </p>
+            </button>
           </div>
         </div>
 
-        <Link to="/submit">
+        <Link
+          to="/submit"
+          style={{
+            color: "black",
+            textDecoration: "underline",
+            fontFamily: "gg-bold-italic",
+            margin: "30px 0",
+          }}
+        >
           <p>Submit an image</p>
 
-          <span style={{ "font-size": "35px" }}> &#9758; </span>
+          <span style={{ "fontSize": "35px" }}> &#9758; </span>
         </Link>
-        <button className="logOutButton" onClick={onLogout}>
+        <button className="btn logOutButton" onClick={onLogout}>
           Log out
         </button>
       </motion.main>
@@ -223,6 +240,7 @@ function ProfilePage() {
             toast.success("Image removed!");
             setOpenModal(false);
             deleteImg(modalId.imgId);
+            setMyData({ ...myData, postCount: myData.postCount - 1 });
           }}
         />
       )}

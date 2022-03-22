@@ -1,44 +1,57 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { db } from "../firebase-config";
 import {
   collection,
   query,
   where,
   getDocs,
-  getDoc,
-  doc,
+  orderBy,
 } from "firebase/firestore";
 import Masonry from "react-masonry-css";
 import Loading from "../components/Loading";
+import Modal from "../components/Modal";
+import { motion, AnimatePresence } from "framer-motion";
+import { transition } from "../functions/constants";
 
 // todo  update this code
 
 function Filtered() {
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
+  const [openModal, setOpenModal] = useState(false);
+  const [modalId, setModalId] = useState({
+    src: "",
+    desc: "",
+    name: "",
+    time: "",
+    tag: "",
+  });
   const params = useParams();
-  const navigate = useNavigate();
-  useEffect(() => {
-    const fetchUploads = async () => {
-      const q = query(
-        collection(db, "uploads"),
-        where("type", "==", params.filteredBy)
-      );
-      let uploads = [];
-      const querySnapshot = await getDocs(q);
 
-      querySnapshot.forEach((doc) => {
-        console.log(doc.id, " => ", doc.data());
-        return uploads.unshift({ id: doc.id, data: doc.data() });
-      });
-      setUploads(uploads);
-      // console.log(uploads);
-      setLoading(false);
-    };
-    fetchUploads();
+
+  useEffect(() => {
+    fetchByTag();
   }, []);
-  //!!   DEPENDENCY ARRAY ZA INF LOOP
+  //!!   dep array for inf loop
+
+  const fetchByTag = async () => {
+    const q = query(
+      collection(db, "uploads"),
+      where("type", "==", params.filteredBy),
+      orderBy("timestamp", "desc")
+    );
+
+    const uploads = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+      uploads.push({ id: doc.id, data: doc.data() });
+    });
+
+    setUploads(uploads);
+    setLoading(false);
+  };
+
   const breakpointColumnsObj = {
     default: 5,
     1600: 4,
@@ -46,37 +59,64 @@ function Filtered() {
     719: 2,
     560: 1,
   };
-  const fetchFilter = async () => {
-    const docRef = doc(db, "uploads", this);
-    const querySnapshot = await getDoc(docRef);
-    console.log(querySnapshot.data());
-  };
 
   let renderedUploads = "";
   if (uploads) {
     if (!(uploads.length > 0)) {
       renderedUploads = `No uploads tagged with ${params.filteredBy}`;
     } else {
-      renderedUploads = uploads.map((file) => (
-        <img onClick={fetchFilter} src={file.data.imageURL[0]} />
+      renderedUploads = uploads.map((file, i) => (
+        <motion.img
+          src={file.data.imageURL[0]}
+          key={i}
+          alt={file.data.description}
+          initial={{ opacity: 0, y: 200 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={transition}
+          onClick={() => {
+            setOpenModal(true);
+            setModalId({
+              // ...modalId,
+              src: file.data.imageURL[0],
+              desc: file.data.description,
+              name: file.data.name,
+              time: JSON.stringify(file.data.timestamp.toDate()),
+              tag: [file.data.type],
+            });
+          }}
+        />
       ));
     }
   }
 
   return (
     <div>
-      <h1>#{params.filteredBy}</h1>
+      <h1 style={{ margin: " 30px 0", textAlign: "center" }}>
+        #{params.filteredBy}
+      </h1>
 
       {loading ? (
-      <Loading/>
+        <Loading />
       ) : (
-        <Masonry
-          breakpointCols={breakpointColumnsObj}
-          className="my-masonry-grid"
-          columnClassName="my-masonry-grid_column"
-        >
-          {renderedUploads}
-        </Masonry>
+        <>
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="my-masonry-grid"
+            columnClassName="my-masonry-grid_column"
+          >
+            {renderedUploads}
+          </Masonry>
+          {openModal && (
+            <Modal
+              toggleModal={setOpenModal}
+              imgSrc={modalId.src}
+              imgDesc={modalId.desc}
+              imgTitle={modalId.name}
+              imgTimestamp={modalId.time.slice(1, 11).replaceAll("-", "/")}
+              imgTag={modalId.tag}
+            />
+          )}
+        </>
       )}
     </div>
   );

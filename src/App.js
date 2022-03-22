@@ -14,10 +14,12 @@ import Cursor from "./components/Cursor";
 import { AnimatePresence } from "framer-motion";
 import ErrorPage from "./pages/ErrorPage";
 
+
+
 function App() {
   const location = useLocation();
   return (
-    <>
+    <div>
       <Cursor />
       <Navbar />
       <AnimatePresence exitBeforeEnter>
@@ -67,7 +69,7 @@ function App() {
           <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
       </AnimatePresence>
-    </>
+    </div>
   );
 }
 

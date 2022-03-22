@@ -134,9 +134,9 @@ function AllUploads() {
       </AnimatePresence>;
     }
   }
-//*--- Uploads end
+  //*--- Uploads end
 
-//*--- Marquee start
+  //*--- Marquee start
   let marqueeTags = [];
   if (uploads) {
     if (!(uploads.length > 0)) {
@@ -155,7 +155,7 @@ function AllUploads() {
               to={`/filtered/${tag}`}
               style={{
                 fontSize: "var(--fs-default)",
-                fontFamily: "lorenzaregular",
+                fontFamily: "gg-italic",
                 marginLeft: "20px",
                 textDecoration: "none",
                 color: "white",
@@ -168,80 +168,86 @@ function AllUploads() {
       });
     }
   }
-//--- Marquee end
+  //--- Marquee end
 
   return (
-    <main style={{ overflow: "hidden" }}>
-      <motion.hr
-        initial={{ width: 0, x: "-100%" }}
-        animate={{ width: "105%", x: 0 }}
-        exit={{ x: "-100%" }}
-        transition={transition}
-      />
-      <motion.hr
-        initial={{ width: 0, x: "-100%" }}
-        animate={{ width: "105%", x: 0 }}
-        exit={{ x: "-100%" }}
-        transition={transition}
-      />
-      <motion.hr
-        initial={{ width: 0, x: "-100%" }}
-        animate={{ width: "105%", x: 0 }}
-        exit={{ x: "-100%" }}
-        transition={transition}
-      />
-      {/* --- Display marquee */}
-      <motion.marquee
-        initial={{ width: 0, x: "-100%" }}
-        animate={{ width: "105%", x: 0 }}
-        exit={{ x: "-100%" }}
-        transition={transition}
-        behavior="scroll"
-        direction="right"
-        style={{ backgroundColor: "#000", padding: "2px" }}
-      >
-        {marqueeTags}
-      </motion.marquee>
-      <motion.marquee
-        initial={{ width: 0, x: "100%" }}
-        animate={{ width: "105%", x: 0 }}
-        exit={{ x: "100%" }}
-        transition={transition}
-        behavior="scroll"
-        direction="left"
-        style={{ backgroundColor: "#000", padding: "2px" }}
-      >
-        {marqueeTags}
-      </motion.marquee>
+    <>
+      <main style={{ overflow: "hidden" }}>
+        <motion.hr
+          initial={{ width: 0, x: "-100%" }}
+          animate={{ width: "105%", x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={transition}
+        />
+        <motion.hr
+          initial={{ width: 0, x: "-100%" }}
+          animate={{ width: "105%", x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={transition}
+        />
+        <motion.hr
+          initial={{ width: 0, x: "-100%" }}
+          animate={{ width: "105%", x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={transition}
+        />
+        {/* --- Display marquee */}
+        <motion.marquee
+          initial={{ width: 0, x: "-100%" }}
+          animate={{ width: "105%", x: 0 }}
+          exit={{ x: "-100%" }}
+          transition={transition}
+          behavior="scroll"
+          direction="right"
+          style={{ backgroundColor: "#000", padding: "2px" }}
+        >
+          {marqueeTags}
+        </motion.marquee>
+        <motion.marquee
+          initial={{ width: 0, x: "100%" }}
+          animate={{ width: "105%", x: 0 }}
+          exit={{ x: "100%" }}
+          transition={transition}
+          behavior="scroll"
+          direction="left"
+          style={{ backgroundColor: "#000", padding: "2px" }}
+        >
+          {marqueeTags}
+        </motion.marquee>
+        {/* *--- Display uploads */}
+        {loading ? (
+          <Loading />
+        ) : (
+          <>
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="my-masonry-grid"
+              columnClassName="my-masonry-grid_column"
+            >
+              {renderedUploads}
+            </Masonry>
 
-      {/* *--- Display uploads */}
-      {loading ? (
-        <Loading />
-      ) : (
-        <>
-          <Masonry
-            breakpointCols={breakpointColumnsObj}
-            className="my-masonry-grid"
-            columnClassName="my-masonry-grid_column"
-          >
-            {renderedUploads}
-          </Masonry>
-
-          {openModal && (
-            <Modal 
-              toggleModal={setOpenModal}
-              imgSrc={modalId.src}
-              imgDesc={modalId.desc}
-              imgTitle={modalId.name}
-              imgTimestamp={modalId.time.slice(1, 11).replaceAll("-", "/")}
-              imgTag={modalId.tag}
-            />
-          )}
-
-          {lastUpload && <button onClick={loadMore}> Load more</button>}
-        </>
-      )}
-    </main>
+            {openModal && (
+              <Modal
+                toggleModal={setOpenModal}
+                imgSrc={modalId.src}
+                imgDesc={modalId.desc}
+                imgTitle={modalId.name}
+                imgTimestamp={modalId.time.slice(1, 11).replaceAll("-", "/")}
+                imgTag={modalId.tag}
+              />
+            )}
+          </>
+        )}{" "}{lastUpload && (
+          <div className="show-more">
+            <button className="load-more-btn" onClick={loadMore}>
+              Show more
+            </button>
+          </div>
+        )}
+      </main>
+      
+    </>
   );
 }
 

@@ -54,7 +54,7 @@ function Navbar() {
       <button
         className="mobile-nav-toggle"
         aria-controls="primary-navigation"
-      />
+      ></button>
       <nav>
         <ul
           data-visible="false"
@@ -65,7 +65,7 @@ function Navbar() {
             <li className="nav-item" onClick={() => navigate("/submit")}>
               <span
                 style={{
-                  "font-size": "25px",
+                  fontSize: "25px",
                   opacity: navIconActive("/submit") ? "1" : "0.5",
                 }}
               >
@@ -81,7 +81,7 @@ function Navbar() {
             <li className="nav-item " onClick={() => navigate("/signin")}>
               <span
                 style={{
-                  "font-size": "25px",
+                  fontSize: "25px",
                   opacity: navIconActive("/signin") ? "1" : "0.5",
                 }}
               >
@@ -97,7 +97,7 @@ function Navbar() {
             <li className="nav-item" onClick={() => navigate("/signup")}>
               <span
                 style={{
-                  "font-size": "25px",
+                  fontSize: "25px",
                   opacity: navIconActive("/signup") ? "1" : "0.5",
                 }}
               >
@@ -112,7 +112,7 @@ function Navbar() {
           <li className="nav-item " onClick={() => navigate("/")}>
             <span
               style={{
-                "font-size": "25px",
+                fontSize: "25px",
                 opacity: navIconActive("/") ? "1" : "0.5",
               }}
             >
@@ -126,7 +126,7 @@ function Navbar() {
           <li className="nav-item " onClick={() => navigate("/profile")}>
             <span
               style={{
-                "font-size": "25px",
+                fontSize: "25px",
                 opacity: navIconActive("/profile") ? "1" : "0.5",
               }}
             >
@@ -138,6 +138,10 @@ function Navbar() {
           </li>
         </ul>
       </nav>
+
+      <div>
+        <img src={logo} alt="logo" className="logo rotating" />
+      </div>
     </header>
   );
 }
