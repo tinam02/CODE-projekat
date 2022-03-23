@@ -13,8 +13,9 @@ import {
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
 import { motion, AnimatePresence } from "framer-motion";
-import { imageVariants, transition } from "../functions/constants";
+import {  transition } from "../functions/constants";
 import useFb from "../functions/useFb";
+
 // FORM
 // https://dev.to/jleewebdev/using-the-usestate-hook-and-working-with-forms-in-react-js-m6b
 function SubmitImage() {
@@ -24,7 +25,7 @@ function SubmitImage() {
   const [formData, setFormData] = useState({
     name: "",
     description: "",
-    type: "digital",
+    type: "other",
     imageURL: {},
   });
 
@@ -152,15 +153,26 @@ function SubmitImage() {
   // if (auth.currentUser) {
   //   lockedUsername = auth.currentUser.displayName;
   // }
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
+  };
 
+  const item = {
+    hidden: { x: "-10%", opacity: 0 },
+    show: { x: 0, opacity: 1, transition },
+  };
   return (
     <>
-      <motion.h1>Submit image</motion.h1>
+      <h1 className="page-h1">Submit image</h1>
       <Toaster />
       <motion.div id="submit-image-div">
         <form className="submit-form" onSubmit={handleSubmit}>
-          <ul>
-            <li>
+          <motion.ul variants={container} initial="hidden" animate="show">
+            <motion.li variants={item}>
               <label htmlFor="name">
                 title
                 <input
@@ -173,8 +185,8 @@ function SubmitImage() {
                   required
                 />
               </label>
-            </li>
-            <li>
+            </motion.li>
+            <motion.li variants={item}>
               <label htmlFor="description">
                 description
                 <textarea
@@ -189,10 +201,10 @@ function SubmitImage() {
                   required
                 />
               </label>
-            </li>
-            <li>
+            </motion.li>
+            <motion.li variants={item}>
               <div className="tag-input-container">
-                <span class="tag-input-prefix">#</span>
+                <span className="tag-input-prefix">#</span>
                 <input
                   className="tag-input"
                   type="text"
@@ -203,8 +215,8 @@ function SubmitImage() {
                   onChange={handleChangeType}
                 />
               </div>
-            </li>
-            <li>
+            </motion.li>
+            <motion.li variants={item}>
               {" "}
               <label htmlFor="images">
                 image
@@ -216,14 +228,8 @@ function SubmitImage() {
                   multiple={false}
                 />
               </label>
-            </li>
-            {/* <li>
-              <label htmlFor="username">
-                username:
-                <input value={lockedUsername} disabled />
-              </label>
-            </li> */}
-          </ul>
+            </motion.li>
+          </motion.ul>
           <button className="btn submit-image-btn" type="submit">
             submit
           </button>

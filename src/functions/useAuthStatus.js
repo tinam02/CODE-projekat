@@ -12,7 +12,10 @@ export const useAuthStatus = () => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setLoggedIn(true);
-        console.log(`korisnik jeulogovan ${auth.currentUser.displayName}`);
+        console.log(`Korisnik je ulogovan ${auth.currentUser.displayName}`);
+      } else {
+        //!added else
+        setLoggedIn(false);
       }
       setStatusToggle(false);
     });
@@ -20,4 +23,3 @@ export const useAuthStatus = () => {
 
   return { loggedIn, statusToggle };
 };
-

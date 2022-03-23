@@ -49,7 +49,7 @@ function App() {
               path="/profile"
               element={<ProfilePage />}
             ></Route>
-            {/* ovo je outlet */}
+            {/*  outlet */}
           </Route>
           <Route
             key={location.pathname}

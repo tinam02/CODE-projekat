@@ -1,31 +1,36 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import { getAuth } from "firebase/auth";
+// import { getAuth } from "firebase/auth";
+import { useAuthStatus } from "../functions/useAuthStatus.js";
 // misc
 import logo from "../assets/logo2.svg";
-import hamburger from "../assets/hamburger.svg";
-import hamburgerclose from "../assets/hamburgerclose.svg";
+import Loading from "./Loading.jsx";
+// import hamburger from "../assets/hamburger.svg";
+// import hamburgerclose from "../assets/hamburgerclose.svg";
 
 function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
-
+  //!TEST switched !user to !loggedIn; should work
+  //navbar instantly shows/hides icons based on status;
+  const { loggedIn, statusToggle } = useAuthStatus();
+  
   const navIconActive = function (path) {
     if (path === location.pathname) {
       return true;
     }
   };
   //  navIconActive("/signup") ? "#fff" : "rgba(255, 255, 255, 0.5)"
-  const auth = getAuth();
-  let user = "";
-  if (auth.currentUser) {
-    user = auth.currentUser;
-  }
+  // const auth = getAuth();
+  // let user = "";
+  // if (auth.currentUser) {
+  //   user = auth.currentUser;
+  // }
   useEffect(() => {
-    console.log("using effect");
+    console.log(`Logged in : ${loggedIn}`);
     handleContentLoaded();
   }, []);
-
+ 
   const handleContentLoaded = () => {
     const nav = document.querySelector(".primary-navigation");
     const navToggle = document.querySelector(".mobile-nav-toggle");
@@ -61,7 +66,7 @@ function Navbar() {
           className="primary-navigation underline-indicators flex"
         >
           {/* Ako korisnik nije ulogovan, prikazi sign in i sign up i ne prikazuj link za upload slike */}
-          {!user ? null : (
+          {!loggedIn ? null : (
             <li className="nav-item" onClick={() => navigate("/submit")}>
               <span
                 style={{
@@ -77,7 +82,7 @@ function Navbar() {
             </li>
           )}
 
-          {!user ? (
+          {!loggedIn ? (
             <li className="nav-item " onClick={() => navigate("/signin")}>
               <span
                 style={{
@@ -93,7 +98,7 @@ function Navbar() {
             </li>
           ) : null}
 
-          {!user ? (
+          {!loggedIn ? (
             <li className="nav-item" onClick={() => navigate("/signup")}>
               <span
                 style={{

@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-
+import { transition } from "../functions/constants";
 function Modal({
   toggleModal,
   imgSrc,
@@ -12,11 +12,18 @@ function Modal({
   imgId,
   onRemove,
 }) {
-  const transition = {
-    duration: 0.45,
-    ease: [0, 0.5, -0.5, 1],
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: { staggerChildren: 0.2 },
+    },
   };
 
+  const item = {
+    hidden: { x: "-10%", opacity: 0 },
+    show: { x: 0, opacity: 1, transition },
+  };
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -35,11 +42,22 @@ function Modal({
       >
         <img src={imgSrc} alt="modal img" draggable={false} />
         <div className="modalBody">
-          <div className="modalDetails">
-            <h1 className="modal__imgTitle">Title: {imgTitle}</h1>
-            <p className="modal__imgDesc">Description: {imgDesc}</p>
-            <p className="modal__imgDate">Date: {imgTimestamp}</p>
-            <p     className="modal__imgTag">
+          <motion.div
+            variants={container}
+            initial="hidden"
+            animate="show"
+            className="modalDetails"
+          >
+            <motion.h1 variants={item} className="modal__imgTitle">
+              {imgTitle}
+            </motion.h1>
+            <motion.p variants={item} className="modal__imgDate">
+              Date: {imgTimestamp}
+            </motion.p>
+            <motion.p variants={item} className="modal__imgDesc">
+              Description: {imgDesc}
+            </motion.p>
+            <motion.p variants={item} className="modal__imgTag">
               <Link
                 to={`/filtered/${imgTag}`}
                 className="modal__imgTag-link"
@@ -48,9 +66,17 @@ function Modal({
               >
                 #{imgTag}
               </Link>
-            </p>
-          </div>
-          <div className="modal-btn-container">
+            </motion.p>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: 1,
+              transition: { ...transition, duration: 1.2 },
+            }}
+            exit={{ opacity: 0 }}
+            className="modal-btn-container"
+          >
             <button
               onClick={() => {
                 toggleModal();
@@ -59,7 +85,7 @@ function Modal({
               Close
             </button>
             {imgRemove && <button onClick={onRemove}>Remove</button>}
-          </div>
+          </motion.div>
         </div>
       </motion.div>
     </motion.div>

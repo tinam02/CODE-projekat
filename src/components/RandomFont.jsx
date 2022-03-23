@@ -32,7 +32,7 @@ function RandomFont(params) {
       id="demo" 
       initial={{ y: -200, opacity: 0,  dropShadow: "10px 10px 0 rgba(255, 0, 0, 0.2)", }}
       animate={{ opacity: 1, y: 0,  dropShadow: "10px 10px 0 rgba(0, 0, 0, 0.3)", }}
-      exit={{ y: "-110%", opacity: 0 }}
+      exit={{ y: "-70%", opacity: 0 }}
       transition={transition}
     >
       {params.text}

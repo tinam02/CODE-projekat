@@ -46,9 +46,9 @@ function SignInPage() {
   };
 
   return (
-    <div className="sign-in-container">
+    <div className="sign-in-container sign-page">
       <Toaster />
-      <h1>Sign In</h1>
+      <h1 className="page-h1">Sign In</h1>
       <form onSubmit={onSubmit}>
         <input
           type="email"
@@ -65,10 +65,12 @@ function SignInPage() {
           onChange={onChange}
           className="password"
           id="password"
-        />
+        />{" "}
+        <Link to={"/forgotpass"} className="forgot-pass-link">
+          Forgot your password?
+        </Link>
+       
         <button className="btn sign-in-btn">Sign in</button>
-
-        <Link to={"/forgotpass"}>Forgot your password?</Link>
       </form>
     </div>
   );

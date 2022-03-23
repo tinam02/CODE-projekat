@@ -29,9 +29,8 @@ function Cursor() {
           cursor.style.animation = "animIdle 0.3s forwards";
         }
       });
-      console.log(`cus`);
     };
-    console.log(`object`);
+
     custom();
   }, []);
   return (

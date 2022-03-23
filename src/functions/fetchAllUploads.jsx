@@ -148,8 +148,8 @@ function AllUploads() {
             key={i}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            exit={{ x: "-100%" }}
-            transition={{ transition, duration: 0.8 }}
+            // removed exit anim bc of delay
+            transition={{ transition, duration: 0.1 }}
           >
             <Link
               to={`/filtered/${tag}`}
@@ -238,7 +238,8 @@ function AllUploads() {
               />
             )}
           </>
-        )}{" "}{lastUpload && (
+        )}{" "}
+        {lastUpload && (
           <div className="show-more">
             <button className="load-more-btn" onClick={loadMore}>
               Show more
@@ -246,7 +247,6 @@ function AllUploads() {
           </div>
         )}
       </main>
-      
     </>
   );
 }

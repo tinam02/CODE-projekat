@@ -27,7 +27,7 @@ const useFb = () => {
 
   //check if image
   const checkURL = (url) => {
-    return url.match(/\.(jpeg|jpg|gif|png|webp|jfif)$/);
+    return url.match(/\.(jpeg|jpg|png|webp|jfif)$/);
   };
 
   //reset avatar
