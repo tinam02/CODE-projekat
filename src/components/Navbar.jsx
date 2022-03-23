@@ -4,7 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthStatus } from "../functions/useAuthStatus.js";
 // misc
 import logo from "../assets/logo2.svg";
-import Loading from "./Loading.jsx";
 // import hamburger from "../assets/hamburger.svg";
 // import hamburgerclose from "../assets/hamburgerclose.svg";
 
@@ -13,7 +12,7 @@ function Navbar() {
   const location = useLocation();
   //!TEST switched !user to !loggedIn; should work
   //navbar instantly shows/hides icons based on status;
-  const { loggedIn, statusToggle } = useAuthStatus();
+  const { loggedIn } = useAuthStatus();
   
   const navIconActive = function (path) {
     if (path === location.pathname) {
@@ -71,7 +70,7 @@ function Navbar() {
               <span
                 style={{
                   fontSize: "25px",
-                  opacity: navIconActive("/submit") ? "1" : "0.5",
+                  opacity: navIconActive("/submit") ? "1" : "0.4",
                 }}
               >
                 &#10133;
@@ -87,7 +86,7 @@ function Navbar() {
               <span
                 style={{
                   fontSize: "25px",
-                  opacity: navIconActive("/signin") ? "1" : "0.5",
+                  opacity: navIconActive("/signin") ? "1" : "0.4",
                 }}
               >
                 &#x1f511;
@@ -103,7 +102,7 @@ function Navbar() {
               <span
                 style={{
                   fontSize: "25px",
-                  opacity: navIconActive("/signup") ? "1" : "0.5",
+                  opacity: navIconActive("/signup") ? "1" : "0.4",
                 }}
               >
                 &#128274;
@@ -118,7 +117,7 @@ function Navbar() {
             <span
               style={{
                 fontSize: "25px",
-                opacity: navIconActive("/") ? "1" : "0.5",
+                opacity: navIconActive("/") ? "1" : "0.4",
               }}
             >
               &#127758;
@@ -132,7 +131,7 @@ function Navbar() {
             <span
               style={{
                 fontSize: "25px",
-                opacity: navIconActive("/profile") ? "1" : "0.5",
+                opacity: navIconActive("/profile") ? "1" : "0.4",
               }}
             >
               &#128566;

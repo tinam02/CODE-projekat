@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, signOut,onAuthStateChanged } from "firebase/auth";
+import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
 import {
   doc,
   getDocs,
@@ -102,7 +102,7 @@ function ProfilePage() {
   let myUploads = "";
   if (!loading) {
     if (!(uploads.length > 0)) {
-      myUploads = ''
+      myUploads = "";
     } else {
       myUploads = uploads.map((file) => (
         <motion.img
@@ -157,7 +157,7 @@ function ProfilePage() {
             })`,
           }}
         />
-        <h2>{myData.myUsername}</h2>
+        <h1 style={{ fontFamily: "gg-bold" }}>{myData.myUsername}</h1>
         <h2>
           {myData.postCount === 1 ? "1 post" : `${myData.postCount} posts`}
         </h2>
@@ -193,7 +193,7 @@ function ProfilePage() {
               }}
               // async await da bi fokus radio!
             >
-              {changeDetails ? "Done" : "Update details"}
+              {changeDetails ? "Done" : "Edit details"}
             </button>
             <button className="details-btn" onClick={onResetAvatar}>
               Reset avatar
@@ -203,21 +203,20 @@ function ProfilePage() {
 
         <Link
           to="/submit"
-          style={{
-            color: "black",
-            textDecoration: "underline",
-            fontFamily: "gg-bold-italic",
-            margin: "30px 0",
-          }}
+          className='profile-submit-link'
+         
         >
           <p>Submit an image</p>
 
-          <span style={{ "fontSize": "35px" }}> &#9758; </span>
+          <span style={{ fontSize: "35px" }}> &#9758; </span>
         </Link>
         <button className="btn logOutButton" onClick={onLogout}>
           Log out
         </button>
       </motion.main>
+      <hr />
+      <hr />
+      <hr />
       <div className="profile-masonry">
         <Masonry
           breakpointCols={breakpointColumnsObj}

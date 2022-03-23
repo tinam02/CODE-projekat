@@ -12,8 +12,8 @@ import {
 } from "firebase/storage";
 import { addDoc, collection, serverTimestamp } from "firebase/firestore";
 import toast, { Toaster } from "react-hot-toast";
-import { motion, AnimatePresence } from "framer-motion";
-import {  transition } from "../functions/constants";
+import { motion } from "framer-motion";
+import { transition } from "../functions/constants";
 import useFb from "../functions/useFb";
 
 // FORM
@@ -167,8 +167,8 @@ function SubmitImage() {
   };
   return (
     <>
-      <h1 className="page-h1">Submit image</h1>
       <Toaster />
+      <h1 className="page-h1">Submit image</h1>
       <motion.div id="submit-image-div">
         <form className="submit-form" onSubmit={handleSubmit}>
           <motion.ul variants={container} initial="hidden" animate="show">
@@ -234,7 +234,11 @@ function SubmitImage() {
             submit
           </button>
         </form>
-        <div id="image-preview-div"></div>
+        <motion.div
+          initial={{ opacity: 0, x: "-100%" }}
+          animate={{ opacity: 1, x: 0 }}
+          id="image-preview-div"
+        ></motion.div>
       </motion.div>
     </>
   );

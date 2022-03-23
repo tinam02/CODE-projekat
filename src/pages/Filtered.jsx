@@ -1,13 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase-config";
-import {
-  collection,
-  query,
-  where,
-  getDocs,
-  orderBy,
-} from "firebase/firestore";
+import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import Masonry from "react-masonry-css";
 import Loading from "../components/Loading";
 import Modal from "../components/Modal";
@@ -28,7 +22,6 @@ function Filtered() {
     tag: "",
   });
   const params = useParams();
-
 
   useEffect(() => {
     fetchByTag();
@@ -90,7 +83,7 @@ function Filtered() {
   }
 
   return (
-    <div>
+    <div style={{ minHeight: "100vh" }}>
       <h1 style={{ margin: " 30px 0", textAlign: "center" }}>
         #{params.filteredBy}
       </h1>

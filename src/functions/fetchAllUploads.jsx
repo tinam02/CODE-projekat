@@ -115,6 +115,7 @@ function AllUploads() {
               initial={{ opacity: 0, y: 200 }}
               key={i}
               whileInView={{ opacity: 1, y: 0 }}
+              exit={{opacity:0}}
               transition={transition}
               onClick={() => {
                 setOpenModal(true);
