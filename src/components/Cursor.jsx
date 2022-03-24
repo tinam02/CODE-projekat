@@ -3,7 +3,6 @@ import React, { useEffect } from "react";
 function Cursor() {
   useEffect(() => {
     const cursor = document.querySelector(".customCursor");
-
     const custom = () => {
       document.addEventListener("mousemove", (e) => {
         cursor.style.display = "block";
@@ -33,11 +32,8 @@ function Cursor() {
 
     custom();
   }, []);
-  return (
-    <div className="customCursor">
-      {/* <div id="customCursor-span"></div> */}
-    </div>
-  );
+
+  return <div className="customCursor"></div>;
 }
 
 export default Cursor;

@@ -61,7 +61,6 @@ const useFb = () => {
       })
         .then(() => {
           // FireStore
-          // u firestoreu postoji users kolekcija
           const userRef = doc(db, "users", auth.currentUser.uid);
           updateDoc(userRef, {
             username: formData.username,
@@ -77,7 +76,6 @@ const useFb = () => {
         });
       setChangeAvatar(false);
     }
-
     //https://firebase.google.com/docs/auth/web/manage-users#update_a_users_profile
   };
 

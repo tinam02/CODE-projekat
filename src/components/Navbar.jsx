@@ -4,8 +4,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useAuthStatus } from "../functions/useAuthStatus.js";
 // misc
 import logo from "../assets/logo2.svg";
-// import hamburger from "../assets/hamburger.svg";
-// import hamburgerclose from "../assets/hamburgerclose.svg";
 
 function Navbar() {
   const navigate = useNavigate();
@@ -19,17 +17,11 @@ function Navbar() {
       return true;
     }
   };
-  //  navIconActive("/signup") ? "#fff" : "rgba(255, 255, 255, 0.5)"
-  // const auth = getAuth();
-  // let user = "";
-  // if (auth.currentUser) {
-  //   user = auth.currentUser;
-  // }
+  
   useEffect(() => {
-    console.log(`Logged in : ${loggedIn}`);
     handleContentLoaded();
   }, []);
- 
+  
   const handleContentLoaded = () => {
     const nav = document.querySelector(".primary-navigation");
     const navToggle = document.querySelector(".mobile-nav-toggle");

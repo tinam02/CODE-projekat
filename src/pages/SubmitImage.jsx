@@ -47,7 +47,7 @@ function SubmitImage() {
   const handleChangeName = (evt) => {
     evt.preventDefault();
     if (evt.target.value === null) {
-      console.log("asdad");
+      console.log("Value is null");
     }
     setFormData({ ...formData, name: evt.target.value });
   };
@@ -169,7 +169,12 @@ function SubmitImage() {
     <>
       <Toaster />
       <h1 className="page-h1">Submit image</h1>
-      <motion.div id="submit-image-div">
+      <motion.div
+        id="submit-image-div"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+      >
         <form className="submit-form" onSubmit={handleSubmit}>
           <motion.ul variants={container} initial="hidden" animate="show">
             <motion.li variants={item}>
@@ -181,7 +186,7 @@ function SubmitImage() {
                   placeholder="Name"
                   value={formData.name}
                   onChange={handleChangeName}
-                  maxLength={50}
+                  maxLength={30}
                   required
                 />
               </label>

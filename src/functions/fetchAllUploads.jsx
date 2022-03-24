@@ -115,18 +115,18 @@ function AllUploads() {
               initial={{ opacity: 0, y: 200 }}
               key={i}
               whileInView={{ opacity: 1, y: 0 }}
-              exit={{opacity:0}}
+              exit={{ opacity: 0 }}
               transition={transition}
               onClick={() => {
                 setOpenModal(true);
                 setModalId({
-                  // ...modalId,
                   src: file.data.imageURL[0],
                   desc: file.data.description,
                   name: file.data.name,
                   time: JSON.stringify(file.data.timestamp.toDate()),
                   tag: [file.data.type],
                 });
+                
               }}
               className="explore-images"
             />

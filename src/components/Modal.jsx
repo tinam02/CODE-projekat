@@ -12,6 +12,8 @@ function Modal({
   imgId,
   onRemove,
 }) {
+
+  // framer
   const container = {
     hidden: { opacity: 0 },
     show: {
@@ -19,11 +21,11 @@ function Modal({
       transition: { staggerChildren: 0.2 },
     },
   };
-
   const item = {
     hidden: { x: "-10%", opacity: 0 },
     show: { x: 0, opacity: 1, transition },
   };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -68,6 +70,7 @@ function Modal({
               </Link>
             </motion.p>
           </motion.div>
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{

@@ -14,10 +14,32 @@ import Cursor from "./components/Cursor";
 import { AnimatePresence } from "framer-motion";
 import ErrorPage from "./pages/ErrorPage";
 
-
-
 function App() {
+  // framer
   const location = useLocation();
+
+  // theme
+  let colorMode = localStorage.getItem("colorMode");
+  const enableColorMode = () => {
+    document.body.classList.add("theme2");
+    localStorage.setItem("colorMode", "enabled");
+  };
+  const disableColorMode = () => {
+    document.body.classList.remove("theme2");
+    localStorage.setItem("colorMode", null);
+  };
+  if (colorMode === "enabled") {
+    enableColorMode();
+  }
+  const themeToggle = () => {
+    colorMode = localStorage.getItem("colorMode");
+    if (colorMode !== "enabled") {
+      enableColorMode();
+    } else {
+      disableColorMode();
+    }
+  };
+
   return (
     <div>
       <Cursor />
@@ -47,7 +69,7 @@ function App() {
             <Route
               key={location.pathname}
               path="/profile"
-              element={<ProfilePage />}
+              element={<ProfilePage themeToggle={themeToggle} />}
             ></Route>
             {/*  outlet */}
           </Route>

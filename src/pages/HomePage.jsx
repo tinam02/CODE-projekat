@@ -1,7 +1,6 @@
 import React from "react";
 import AllUploads from "../functions/fetchAllUploads";
 import ScrollToTop from "../components/ScrollToTop";
-import { motion, AnimatePresence } from "framer-motion";
 import RandomFont from "../components/RandomFont";
 
 function HomePage() {
@@ -17,6 +16,7 @@ function HomePage() {
         {/* sve slike iz fetchalluploads */}
         <AllUploads />
       </div>
+
       <ScrollToTop />
     </main>
   );

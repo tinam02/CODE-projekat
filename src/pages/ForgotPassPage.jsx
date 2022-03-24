@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { getAuth, sendPasswordResetEmail } from "firebase/auth";
 //alerts
+import { motion } from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 
 function ForgotPasswordPage() {
@@ -31,7 +32,7 @@ function ForgotPasswordPage() {
   };
 
   return (
-    <div>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
       <Toaster />
       <h1 className="page-h1">Reset password</h1>
       <main className="sign-page">
@@ -52,7 +53,7 @@ function ForgotPasswordPage() {
           <button>Send Reset Email</button>
         </form>
       </main>
-    </div>
+    </motion.div>
   );
 }
 

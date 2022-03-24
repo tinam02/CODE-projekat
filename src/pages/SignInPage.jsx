@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 //sign in;
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 // misc
+import {motion} from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 
 //https://www.pluralsight.com/guides/handling-multiple-inputs-with-single-onchange-handler-react
@@ -46,7 +47,9 @@ function SignInPage() {
   };
 
   return (
-    <div className="sign-in-container sign-page">
+    <motion.div className="sign-in-container sign-page"    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}>
       <Toaster />
       <h1 className="page-h1">Sign In</h1>
       <form onSubmit={onSubmit}>
@@ -72,7 +75,7 @@ function SignInPage() {
        
         <button className="btn sign-in-btn">Sign in</button>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

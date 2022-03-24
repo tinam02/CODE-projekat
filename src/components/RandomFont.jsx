@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import { transition } from "../functions/constants.js";
+
 function RandomFont(params) {
   useEffect(() => {
     const getFont = () => {
@@ -14,14 +15,14 @@ function RandomFont(params) {
       // ovde se koristi textcontent jer innerhtml i innertext dodaju  i html tagove!!
       let txt = x.textContent;
       let newText = "";
-      const forFonts = () => {
+      const randomizeEachLetter = () => {
         for (let i = 0; i < txt.length; i++) {
           newText += `<span key={${i}} style="font-family:'${getFont()}'">${txt.charAt(
             i
           )}</span>`;
         }
       };
-      forFonts();
+      randomizeEachLetter();
       x.innerHTML = newText;
     };
     changeFonts();
@@ -29,9 +30,9 @@ function RandomFont(params) {
 
   return (
     <motion.h1
-      id="demo" 
-      initial={{ y: -200, opacity: 0,  dropShadow: "10px 10px 0 rgba(255, 0, 0, 0.2)", }}
-      animate={{ opacity: 1, y: 0,  dropShadow: "10px 10px 0 rgba(0, 0, 0, 0.3)", }}
+      id="demo"
+      initial={{ y: -200, opacity: 0 }}
+      animate={{ opacity: 1, y: 0 }}
       exit={{ y: "-70%", opacity: 0 }}
       transition={transition}
     >

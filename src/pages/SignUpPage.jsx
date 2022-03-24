@@ -10,6 +10,7 @@ import {
 import { db } from "../firebase-config";
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
 //misc
+import {motion} from "framer-motion";
 import toast, { Toaster } from "react-hot-toast";
 
 function SignUpPage() {
@@ -76,7 +77,9 @@ function SignUpPage() {
   };
 
   return (
-    <div className="sign-page">
+    <motion.div className="sign-page"    initial={{ opacity: 0 }}
+    animate={{ opacity: 1 }}
+    exit={{ opacity: 0 }}>
       <Toaster />
       <h1 className="page-h1">Sign Up</h1>
       <form onSubmit={onSubmit}>
@@ -105,9 +108,9 @@ function SignUpPage() {
           id="password"
         />
 
-        <button className="btn sign-up-btn">Submit</button>
+        <button className="btn sign-up-btn">Sign Up</button>
       </form>
-    </div>
+    </motion.div>
   );
 }
 

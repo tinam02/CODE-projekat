@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import RandomFont from "../components/RandomFont";
+
 function ErrorPage() {
   return (
     <div
@@ -23,14 +24,15 @@ function ErrorPage() {
           color: "rgba(255,255,255,1)",
         }}
       >
-        <h1
+        <div
           style={{
-            fontSize: "10rem",
+            textAlign: "center",
+            fontSize: "clamp(5rem, 10vw, 10rem)",
             color: "rgba(255,255,255,1)",
           }}
         >
           <RandomFont text="404" />
-        </h1>
+        </div>
         <h2
           style={{
             display: "flex",
@@ -40,7 +42,10 @@ function ErrorPage() {
           }}
         >
           this page does not exist!
-          <Link style={{ color: "white", padding: "3rem" }} to="/">
+          <Link
+            style={{ color: "white", padding: "3rem", whiteSpace: "nowrap" }}
+            to="/"
+          >
             &#10036; click to go back &#10036;
           </Link>
         </h2>

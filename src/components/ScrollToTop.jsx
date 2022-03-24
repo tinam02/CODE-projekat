@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 function ScrollToTop() {
   const [isVisible, setVisibility] = useState();
 
+  // removes scroll button when modal is open
   const toggleVisibility = () => {
     if (document.querySelector("body").classList.contains("body-openModal")) {
       setVisibility(false);
@@ -17,14 +16,15 @@ function ScrollToTop() {
     } else {
       setVisibility(false);
     }
-    // removes scroll button when modal is open
   };
+
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
       behavior: "smooth",
     });
   };
+  
   useEffect(() => {
     window.addEventListener("scroll", toggleVisibility);
 
@@ -45,7 +45,7 @@ function ScrollToTop() {
         type="button"
         onClick={scrollToTop}
       >
-       &#128285;
+        &#128285;
       </button>
     </div>
   );

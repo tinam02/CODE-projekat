@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { getAuth, signOut, onAuthStateChanged } from "firebase/auth";
+import { getAuth, signOut } from "firebase/auth";
 import {
   doc,
   getDocs,
@@ -10,10 +10,8 @@ import {
   orderBy,
   deleteDoc,
 } from "firebase/firestore";
-
 import { db } from "../firebase-config";
 import useFb from "../functions/useFb";
-import ScrollToTop from "../components/ScrollToTop";
 // style
 import Masonry from "react-masonry-css";
 import { motion } from "framer-motion";
@@ -25,7 +23,7 @@ import {
 import toast, { Toaster } from "react-hot-toast";
 import Modal from "../components/Modal";
 
-function ProfilePage() {
+function ProfilePage({ themeToggle }) {
   const { formData, defaultAvatar, onChange, onSubmit, onResetAvatar } =
     useFb();
   const [loading, setLoading] = useState(true);
@@ -48,7 +46,7 @@ function ProfilePage() {
     imgId: null,
   });
 
-  // get personal uploads
+  //only get your own images
   //https://firebase.google.com/docs/firestore/query-data/get-data#get_multiple_documents_from_a_collection
   useEffect(() => {
     getMyUploads();
@@ -120,7 +118,7 @@ function ProfilePage() {
 
             setOpenModal(true);
             setModalId({
-              // ...modalId,
+             
               src: file.data.imageURL[0],
               desc: file.data.description,
               name: file.data.name,
@@ -139,7 +137,7 @@ function ProfilePage() {
   return (
     <>
       <Toaster />
-      <ScrollToTop />
+     
       <motion.main
         id="profile"
         initial="exit"
@@ -198,14 +196,14 @@ function ProfilePage() {
             <button className="details-btn" onClick={onResetAvatar}>
               Reset avatar
             </button>
+
+            <button id="color-mode-toggle" onClick={themeToggle}>
+              Toggle Theme
+            </button>
           </div>
         </div>
 
-        <Link
-          to="/submit"
-          className='profile-submit-link'
-         
-        >
+        <Link to="/submit" className="profile-submit-link">
           <p>Submit an image</p>
 
           <span style={{ fontSize: "35px" }}> &#9758; </span>

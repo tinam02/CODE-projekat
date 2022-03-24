@@ -5,10 +5,8 @@ import { collection, query, where, getDocs, orderBy } from "firebase/firestore";
 import Masonry from "react-masonry-css";
 import Loading from "../components/Loading";
 import Modal from "../components/Modal";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { transition } from "../functions/constants";
-
-// todo  update this code
 
 function Filtered() {
   const [loading, setLoading] = useState(true);
@@ -45,6 +43,7 @@ function Filtered() {
     setLoading(false);
   };
 
+  //masonry
   const breakpointColumnsObj = {
     default: 5,
     1600: 4,
@@ -69,7 +68,6 @@ function Filtered() {
           onClick={() => {
             setOpenModal(true);
             setModalId({
-              // ...modalId,
               src: file.data.imageURL[0],
               desc: file.data.description,
               name: file.data.name,
