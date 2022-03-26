@@ -133,10 +133,7 @@ input[type="file"]::file-selector-button {
 }
 body {
   background-color: rgb(90, 34, 179);
-  /* https://framerusercontent.com/modules/assets/2048/sy0T3nkQUm19CQjLfCrE33og74~j2gmcJQvWCzkfljJuchAjvw0lHdGGLlhv5wQ_S1vdD4.png */
-  /* background: url(https://framerusercontent.com/modules/assets/2048/sy0T3nkQUm19CQjLfCrE33og74~j2gmcJQvWCzkfljJuchAjvw0lHdGGLlhv5wQ_S1vdD4.png); */
   min-height: 100vh;
-
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;

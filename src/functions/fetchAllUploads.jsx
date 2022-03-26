@@ -14,7 +14,7 @@ import Masonry from "react-masonry-css";
 import Modal from "../components/Modal";
 import { motion, AnimatePresence } from "framer-motion";
 import { transition } from "./constants";
-
+import moment from "moment";
 function AllUploads() {
   const [loading, setLoading] = useState(true);
   const [uploads, setUploads] = useState(null);
@@ -118,15 +118,15 @@ function AllUploads() {
               exit={{ opacity: 0 }}
               transition={transition}
               onClick={() => {
+                console.log(moment(file.data.timestamp.toDate()).fromNow());
                 setOpenModal(true);
                 setModalId({
                   src: file.data.imageURL[0],
                   desc: file.data.description,
                   name: file.data.name,
-                  time: JSON.stringify(file.data.timestamp.toDate()),
+                  time: moment(file.data.timestamp.toDate()).fromNow(),
                   tag: [file.data.type],
                 });
-                
               }}
               className="explore-images"
             />
@@ -234,7 +234,7 @@ function AllUploads() {
                 imgSrc={modalId.src}
                 imgDesc={modalId.desc}
                 imgTitle={modalId.name}
-                imgTimestamp={modalId.time.slice(1, 11).replaceAll("-", "/")}
+                imgTimestamp={modalId.time}
                 imgTag={modalId.tag}
               />
             )}

@@ -54,7 +54,7 @@ function Modal({
               {imgTitle}
             </motion.h1>
             <motion.p variants={item} className="modal__imgDate">
-              Date: {imgTimestamp}
+             Posted {imgTimestamp}
             </motion.p>
             <motion.p variants={item} className="modal__imgDesc">
               Description: {imgDesc}
